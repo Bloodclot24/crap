@@ -8,3 +8,6 @@ SET(CMAKE_CXX_FLAGS "-Wall -I${INCLUDES} -ggdb")
 
 ADD_EXECUTABLE(framework main.cpp)
 TARGET_LINK_LIBRARIES(framework -lGL -lGLU -lglut)
+
+ADD_EXECUTABLE(solar solar_system_main.cpp)
+TARGET_LINK_LIBRARIES(solar -lGL -lGLU -lglut)

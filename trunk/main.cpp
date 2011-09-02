@@ -11,6 +11,7 @@
 #include <stdlib.h>
 
 int edad = 7;
+float Z=0;
 
 // Variables que controlan la ubicación de la cámara en la Escena 3D
 float eye[3] = {15.0, 15.0, 5.0};
@@ -54,7 +55,7 @@ void OnIdle (void)
 {
 	rotate_sphere += 0.1f;
 	if(rotate_sphere > 360.0) rotate_sphere = 0.0;
-    glutPostRedisplay();
+	//glutPostRedisplay();
 }
 
 void DrawAxis()
@@ -121,7 +122,7 @@ void DrawXYGrid()
 }
 void Set3DEnv()
 {
-	glViewport (0, 0, (GLsizei) W_WIDTH, (GLsizei) W_HEIGHT); 
+    glViewport (0, 0, (GLsizei) W_WIDTH, (GLsizei) W_HEIGHT); 
     glMatrixMode (GL_PROJECTION);
     glLoadIdentity ();
     gluPerspective(60.0, (GLfloat) W_WIDTH/(GLfloat) W_HEIGHT, 0.10, 100.0);
@@ -161,6 +162,16 @@ void init(void)
 	glEndList();
 }
 
+void dibujarCuadrado(){
+	glBegin(GL_TRIANGLE_STRIP);
+	  glVertex3f(0, -0.5, -0.5);
+	  glVertex3f(0, -0.5, 0.5);
+	  glVertex3f(0, 0.5, -0.5);
+	  glVertex3f(0, 0.5, 0.5);
+	glEnd();
+}
+
+
 void dibujarRectangulo(float edad, int verde){
 	glBegin(GL_TRIANGLES);
 		glColor3f(0.5f, 0.3f, 0.0f);
@@ -178,17 +189,42 @@ void dibujarRectangulo(float edad, int verde){
 
 }
 
+void dibujarCilindroDentado(){
+  int angulo=10;
+  for(int i=0;i<360;i+=angulo){
+    glPushMatrix();
+    //glScalef(0, 0.1, 0);
+    glRotatef(i, 0, 0, 1);
+    glTranslatef(1, 0, 0);
+    dibujarCuadrado();
+    glPopMatrix();
+  }
+}
+
+void dibujarCilindro(){
+  int angulo=10;
+  for(int i=0;i<360;i+=angulo){
+    glPushMatrix();
+    glRotatef(i, 0, 0, 1);
+    glScalef(1, 0.2, 1);
+    glTranslatef(1, 0, 0);
+    dibujarCuadrado();
+    glPopMatrix();
+  }
+}
+
+
 void dibujarRectanguloRecursivo(int angulo, int edad, int verde){
- if(angulo < 360) {
+    if(angulo < 360) {
 	glRotatef(angulo,0,0,1);
 	dibujarRectangulo(edad,verde);
 	dibujarRectanguloRecursivo(angulo + 10,edad,verde);
-}
+    }
 }
 
 void dibujarArbolRecursivo(int edad, int x, int y, float z, int angulo, int ejex, int ejey, int ejej, int verde) {
 
-if(edad > 0) {
+    if(edad > 0) {
 	//posicionar
 	glPushMatrix();
 	glTranslatef(x,y,z);
@@ -196,17 +232,17 @@ if(edad > 0) {
 	dibujarRectanguloRecursivo(0, edad,verde);
 
 	if(edad > 2) {
-	glPushMatrix();
-	dibujarArbolRecursivo(edad - 1, x, y,( edad - 1)/3, - angulo, ejex, ejey, ejej,0);
+	    glPushMatrix();
+	    dibujarArbolRecursivo(edad - 1, x, y,( edad - 1)/3, - angulo, ejex, ejey, ejej,0);
+	    glPopMatrix();
+
+	    glPushMatrix();
+	    dibujarArbolRecursivo(edad - 1, x, y,( edad - 1)/3, angulo, ejex, ejey, ejej,0);
+	    glPopMatrix();
+	} 
 	glPopMatrix();
 
-	glPushMatrix();
-	dibujarArbolRecursivo(edad - 1, x, y,( edad - 1)/3, angulo, ejex, ejey, ejej,0);
-	glPopMatrix();
-} 
-	glPopMatrix();
-
-}
+    }
 }
 
 void display(void)
@@ -217,7 +253,10 @@ void display(void)
 	Set3DEnv();
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+
 	gluLookAt (eye[0], eye[1], eye[2], at[0], at[1], at[2], up[0], up[1], up[2]);
+	glRotatef(Z, 0, 0, 1);
+
    
 	if (view_axis)
 		 glCallList(DL_AXIS);
@@ -230,15 +269,19 @@ void display(void)
     ///////////////////////////////////////////////////
 	//
 	// Draw here
-	glDisable(GL_LIGHTING);
+	glEnable(GL_COLOR_MATERIAL);
+	/*
 	glPushMatrix();
 	dibujarRectanguloRecursivo(0, edad + 1,0);
 	dibujarArbolRecursivo(edad,0,0,edad/3,30,0,1,0,0);
 	dibujarArbolRecursivo(edad,0,0,edad/3,-30,0,1,0,0);
 	dibujarArbolRecursivo(edad,0,0,(edad + 1)/2,30,1,0,0,0);
 	dibujarArbolRecursivo(edad,0,0,(edad+1)/2,-30,1,0,0,0);
-	glPopMatrix();
-	glEnable(GL_LIGHTING);
+	glPopMatrix();*/
+	glColor3f(0.5,0,0);
+	//dibujarCuadrado();
+	dibujarCilindro();
+	
 	
 
 
@@ -308,6 +351,29 @@ void keyboard (unsigned char key, int x, int y)
 		  up[2] = 0.0;
 		  glutPostRedisplay();
 		  break;
+
+   case 'm':
+       edad--;
+		  glutPostRedisplay();
+
+       break;
+   case 'M':
+       edad++;
+		  glutPostRedisplay();
+
+       break;
+
+   case 'z':
+       Z -=2;
+		  glutPostRedisplay();
+
+       break;
+   case 'Z':
+       Z +=1;
+		  glutPostRedisplay();
+
+       break;
+
 
 	  case '3':
 		  eye[0] = 15.0;
