@@ -10,6 +10,8 @@
 #include <math.h>
 #include <stdlib.h>
 
+int edad = 7;
+
 // Variables que controlan la ubicación de la cámara en la Escena 3D
 float eye[3] = {15.0, 15.0, 5.0};
 float at[3]  = { 0.0,  0.0, 0.0};
@@ -159,7 +161,53 @@ void init(void)
 	glEndList();
 }
 
+void dibujarRectangulo(float edad, int verde){
+	glBegin(GL_TRIANGLES);
+		glColor3f(0.5f, 0.3f, 0.0f);
+		glVertex3f(-0.01f, 0.01*edad, 0.0f);
+		glVertex3f(0.01f, 0.01*edad, edad/2);
+		glVertex3f(0.01f, 0.01*edad, 0.0f);
+	glEnd();
 
+	glBegin(GL_TRIANGLES);
+		glColor3f(0.5f, 0.3f, 0.0f);	
+		glVertex3f(-0.01f, 0.01*edad, 0.0f);
+		glVertex3f(-0.01f, 0.01*edad, edad/2);
+		glVertex3f(0.01f, 0.01*edad, edad/2);
+	glEnd();
+
+}
+
+void dibujarRectanguloRecursivo(int angulo, int edad, int verde){
+ if(angulo < 360) {
+	glRotatef(angulo,0,0,1);
+	dibujarRectangulo(edad,verde);
+	dibujarRectanguloRecursivo(angulo + 10,edad,verde);
+}
+}
+
+void dibujarArbolRecursivo(int edad, int x, int y, float z, int angulo, int ejex, int ejey, int ejej, int verde) {
+
+if(edad > 0) {
+	//posicionar
+	glPushMatrix();
+	glTranslatef(x,y,z);
+	glRotatef(angulo, ejex, ejey, ejej);
+	dibujarRectanguloRecursivo(0, edad,verde);
+
+	if(edad > 2) {
+	glPushMatrix();
+	dibujarArbolRecursivo(edad - 1, x, y,( edad - 1)/3, - angulo, ejex, ejey, ejej,0);
+	glPopMatrix();
+
+	glPushMatrix();
+	dibujarArbolRecursivo(edad - 1, x, y,( edad - 1)/3, angulo, ejex, ejey, ejej,0);
+	glPopMatrix();
+} 
+	glPopMatrix();
+
+}
+}
 
 void display(void)
 {
@@ -182,8 +230,15 @@ void display(void)
     ///////////////////////////////////////////////////
 	//
 	// Draw here
-	//
-
+	glDisable(GL_LIGHTING);
+	glPushMatrix();
+	dibujarRectanguloRecursivo(0, edad + 1,0);
+	dibujarArbolRecursivo(edad,0,0,edad/3,30,0,1,0,0);
+	dibujarArbolRecursivo(edad,0,0,edad/3,-30,0,1,0,0);
+	dibujarArbolRecursivo(edad,0,0,(edad + 1)/2,30,1,0,0,0);
+	dibujarArbolRecursivo(edad,0,0,(edad+1)/2,-30,1,0,0,0);
+	glPopMatrix();
+	glEnable(GL_LIGHTING);
 	
 
 
@@ -275,6 +330,10 @@ void keyboard (unsigned char key, int x, int y)
 
 int main(int argc, char** argv)
 {
+
+    if(argc > 1)
+	edad = atoi(argv[1]);
+
    glutInit(&argc, argv);
    glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
    glutInitWindowSize (1024, 768); 
