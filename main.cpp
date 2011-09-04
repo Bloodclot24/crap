@@ -164,6 +164,7 @@ void init(void)
 
 void dibujarCuadrado(){
 	glBegin(GL_TRIANGLE_STRIP);
+	  glNormal3f(0, 0, 1);
 	  glVertex3f(0, -0.5, -0.5);
 	  glVertex3f(0, -0.5, 0.5);
 	  glVertex3f(0, 0.5, -0.5);
@@ -211,6 +212,40 @@ void dibujarCilindro(){
     dibujarCuadrado();
     glPopMatrix();
   }
+}
+
+void dibujarCirculo(int segmentos){
+ glBegin(GL_TRIANGLE_FAN);
+   glNormal3f(0, 0, 1);
+   glVertex3f(0, 0, 0);
+   for(float i = 0; i <= 2*M_PI; i += 2*M_PI / segmentos)
+     glVertex3f(cos(i), sin(i), 0);
+ glEnd();
+}
+
+void dibujarCilindro(int segmentos, float radio_superior = 1){
+  glBegin(GL_TRIANGLE_STRIP);
+    for(float i = 0; i <= 2*M_PI; i += 2*M_PI / segmentos){
+      float _cos = cos(i);
+      float _sin = sin(i);
+      glNormal3f(_cos, _sin, 0);
+      glVertex3f(_cos, _sin, -0.5);
+      glVertex3f(_cos*radio_superior, _sin*radio_superior, 0.5);
+    }
+  glEnd();
+  
+  //Dibujo las tapas
+  glPushMatrix();
+    glTranslatef(0, 0, 0.5);
+    glScalef(radio_superior, radio_superior, 1);
+    dibujarCirculo(segmentos);
+  glPopMatrix();
+  
+  glPushMatrix();
+    glTranslatef(0, 0, -0.5);
+    glRotatef(180, 1, 0, 0);
+    dibujarCirculo(segmentos);
+  glPopMatrix();
 }
 
 
@@ -281,6 +316,8 @@ void display(void)
 	glColor3f(0.5,0,0);
 	//dibujarCuadrado();
 	dibujarCilindro();
+	glTranslatef(2, 2, 0);
+	dibujarCilindro(10, 0.5);
 	
 	
 
