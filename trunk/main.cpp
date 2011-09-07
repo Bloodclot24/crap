@@ -11,11 +11,16 @@
 #include <stdlib.h>
 
 int tiempo = 0;
+int incremento_tiempo = 1;
+int incremento_anterior = 0;
+bool animacion_corriendo = true;
 float Z=0;
+
+#define TIEMPO_MAX 80
 
 // Variables que controlan la ubicación de la cámara en la Escena 3D
 float eye[3] = {15.0, 15.0, 5.0};
-float at[3]  = { 0.0,  0.0, 0.0};
+float at[3]  = { 0.0,  0.0, 3.0};
 float up[3]  = { 0.0,  0.0, 1.0};
 
 // Variables asociadas a única fuente de luz de la escena
@@ -241,7 +246,7 @@ void dibujarRama(float altura){
   glPopMatrix();
 }  
 
-void dibujarArbol(int profundidad, int tiempo, float x, float y, float z, float angulo, int ejex, int ejey, int ejej) {
+void dibujarArbol(int profundidad, float x, float y, float z, float angulo, int ejex, int ejey, int ejej) {
 
     if(profundidad > 0) {
 	//posicionar
@@ -256,14 +261,22 @@ void dibujarArbol(int profundidad, int tiempo, float x, float y, float z, float 
 	    profundidad--;
 	    //altura = 0.1 * profundidad * profundidad ;// + tiempo mod 10 / 10;
 	    glRotatef(90,0,0,1);
-	    dibujarArbol(profundidad,tiempo, x, y,0.5*altura, 40 + profundidad, 1, 0, 0);
-	    dibujarArbol(profundidad,tiempo, x, y,0.5*altura, -(40 + profundidad), 1, 0, 0);
-	    dibujarArbol(profundidad,tiempo, x, y,altura, 30 + profundidad, 0, 1, 0);
-	    dibujarArbol(profundidad,tiempo, x, y,altura, -(30 + profundidad), 0, 1, 0);
+	    dibujarArbol(profundidad, x, y,0.5*altura, 40 + profundidad, 1, 0, 0);
+	    dibujarArbol(profundidad, x, y,0.5*altura, -(40 + profundidad), 1, 0, 0);
+	    dibujarArbol(profundidad, x, y,altura, 30 + profundidad, 0, 1, 0);
+	    dibujarArbol(profundidad, x, y,altura, -(30 + profundidad), 0, 1, 0);
 	}
 	glPopMatrix();
 
     }
+}
+
+void incrementar_tiempo(int a){
+	if ( tiempo + incremento_tiempo <= TIEMPO_MAX) 
+		tiempo += incremento_tiempo;
+	else 
+		tiempo = TIEMPO_MAX;
+	glutPostRedisplay();
 }
  
 void display(void)
@@ -296,7 +309,9 @@ void display(void)
 //	dibujarCilindro();
 //	glTranslatef(2, 2, 0);
 //	dibujarCilindro(10, 0.5);
-	dibujarArbol(tiempo/10,tiempo,0,0,0,0,0,1,0); 
+	dibujarArbol(tiempo/10,0,0,0,0,0,1,0);
+	if(animacion_corriendo && tiempo < TIEMPO_MAX)
+		glutTimerFunc(10, incrementar_tiempo,0);
 	//
 	///////////////////////////////////////////////////
 
@@ -362,15 +377,32 @@ void keyboard (unsigned char key, int x, int y)
 		  glutPostRedisplay();
 		  break;
 
-   case 'm':
-       tiempo--;
-		  glutPostRedisplay();
-
+   case 'A':
+       if (animacion_corriendo && incremento_tiempo > 0)
+		incremento_tiempo--;
+	
        break;
-   case 'M':
-       tiempo++;
-		  glutPostRedisplay();
+   case 'Q':
+	if (animacion_corriendo)
+       		incremento_tiempo++;
+	
+       break;
 
+   case 'P':
+	if ( animacion_corriendo) {       
+		incremento_anterior = incremento_tiempo;		
+		incremento_tiempo = 0;
+		animacion_corriendo = false;
+	} else {
+		incremento_tiempo = incremento_anterior;
+		animacion_corriendo = true;
+		glutPostRedisplay();
+	}
+       break;
+
+   case 'R':
+       tiempo = 0;
+       glutPostRedisplay();
        break;
 
    case 'z':
@@ -421,7 +453,6 @@ int main(int argc, char** argv)
    glutDisplayFunc(display); 
    glutReshapeFunc(reshape);
    glutKeyboardFunc(keyboard);
-   glutIdleFunc(OnIdle);
    glutMainLoop();
    return 0;
 }
