@@ -58,72 +58,72 @@ GLfloat window_size[2];
 
 void OnIdle (void)
 {
-	rotate_sphere += 0.1f;
-	if(rotate_sphere > 360.0) rotate_sphere = 0.0;
-	//glutPostRedisplay();
+    rotate_sphere += 0.1f;
+    if(rotate_sphere > 360.0) rotate_sphere = 0.0;
+    //glutPostRedisplay();
 }
 
 void DrawAxis()
 {
-	glDisable(GL_LIGHTING);
-	glBegin(GL_LINES);
-		// X
-		glColor3f(1.0, 0.0, 0.0);
-		glVertex3f(0.0, 0.0, 0.0);
-		glColor3f(0.0, 0.0, 0.0);
-		glVertex3f(15.0, 0.0, 0.0);
-		// Y
-		glColor3f(0.0, 1.0, 0.0);
-		glVertex3f(0.0, 0.0, 0.0);
-		glColor3f(0.0, 0.0, 0.0);
-		glVertex3f(0.0, 15.0, 0.0);
-		// Z
-		glColor3f(0.0, 0.0, 1.0);
-		glVertex3f(0.0, 0.0, 0.0);
-		glColor3f(0.0, 0.0, 0.0);
-		glVertex3f(0.0, 0.0, 15.0);
-	glEnd();
-	glEnable(GL_LIGHTING);
+    glDisable(GL_LIGHTING);
+    glBegin(GL_LINES);
+    // X
+    glColor3f(1.0, 0.0, 0.0);
+    glVertex3f(0.0, 0.0, 0.0);
+    glColor3f(0.0, 0.0, 0.0);
+    glVertex3f(15.0, 0.0, 0.0);
+    // Y
+    glColor3f(0.0, 1.0, 0.0);
+    glVertex3f(0.0, 0.0, 0.0);
+    glColor3f(0.0, 0.0, 0.0);
+    glVertex3f(0.0, 15.0, 0.0);
+    // Z
+    glColor3f(0.0, 0.0, 1.0);
+    glVertex3f(0.0, 0.0, 0.0);
+    glColor3f(0.0, 0.0, 0.0);
+    glVertex3f(0.0, 0.0, 15.0);
+    glEnd();
+    glEnable(GL_LIGHTING);
 }
 
 void DrawAxis2DTopView()
 {
-	glDisable(GL_LIGHTING);
-	glBegin(GL_LINE_LOOP);
-		// X
-		glColor3f(0.0f, 0.5f, 1.0f);
-		glVertex3f(0.0f, 0.0f, 0.0f);
-		glVertex3f(1.0f, 0.0f, 0.0f);
-		glVertex3f(1.0f, 1.0f, 0.0f);
-		glVertex3f(0.0f, 1.0f, 0.0f);
-	glEnd();
-	glBegin(GL_QUADS);
-		glColor3f(0.1f, 0.1f, 0.1f);
-		glVertex3f(0.0f, 0.0f, 0.0f);
-		glVertex3f(1.0f, 0.0f, 0.0f);
-		glVertex3f(1.0f, 1.0f, 0.0f);
-		glVertex3f(0.0f, 1.0f, 0.0f);
-	glEnd();
+    glDisable(GL_LIGHTING);
+    glBegin(GL_LINE_LOOP);
+    // X
+    glColor3f(0.0f, 0.5f, 1.0f);
+    glVertex3f(0.0f, 0.0f, 0.0f);
+    glVertex3f(1.0f, 0.0f, 0.0f);
+    glVertex3f(1.0f, 1.0f, 0.0f);
+    glVertex3f(0.0f, 1.0f, 0.0f);
+    glEnd();
+    glBegin(GL_QUADS);
+    glColor3f(0.1f, 0.1f, 0.1f);
+    glVertex3f(0.0f, 0.0f, 0.0f);
+    glVertex3f(1.0f, 0.0f, 0.0f);
+    glVertex3f(1.0f, 1.0f, 0.0f);
+    glVertex3f(0.0f, 1.0f, 0.0f);
+    glEnd();
 
-	glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHTING);
 }
 
 
 void DrawXYGrid()
 {
-	int i;
-	glDisable(GL_LIGHTING);
-	glColor3f(0.25f, 0.2f, 0.2f);
-	glBegin(GL_LINES);
-	for(i=-20; i<21; i++)
+    int i;
+    glDisable(GL_LIGHTING);
+    glColor3f(0.25f, 0.2f, 0.2f);
+    glBegin(GL_LINES);
+    for(i=-20; i<21; i++)
 	{
-		glVertex3f((float)i, -20.0f, 0.0f);
-		glVertex3f((float)i,  20.0f, 0.0f);
-		glVertex3f(-20.0f, (float)i, 0.0f);
-		glVertex3f( 20.0f, (float)i, 0.0f);
+	    glVertex3f((float)i, -20.0f, 0.0f);
+	    glVertex3f((float)i,  20.0f, 0.0f);
+	    glVertex3f(-20.0f, (float)i, 0.0f);
+	    glVertex3f( 20.0f, (float)i, 0.0f);
 	}
-	glEnd();
-	glEnable(GL_LIGHTING);
+    glEnd();
+    glEnable(GL_LIGHTING);
 }
 void Set3DEnv()
 {
@@ -135,18 +135,18 @@ void Set3DEnv()
 
 void SetPanelTopEnv()
 {
-	glViewport (TOP_VIEW_POSX, TOP_VIEW_POSY, (GLsizei) TOP_VIEW_W, (GLsizei) TOP_VIEW_H); 
+    glViewport (TOP_VIEW_POSX, TOP_VIEW_POSY, (GLsizei) TOP_VIEW_W, (GLsizei) TOP_VIEW_H); 
     glMatrixMode (GL_PROJECTION);
     glLoadIdentity ();
-	gluOrtho2D(-0.10, 1.05, -0.10, 1.05);
+    gluOrtho2D(-0.10, 1.05, -0.10, 1.05);
 }
 
 
 void init(void) 
 {
-	dl_handle = glGenLists(3);
+    dl_handle = glGenLists(3);
 
-	glClearColor (0.02f, 0.02f, 0.04f, 0.0f);
+    glClearColor (0.02f, 0.02f, 0.04f, 0.0f);
     glShadeModel (GL_SMOOTH);
     glEnable(GL_DEPTH_TEST);
     glLightfv(GL_LIGHT0, GL_DIFFUSE, light_color);
@@ -155,104 +155,80 @@ void init(void)
     glEnable(GL_LIGHT0);
     glEnable(GL_LIGHTING);
 
-	// Generación de las Display Lists
-	glNewList(DL_AXIS, GL_COMPILE);
-		DrawAxis();
-	glEndList();
-	glNewList(DL_GRID, GL_COMPILE);
-		DrawXYGrid();
-	glEndList();
-	glNewList(DL_AXIS2D_TOP, GL_COMPILE);
-		DrawAxis2DTopView();
-	glEndList();
+    // Generación de las Display Lists
+    glNewList(DL_AXIS, GL_COMPILE);
+    DrawAxis();
+    glEndList();
+    glNewList(DL_GRID, GL_COMPILE);
+    DrawXYGrid();
+    glEndList();
+    glNewList(DL_AXIS2D_TOP, GL_COMPILE);
+    DrawAxis2DTopView();
+    glEndList();
 }
 
 void dibujarCuadrado(){
-	glBegin(GL_TRIANGLE_STRIP);
-	  glNormal3f(-10, -10, -8);
-	  glVertex3f(0, -0.5, -0.5);
-	  glVertex3f(0, -0.5, 0.5);
-	  glVertex3f(0, 0.5, -0.5);
-	  glVertex3f(0, 0.5, 0.5);
-	glEnd();
-}
-
-void dibujarCilindroDentado(){
-  int angulo=10;
-  for(int i=0;i<360;i+=angulo){
-    glPushMatrix();
-    //glScalef(0, 0.1, 0);
-    glRotatef(i, 0, 0, 1);
-    glTranslatef(1, 0, 0);
-    dibujarCuadrado();
-    glPopMatrix();
-  }
-}
-
-void dibujarCilindro(){
-  int angulo=10;
-  for(int i=0;i<360;i+=angulo){
-    glPushMatrix();
-    glRotatef(i, 0, 0, 1);
-    glScalef(1, 0.2, 1);
-    glTranslatef(1, 0, 0);
-    dibujarCuadrado();
-    glPopMatrix();
-  }
+    glBegin(GL_TRIANGLE_STRIP);
+    glNormal3f(-10, -10, -8);
+    glVertex3f(0, -0.5, -0.5);
+    glVertex3f(0, -0.5, 0.5);
+    glVertex3f(0, 0.5, -0.5);
+    glVertex3f(0, 0.5, 0.5);
+    glEnd();
 }
 
 void dibujarCirculo(int segmentos){
- glBegin(GL_TRIANGLE_FAN);
-   glNormal3f(0, 0, 1);
-   glVertex3f(0, 0, 0);
-   for(float i = 0; i <= 2*M_PI; i += 2*M_PI / segmentos)
-     glVertex3f(cos(i), sin(i), 0);
- glEnd();
+    glBegin(GL_TRIANGLE_FAN);
+    glNormal3f(0, 0, 1);
+    glVertex3f(0, 0, 0);
+    for(float i = 0; i <= 2*M_PI; i += 2*M_PI / segmentos)
+	glVertex3f(cos(i), sin(i), 0);
+    glEnd();
 }
 
 void dibujarCilindro(int segmentos, float radio_superior = 1){
-  static GLint lista = 0;
-  static bool compilada=false;
+    static GLint lista = 0;
+    static bool compilada=false;
 
-  if(!compilada){
+    if(!compilada){
 	lista=glGenLists(1);
 	glNewList(lista, GL_COMPILE);
   
-  glBegin(GL_TRIANGLE_STRIP);
-    for(float i = 0; i <= 2*M_PI; i += 2*M_PI / segmentos){
-      float _cos = cos(i);
-      float _sin = sin(i);
-      glNormal3f(_cos, _sin, 0);
-      glVertex3f(_cos, _sin, -0.5);
-      glVertex3f(_cos*radio_superior, _sin*radio_superior, 0.5);
-    }
-  glEnd();
+	glBegin(GL_TRIANGLE_STRIP);
+	for(float i = 0; i <= 2*M_PI; i += 2*M_PI / segmentos){
+	    float _cos = cos(i);
+	    float _sin = sin(i);
+	    glNormal3f(_cos, _sin, 0);
+	    glVertex3f(_cos, _sin, -0.5);
+	    glVertex3f(_cos*radio_superior, _sin*radio_superior, 0.5);
+	}
+	glEnd();
   
-  //Dibujo las tapas
-  glPushMatrix();
-    glTranslatef(0, 0, 0.5);
-    glScalef(radio_superior, radio_superior, 1);
-    dibujarCirculo(segmentos);
-  glPopMatrix();
+	//Dibujo las tapas
+	glPushMatrix();
+	glTranslatef(0, 0, 0.5);
+	glScalef(radio_superior, radio_superior, 1);
+	dibujarCirculo(segmentos);
+	glPopMatrix();
   
-  glPushMatrix();
-    glTranslatef(0, 0, -0.5);
-    glRotatef(180, 1, 0, 0);
-    dibujarCirculo(segmentos);
-  glPopMatrix();
+	glPushMatrix();
+	glTranslatef(0, 0, -0.5);
+	glRotatef(180, 1, 0, 0);
+	dibujarCirculo(segmentos);
+	glPopMatrix();
 
 	glEndList();
 	compilada=true;
-  }
+    }
 
-glCallList(lista);
+    glCallList(lista);
 }
 
 void dibujarHoja() {
-  static GLint lista = 0;
-  static bool compilada=false;
+    static GLint lista = 0;
+    static bool compilada=false;
 
-  if(!compilada){
+    if(!compilada){
 	lista=glGenLists(1);
 	glNewList(lista, GL_COMPILE);
 
@@ -260,22 +236,22 @@ void dibujarHoja() {
  	dibujarCuadrado();     
 	glEndList();
 	compilada=true;
-  }
+    }
 
-glCallList(lista);
+    glCallList(lista);
 
 }
 
 void dibujarRama(float altura){
  
-  float radio = 0.04*altura;
-  glPushMatrix(); 
-  glScalef(radio, radio, altura);
-  glTranslatef(0, 0, 0.5);
-  glColor3f(0.58,0.26,0);
-	//glColor3f(1,0,0);
-  dibujarCilindro(6, 0.5);
-  glPopMatrix();
+    float radio = 0.04*altura;
+    glPushMatrix(); 
+    glScalef(radio, radio, altura);
+    glTranslatef(0, 0, 0.5);
+    glColor3f(0.58,0.26,0);
+    //glColor3f(1,0,0);
+    dibujarCilindro(6, 0.5);
+    glPopMatrix();
 }  
 
 void dibujarArbol(int profundidad, float x, float y, float z, float angulo, int ejex, int ejey, int ejej) {
@@ -306,167 +282,165 @@ void dibujarArbol(int profundidad, float x, float y, float z, float angulo, int 
 	glTranslatef(x,y,z);
 	glRotatef(angulo, ejex, ejey, ejej);
 	glScalef(0.15, 0.15, 0.15);
-//	glDisable(GL_LIGHTING);
 	dibujarHoja();
-//	glEnable(GL_LIGHTING);
 	glPopMatrix();
     }
 
 }
 
 void incrementar_tiempo(int a){
-	if ( tiempo + incremento_tiempo <= TIEMPO_MAX) 
-		tiempo += incremento_tiempo;
-	else 
-		tiempo = TIEMPO_MAX;
-	glutPostRedisplay();
+    if ( tiempo + incremento_tiempo <= TIEMPO_MAX) 
+	tiempo += incremento_tiempo;
+    else 
+	tiempo = TIEMPO_MAX;
+    glutPostRedisplay();
 }
  
 void display(void)
 {
-	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	///////////////////////////////////////////////////
-	// Escena 3D
-	Set3DEnv();
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
+    glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    ///////////////////////////////////////////////////
+    // Escena 3D
+    Set3DEnv();
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
 
-	gluLookAt (eye[0], eye[1], eye[2], at[0], at[1], at[2], up[0], up[1], up[2]);
-	glRotatef(Z, 0, 0, 1);
+    gluLookAt (eye[0], eye[1], eye[2], at[0], at[1], at[2], up[0], up[1], up[2]);
+    glRotatef(Z, 0, 0, 1);
 
    
-	if (view_axis)
-		 glCallList(DL_AXIS);
+    if (view_axis)
+	glCallList(DL_AXIS);
 	
-	if (view_grid)
-		 glCallList(DL_GRID);
-	//
-	///////////////////////////////////////////////////
+    if (view_grid)
+	glCallList(DL_GRID);
+    //
+    ///////////////////////////////////////////////////
 
-	glEnable(GL_COLOR_MATERIAL);
-	glEnable(GL_NORMALIZE);
-	dibujarArbol(tiempo/10,0,0,0,0,0,1,0);
-	if(animacion_corriendo && tiempo < TIEMPO_MAX)
-		glutTimerFunc(10, incrementar_tiempo,0);
+    glEnable(GL_COLOR_MATERIAL);
+    glEnable(GL_NORMALIZE);
+    dibujarArbol(tiempo/10,0,0,0,0,0,1,0);
+    if(animacion_corriendo && tiempo < TIEMPO_MAX)
+	glutTimerFunc(10, incrementar_tiempo,0);
 
-	///////////////////////////////////////////////////
-	// Panel 2D para la vista superior
-	if (edit_panel)
+    ///////////////////////////////////////////////////
+    // Panel 2D para la vista superior
+    if (edit_panel)
 	{
-		SetPanelTopEnv();
-		glMatrixMode(GL_MODELVIEW);
-		glLoadIdentity();
-		gluLookAt (0, 0, 0.5, 0, 0, 0, 0, 1, 0);
-		glCallList(DL_AXIS2D_TOP);
+	    SetPanelTopEnv();
+	    glMatrixMode(GL_MODELVIEW);
+	    glLoadIdentity();
+	    gluLookAt (0, 0, 0.5, 0, 0, 0, 0, 1, 0);
+	    glCallList(DL_AXIS2D_TOP);
 	}
-	//
-	///////////////////////////////////////////////////
+    //
+    ///////////////////////////////////////////////////
 	
 	
 
-	glutSwapBuffers();
+    glutSwapBuffers();
 }
 
 void reshape (int w, int h)
 {
-   	W_WIDTH  = (float)w;
-	W_HEIGHT = (float)h;
+    W_WIDTH  = (float)w;
+    W_HEIGHT = (float)h;
 }
 
 void keyboard (unsigned char key, int x, int y)
 {
-   switch (key) {
-      case 'q':
-         exit(0);
-         break;
+    switch (key) {
+    case 'q':
+	exit(0);
+	break;
 
-	  case 'g':
-		  view_grid = !view_grid;
-		  glutPostRedisplay();
-		  break;
+    case 'g':
+	view_grid = !view_grid;
+	glutPostRedisplay();
+	break;
 
-	  case 'a':
-		  view_axis = !view_axis;
-		  glutPostRedisplay();
-		  break;
+    case 'a':
+	view_axis = !view_axis;
+	glutPostRedisplay();
+	break;
 
-	  case 'e':
-		  edit_panel = !edit_panel;
-		  glutPostRedisplay();
-		  break;
+    case 'e':
+	edit_panel = !edit_panel;
+	glutPostRedisplay();
+	break;
 
-	  case '2':
-		  eye[0] = 0.0;
-		  eye[1] = 0.0;
-		  eye[2] = 15.0;
+    case '2':
+	eye[0] = 0.0;
+	eye[1] = 0.0;
+	eye[2] = 15.0;
 
-		  at[0] = 0.0;
-		  at[1] = 0.0;
-		  at[2] = 0.0;
+	at[0] = 0.0;
+	at[1] = 0.0;
+	at[2] = 0.0;
 
-		  up[0] = 0.0;
-		  up[1] = 1.0;
-		  up[2] = 0.0;
-		  glutPostRedisplay();
-		  break;
+	up[0] = 0.0;
+	up[1] = 1.0;
+	up[2] = 0.0;
+	glutPostRedisplay();
+	break;
 
-   case 'A':
-       if (animacion_corriendo && incremento_tiempo > 0)
-		incremento_tiempo--;
+    case 'A':
+	if (animacion_corriendo && incremento_tiempo > 0)
+	    incremento_tiempo--;
 	
-       break;
-   case 'Q':
+	break;
+    case 'Q':
 	if (animacion_corriendo)
-       		incremento_tiempo++;
+	    incremento_tiempo++;
 	
-       break;
+	break;
 
-   case 'P':
+    case 'P':
 	if ( animacion_corriendo) {       
-		incremento_anterior = incremento_tiempo;		
-		incremento_tiempo = 0;
-		animacion_corriendo = false;
+	    incremento_anterior = incremento_tiempo;		
+	    incremento_tiempo = 0;
+	    animacion_corriendo = false;
 	} else {
-		incremento_tiempo = incremento_anterior;
-		animacion_corriendo = true;
-		glutPostRedisplay();
+	    incremento_tiempo = incremento_anterior;
+	    animacion_corriendo = true;
+	    glutPostRedisplay();
 	}
-       break;
+	break;
 
-   case 'R':
-       tiempo = 0;
-       glutPostRedisplay();
-       break;
+    case 'R':
+	tiempo = 0;
+	glutPostRedisplay();
+	break;
 
-   case 'z':
-       Z -=2;
-		  glutPostRedisplay();
+    case 'z':
+	Z -=2;
+	glutPostRedisplay();
 
-       break;
-   case 'Z':
-       Z +=1;
-		  glutPostRedisplay();
+	break;
+    case 'Z':
+	Z +=1;
+	glutPostRedisplay();
 
-       break;
+	break;
 
 
-	  case '3':
-		  eye[0] = 15.0;
-		  eye[1] = 15.0;
-		  eye[2] = 5.0;
+    case '3':
+	eye[0] = 15.0;
+	eye[1] = 15.0;
+	eye[2] = 5.0;
 
-		  at[0] = 0.0;
-		  at[1] = 0.0;
-		  at[2] = 0.0;
+	at[0] = 0.0;
+	at[1] = 0.0;
+	at[2] = 3.0;
 
-		  up[0] = 0.0;
-		  up[1] = 0.0;
-		  up[2] = 1.0;
-		  glutPostRedisplay();
-		  break;
-     default:
-         break;
-   }
+	up[0] = 0.0;
+	up[1] = 0.0;
+	up[2] = 1.0;
+	glutPostRedisplay();
+	break;
+    default:
+	break;
+    }
 }
 
 int main(int argc, char** argv)
@@ -475,17 +449,17 @@ int main(int argc, char** argv)
     if(argc > 1)
 	tiempo = atoi(argv[1]);
 
-   glutInit(&argc, argv);
-   glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-   glutInitWindowSize (1024, 768); 
-   glutInitWindowPosition (0, 0);
+    glutInit(&argc, argv);
+    glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
+    glutInitWindowSize (1024, 768); 
+    glutInitWindowPosition (0, 0);
    
-   glutCreateWindow (argv[0]);
-   //glutFullScreen();
-   init ();
-   glutDisplayFunc(display); 
-   glutReshapeFunc(reshape);
-   glutKeyboardFunc(keyboard);
-   glutMainLoop();
-   return 0;
+    glutCreateWindow (argv[0]);
+    //glutFullScreen();
+    init ();
+    glutDisplayFunc(display); 
+    glutReshapeFunc(reshape);
+    glutKeyboardFunc(keyboard);
+    glutMainLoop();
+    return 0;
 }
