@@ -241,19 +241,20 @@ void dibujarRama(float altura){
   glPopMatrix();
 }  
 
-void dibujarArbol(float profundidad, int tiempo, float x, float y, float z, float angulo, int ejex, int ejey, int ejej) {
+void dibujarArbol(int profundidad, int tiempo, float x, float y, float z, float angulo, int ejex, int ejey, int ejej) {
 
-    if(profundidad >= 0) {
+    if(profundidad > 0) {
 	//posicionar
 	glPushMatrix();
 	glTranslatef(x,y,z);
 	glRotatef(angulo, ejex, ejey, ejej);
-	float altura = 0.1 * profundidad * profundidad;// + tiempo mod 10 / 10;
+	float crecimiento = 0.1*(2*profundidad - 1) * (tiempo % 10)/10;
+	float altura = 0.1 * (profundidad - 1) * (profundidad - 1) + crecimiento;// + tiempo mod 10 / 10;
 	dibujarRama(altura);
 
 	if(profundidad >= 1) {
 	    profundidad--;
-	    altura = 0.1 * profundidad * profundidad;// + tiempo mod 10 / 10;
+	    //altura = 0.1 * profundidad * profundidad ;// + tiempo mod 10 / 10;
 	    glRotatef(90,0,0,1);
 	    dibujarArbol(profundidad,tiempo, x, y,0.5*altura, 40 + profundidad, 1, 0, 0);
 	    dibujarArbol(profundidad,tiempo, x, y,0.5*altura, -(40 + profundidad), 1, 0, 0);
@@ -295,7 +296,7 @@ void display(void)
 //	dibujarCilindro();
 //	glTranslatef(2, 2, 0);
 //	dibujarCilindro(10, 0.5);
-	dibujarArbol(tiempo/2,tiempo,0,0,0,0,0,1,0); 
+	dibujarArbol(tiempo/10,tiempo,0,0,0,0,0,1,0); 
 	//
 	///////////////////////////////////////////////////
 
