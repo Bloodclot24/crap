@@ -167,13 +167,13 @@ void init(void)
     glEndList();
 }
 
-void dibujarCuadrado(){
+void dibujarRombo(){
     glBegin(GL_TRIANGLE_STRIP);
     glNormal3f(-10, -10, -8);
-    glVertex3f(0, -0.5, -0.5);
-    glVertex3f(0, -0.5, 0.5);
-    glVertex3f(0, 0.5, -0.5);
-    glVertex3f(0, 0.5, 0.5);
+    glVertex3f(0, -0.25, -0.5);
+    glVertex3f(0, -0.25, 0);
+    glVertex3f(0, 0.25, 0);
+    glVertex3f(0, 0.25, 0.5);
     glEnd();
 }
 
@@ -188,7 +188,7 @@ void dibujarCirculo(int segmentos){
 
 void dibujarCilindro(int segmentos, float radio_superior = 1){
     static GLint lista = 0;
-    static bool compilada=false;
+    static bool compilada = false;
 
     if(!compilada){
 	lista=glGenLists(1);
@@ -233,7 +233,7 @@ void dibujarHoja() {
 	glNewList(lista, GL_COMPILE);
 
 	glColor3f(0,0.5,0);
- 	dibujarCuadrado();     
+ 	dibujarRombo();     
 	glEndList();
 	compilada=true;
     }
@@ -249,43 +249,31 @@ void dibujarRama(float altura){
     glScalef(radio, radio, altura);
     glTranslatef(0, 0, 0.5);
     glColor3f(0.58,0.26,0);
-    //glColor3f(1,0,0);
     dibujarCilindro(6, 0.5);
     glPopMatrix();
 }  
 
-void dibujarArbol(int profundidad, float x, float y, float z, float angulo, int ejex, int ejey, int ejej) {
+void dibujarArbol(int profundidad, float z, float angulo, int ejex, int ejey, int ejej) {
 
+    glPushMatrix();
+    glTranslatef(0, 0, z);
+    glRotatef(angulo, ejex, ejey, ejej);
+   
     if(profundidad > 0) {
-	//posicionar
-	glPushMatrix();
-	glTranslatef(x,y,z);
-	glRotatef(angulo, ejex, ejey, ejej);
 	float crecimiento = 0.1*(2*profundidad - 1) * (tiempo % 10)/10;
-	float altura = 0.1 * (profundidad - 1) * (profundidad - 1) + crecimiento;// + tiempo mod 10 / 10;
+	float altura = 0.1 * (profundidad - 1) * (profundidad - 1) + crecimiento;
 	dibujarRama(altura);
-
         profundidad--;
-	//altura = 0.1 * profundidad * profundidad ;// + tiempo mod 10 / 10;
-	glRotatef(90,0,0,1);
-	dibujarArbol(profundidad, x, y,0.5*altura, 40 + profundidad, 1, 0, 0);
-	dibujarArbol(profundidad, x, y,0.5*altura, -(40 + profundidad), 1, 0, 0);
-	dibujarArbol(profundidad, x, y,altura, 30 + profundidad, 0, 1, 0);
-	dibujarArbol(profundidad, x, y,altura, -(30 + profundidad), 0, 1, 0);
-	
-	glPopMatrix();
-
-    }
-    else{
-	//posicionar
-	glPushMatrix();
-	glTranslatef(x,y,z);
-	glRotatef(angulo, ejex, ejey, ejej);
-	glScalef(0.15, 0.15, 0.15);
+	glRotatef(90, 0, 0, 1);
+	dibujarArbol(profundidad, 0.5*altura, 40 + profundidad, 1, 0, 0);
+	dibujarArbol(profundidad, 0.5*altura, -(40 + profundidad), 1, 0, 0);
+	dibujarArbol(profundidad, altura, 30 + profundidad, 0, 1, 0);
+	dibujarArbol(profundidad, altura, -(30 + profundidad), 0, 1, 0);
+    } else {
+	glScalef(0.25, 0.25, 0.25);
 	dibujarHoja();
-	glPopMatrix();
     }
-
+    glPopMatrix();
 }
 
 void incrementar_tiempo(int a){
@@ -319,7 +307,7 @@ void display(void)
 
     glEnable(GL_COLOR_MATERIAL);
     glEnable(GL_NORMALIZE);
-    dibujarArbol(tiempo/10,0,0,0,0,0,1,0);
+    dibujarArbol(tiempo/10,0,0,0,1,0);
     if(animacion_corriendo && tiempo < TIEMPO_MAX)
 	glutTimerFunc(10, incrementar_tiempo,0);
 
@@ -335,9 +323,6 @@ void display(void)
 	}
     //
     ///////////////////////////////////////////////////
-	
-	
-
     glutSwapBuffers();
 }
 
