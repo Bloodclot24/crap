@@ -15,6 +15,8 @@ int incremento_tiempo = 1;
 int incremento_anterior = 0;
 bool animacion_corriendo = true;
 float Z=0;
+bool mouse_capturado=false;
+int x_mouse=0, y_mouse=0;
 
 #define TIEMPO_MAX 80
 
@@ -38,7 +40,6 @@ float rotate_sphere = 0;
 bool view_grid = true;
 bool view_axis = true;
 bool edit_panel = false;
-
 
 // Handle para el control de las Display Lists
 GLuint dl_handle;
@@ -379,6 +380,17 @@ void keyboard (unsigned char key, int x, int y)
 	    incremento_tiempo++;
 	
 	break;
+	
+    case 'c':
+      if(mouse_capturado){
+	mouse_capturado = false;
+	glutSetCursor(GLUT_CURSOR_INHERIT);
+      }
+      else{
+	glutSetCursor(GLUT_CURSOR_NONE);
+	mouse_capturado = true;
+      }
+      break;
 
     case 'P':
 	if ( animacion_corriendo) {       
@@ -403,7 +415,7 @@ void keyboard (unsigned char key, int x, int y)
 
 	break;
     case 'Z':
-	Z +=1;
+	Z +=2;
 	glutPostRedisplay();
 
 	break;
@@ -428,6 +440,21 @@ void keyboard (unsigned char key, int x, int y)
     }
 }
 
+void motion(int x, int y){
+  if(mouse_capturado){
+      if(x_mouse < x)
+	Z +=2;
+      else if(x_mouse > x)
+	Z -= 2;
+      x_mouse=x;
+      glutPostRedisplay();
+      if(x<W_WIDTH/3 || x > 2*W_WIDTH/3){
+	x_mouse = W_WIDTH/2;
+	glutWarpPointer(x_mouse, W_HEIGHT/2);
+      }
+  }
+}
+
 int main(int argc, char** argv)
 {
 
@@ -445,6 +472,7 @@ int main(int argc, char** argv)
     glutDisplayFunc(display); 
     glutReshapeFunc(reshape);
     glutKeyboardFunc(keyboard);
+    glutPassiveMotionFunc(motion);
     glutMainLoop();
     return 0;
 }
