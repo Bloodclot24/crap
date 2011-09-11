@@ -296,7 +296,8 @@ void display(void)
 
     gluLookAt (eye[0], eye[1], eye[2], at[0], at[1], at[2], up[0], up[1], up[2]);
     glRotatef(Z, 0, 0, 1);
-
+    
+    
    
     if (view_axis)
 	glCallList(DL_AXIS);
@@ -417,7 +418,20 @@ void keyboard (unsigned char key, int x, int y)
     case 'Z':
 	Z +=2;
 	glutPostRedisplay();
+	break;
+    
+    case 0x2B://+
+	if(eye[0] > 1.0 && eye[1] > 1.0){
+		eye[0]--;
+		eye[1]--;
+	}	
+	glutPostRedisplay();
+	break;
 
+    case 0x2D://-
+	eye[0]++;
+	eye[1]++;
+	glutPostRedisplay();
 	break;
 
 
