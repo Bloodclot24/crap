@@ -11,14 +11,14 @@
 #include <stdlib.h>
 
 int tiempo = 0;
+int niveles = 8;
 int incremento_tiempo = 1;
 int incremento_anterior = 0;
 bool animacion_corriendo = true;
-float Z=0;
-bool mouse_capturado=false;
-int x_mouse=0, y_mouse=0;
-
-#define TIEMPO_MAX 80
+float Z = 0;
+bool mouse_capturado = false;
+int x_mouse = 0, y_mouse = 0;
+int tiempo_max = niveles * 10;
 
 // Variables que controlan la ubicación de la cámara en la Escena 3D
 float eye[3] = {15.0, 15.0, 5.0};
@@ -278,10 +278,10 @@ void dibujarArbol(int profundidad, float z, float angulo, int ejex, int ejey, in
 }
 
 void incrementar_tiempo(int a){
-    if ( tiempo + incremento_tiempo <= TIEMPO_MAX) 
+    if ( tiempo + incremento_tiempo <= tiempo_max) 
 	tiempo += incremento_tiempo;
     else 
-	tiempo = TIEMPO_MAX;
+	tiempo = tiempo_max;
     glutPostRedisplay();
 }
  
@@ -310,7 +310,7 @@ void display(void)
     glEnable(GL_COLOR_MATERIAL);
     glEnable(GL_NORMALIZE);
     dibujarArbol(tiempo/10,0,0,0,1,0);
-    if(animacion_corriendo && tiempo < TIEMPO_MAX)
+    if(animacion_corriendo && tiempo < tiempo_max)
 	glutTimerFunc(10, incrementar_tiempo,0);
 
     ///////////////////////////////////////////////////
@@ -472,8 +472,10 @@ void motion(int x, int y){
 int main(int argc, char** argv)
 {
 
-    if(argc > 1)
-	tiempo = atoi(argv[1]);
+    if(argc > 1) {
+	niveles = atoi(argv[1]);
+	tiempo_max = niveles * 10;
+    }
 
     glutInit(&argc, argv);
     glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);

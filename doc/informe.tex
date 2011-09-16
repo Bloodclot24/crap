@@ -62,32 +62,33 @@
 
 \section{Consideraciones de Dise\~no}
   El presente trabajo pr\'actico se basa en la utilizaci\'on de un algoritmo recursivo para dibujar y simular el crecimiento del \'arbol.
-Este algoritmo, dibuja en cada llamada una rama, o en su defecto una hoja, de un nivel determinado del \'arbol. Para realizarlo,
-se tomaron en cuenta las siguientes consideraciones de dise\~no:
+Este algoritmo, dibuja en cada llamada una rama, o en su defecto una hoja, de un determinado nivel del \'arbol. \\
+  Para realizarlo, se tomaron en cuenta las siguientes consideraciones de dise\~no:
 \begin{itemize} 
  \item Cada rama posee cuatro ramas hijas; o en su defecto cuatro hojas si se tratara del ante\'ultimo nivel. 
- \item Por defecto, el \'arbol tiene ocho niveles.
+ \item Por defecto, el \'arbol tiene ocho niveles. Para modificar la cantidad de niveles, se puede pasar por l\'inea de comandos el par\'ametro con dicha cantidad. 
+Se recomienda no exceder la cantidad de 10 niveles.
  \item La altura de cada nivel del \'arbol depende en forma cuadr\'atica de dicho nivel. La misma se actualiza aut\'omaticamente 
 con el paso del tiempo, de forma tal de producir la sensaci\'on de que el \'arbol va creciendo hasta alcanzar su edad tope. Se consideraron 10
 intervalos de tiempo para lograr que una rama en particular alcance su altura total.
- \item El di\'ametro de cada rama depende de la altura de la misma.
+ \item El di\'ametro de cada rama depende linealmente de la altura de la misma.
  \item Para dibujar las hojas se utilizaron dos tri\'angulos, empleando GL\_TRIANGLE\_STRIP, de forma tal de que los mismos conformen un rombo.
  \item Con el fin de dibujar el tronco y las ramas, se utilizaron tri\'angulos para conformar un cono truncado, junto con sus tapas.
- \item El \'angulo de una rama respecto de su hija varia en funci\'on del nivel y en los rangos: [40; 40+NivelMaximo] y [30; 30+NivelMaximo ]; correspondiendo
+ \item El \'angulo de una rama respecto de su hija var\'ia en funci\'on del nivel y en los rangos: [40; 40+NivelM\'aximo] y [30; 30+NivelM\'aximo ]; correspondiendo
  el mayor \'angulo a las ramas ubicadas a menor altura en la rama padre.
  \item Despu\'es de dibujar cada nivel, se realiza una rotaci\'on de 90 grados, de forma tal de lograr repartir las ramas en todo el espacio.
 \end{itemize}
 
 Asimismo, para el manejo de la c\'amara, se tomaron las siguientes consideraciones de dise\~no:
 \begin{itemize} 
- \item Se puede hacer orbitar la c\'amara alrededor del \'arbol utilizando la tecla z Z o presionando la tecla c para capturar el movimiento del mouse y rotando la camara con el mismo.
+ \item Se puede hacer orbitar la c\'amara alrededor del \'arbol utilizando la tecla z y Z o presionando la tecla c para capturar el movimiento del mouse y rotar la camara con el mismo.
 \item Se permite acercar la c\'amara hasta el tronco del \'arbol utilizando la tecla + y alejarse del mismo utilizando la tecla -.
 \end{itemize}
 
 
 \section{Compilaci\'on}
-  Para compilar la aplicaci\'on bajo entornos Linux se provee un archivo de makefile.
-  Para utilizar el mismo debe tenerse instalada la herramienta cmake. Para instalarla, por ejemplo, en una distribuci\'on Ubuntu se deben 
+  Para compilar la aplicaci\'on bajo entorno Linux se provee un archivo de makefile.
+  Para utilizar el mismo, debe tenerse instalada la herramienta cmake. Para instalarla, por ejemplo, en una distribuci\'on Ubuntu se deben 
 realizar los siguientes pasos: \\
 1) sudo apt-get install cmake \\
 2) Ingresar la contrase\~na de root del usuario. \\
@@ -100,14 +101,14 @@ cd build \\
 cmake .. \\
 make \\
 
-Una vez realizados estos pasos, se dispondr\'a del ejecutable de nombre NOMBREEJECUTABLE.
+Una vez realizados estos pasos, se dispondr\'a del ejecutable de nombre tp1.
 
 \section{Ejecuci\'on}
 
 Para ejecutar la aplicacio\'n bajo un entorno Linux se deben realizar los siguientes pasos: \\
 1)Posicionarse en el directorio build creado anteriormente. \\
 2)Ejecutar: \\
-./NOMBREEJECUTABLE 
+./tp1 
 
 
 \section{Controles de teclado}
@@ -121,17 +122,17 @@ La aplicaci\'on permite realizar las siguientes acciones utilizando las teclas d
 	\begin{large}Acci\'{o}n \end{large} \\
           \hline
 R & Reiniciar la animaci\'on de crecimiento \\
-P & Pausar/reanudar animaci\'on  \\
-Q & Incrementar velocidad de crecimiento  \\
-A & Decrementar velocidad de crecimiento  \\
+P & Pausar/reanudar la animaci\'on  \\
+Q & Incrementar la velocidad de crecimiento  \\
+A & Decrementar la velocidad de crecimiento  \\
 q & Salir de la aplicaci\'on  \\
 a & Muestra/esconde los ejes  \\
 g & Muestra/esconde la grilla  \\
-c & Captura/libera el mouse  \\
-z & Permite rotar alrededor del \'arbol en sentido antihorario  \\
-Z & Permite rotar alrededor del \'arbol en sentido horario  \\
-+ & Permite acercar la c\'amara al \'arbol  \\
-- & Permite alejar la c\'amara del \'arbol  \\
+c & Captura/libera el movimiento del mouse para rotar la c\'amara  \\
+z & Rotar la c\'amara alrededor del \'arbol en sentido antihorario  \\
+Z & Rotar la c\'amara alrededor del \'arbol en sentido horario  \\
++ & Acercar la c\'amara al \'arbol  \\
+- & Alejar la c\'amara del \'arbol  \\
 
           \hline
     \end{tabular}
