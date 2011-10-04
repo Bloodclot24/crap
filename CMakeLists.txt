@@ -4,5 +4,11 @@ PROJECT(CRAP)
 SET(CMAKE_BUILD_TYPE debug)
 SET(CMAKE_CXX_FLAGS "-Wall -ggdb")
 
-ADD_EXECUTABLE(tp1 main.cpp)
-TARGET_LINK_LIBRARIES(tp1 -lGL -lGLU -lglut)
+find_package(OpenGL)
+find_package(GLUT)
+
+set(CORELIBS ${OPENGL_LIBRARY} ${GLUT_LIBRARY})
+
+add_subdirectory(tp1)
+add_Subdirectory(solar)
+
