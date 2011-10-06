@@ -10,5 +10,7 @@ find_package(GLUT)
 set(CORELIBS ${OPENGL_LIBRARY} ${GLUT_LIBRARY})
 
 add_subdirectory(tp1)
+add_subdirectory(tp2)
 add_Subdirectory(solar)
+add_Subdirectory(GLDEMO)
 
