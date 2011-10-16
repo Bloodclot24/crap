@@ -10,11 +10,11 @@
 class Mundo {
 protected:
   static Mundo* te_odio;
+  int ancho_ventana, alto_ventana;
   Mundo();
 private:
     
     std::string nombreMundo;
-    int ancho_ventana, alto_ventana;
     std::map<char, ManejadorTecla*> teclas;
     
     virtual void display();
