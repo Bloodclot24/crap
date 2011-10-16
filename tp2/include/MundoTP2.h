@@ -5,6 +5,7 @@
 
 class MundoTP2: public Mundo{
 private:
+  MundoTP2();
   void display();
 public:
   static Mundo* get_instance();
