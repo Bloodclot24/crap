@@ -64,7 +64,12 @@ void Mundo::comenzar() {
     glutReshapeFunc(reshape_static);
     glutKeyboardFunc(keyboard_static);
     //glutPassiveMotionFunc(Mundo::pmotion_static);
+    inicializar();
     glutMainLoop();
+}
+
+void Mundo::inicializar(){
+  
 }
 
 void Mundo::agregarTecla(char tecla, ManejadorTecla *manejador){
