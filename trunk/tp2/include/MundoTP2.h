@@ -3,12 +3,14 @@
 
 #include "Mundo.h"
 #include "Cuerpo.h"
+#include "Menu.h"
 
 class MundoTP2: public Mundo{
 private:
   Cuerpo *figura;
   float rotX, rotY, rotZ;
   static MundoTP2 *te_odio2;
+  Menu menu;
         
   MundoTP2();
   void display();
