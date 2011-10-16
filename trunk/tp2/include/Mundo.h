@@ -17,6 +17,7 @@ private:
     std::string nombreMundo;
     std::map<char, ManejadorTecla*> teclas;
     
+    virtual void inicializar();
     virtual void display();
     virtual void reshape(int x, int y);
     virtual void keyboard(unsigned char key, int x, int y);
