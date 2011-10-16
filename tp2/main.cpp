@@ -1,19 +1,13 @@
-#include "Mundo.h"
+#include "Shader.h"
+#include "MundoTP2.h"
 #include "ManejadorTecla.h"
-
-class TeclaVisibilidadPanel : public ManejadorTecla {
-  bool press(){
-    mundo->cambiarVisibilidadPanel();
-    return true;
-  }
-};
+#include "Cubo.h"
 
 int main(int argc, char** argv)
 {
-  Mundo m(argc, argv);
-  m.crearVentana();
-  TeclaVisibilidadPanel mj;
-  m.agregarTecla('e', &mj);
-  m.comenzar();
+
+  Mundo *m = MundoTP2::get_instance();
+  m->crearVentana();
+  m->comenzar();
   return 0;
 }
