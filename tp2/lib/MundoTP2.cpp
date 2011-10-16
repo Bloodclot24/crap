@@ -8,6 +8,19 @@ MundoTP2* MundoTP2::te_odio2 = NULL;
 MundoTP2::MundoTP2(){
   figura=new Cubo();
   resetearRotacion();
+  
+  Cubo* c;
+  c=new Cubo();
+  c->setColor(1,0,0);
+  menu.agregarElemento(c, NULL);
+
+  c=new Cubo();
+  c->setColor(0,1,0);
+  menu.agregarElemento(c, NULL);
+
+  c=new Cubo();
+  c->setColor(0,0,1);
+  menu.agregarElemento(c, NULL);
 }
 
 void MundoTP2::inicializar(){
@@ -22,7 +35,7 @@ void MundoTP2::display(){
   glLoadIdentity ();
   gluPerspective(60.0, (GLfloat) ancho_ventana/(GLfloat) alto_ventana, 0.10, 100.0);
   glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    
+    std::cout << "Ancho ventana: " << ancho_ventana << " Alto ventana: " << alto_ventana << "\n";
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
   gluLookAt (0,0,2,0,0,0,0,1,0);
@@ -30,11 +43,23 @@ void MundoTP2::display(){
   ///////////////////////////////////////////////////
   // Escena 3D
   glColor3f(1,0,0);
+  glPushMatrix();
   glRotatef(rotX, 1,0,0);
   glRotatef(rotY, 0,1,0);
   glRotatef(rotZ, 0,0,1);
   figura->dibujar();
+  glPopMatrix();
   
+  GLdouble model[16];
+  GLdouble proj[16];
+  GLint viewport[4];
+  glGetDoublev(GL_MODELVIEW_MATRIX, model);
+  glGetDoublev(GL_PROJECTION_MATRIX, proj);
+  glGetIntegerv(GL_VIEWPORT, viewport);
+  double x,y,z;
+  gluUnProject(ancho_ventana/2, alto_ventana/8+3*alto_ventana/4, 0.95, model, proj, viewport, &x, &y, &z);
+  glTranslatef(0,y,0);
+  menu.dibujar();
   glutSwapBuffers();
 }
 
