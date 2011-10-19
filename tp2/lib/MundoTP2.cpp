@@ -3,6 +3,7 @@
 #include "Cubo.h"
 #include "Esfera.h"
 #include "ComandoCambiarColor.h"
+#include "ComandoCambiarForma.h"
 
 MundoTP2* MundoTP2::te_odio2 = NULL;
 
@@ -24,6 +25,13 @@ void MundoTP2::crearMenues(){
   c=new Esfera();
   c->setColor(0,0,1);
   menuTexturas.agregarElemento(c, new ComandoCambiarColor(0,0,1));
+  
+  menuFormas.cambiarOrientacion(MENU_VERTICAL);
+  c=new Esfera();
+  menuFormas.agregarElemento(c,new ComandoCambiarFormaEsfera());
+  c=new Cubo();
+  menuFormas.agregarElemento(c,new ComandoCambiarFormaCubo());
+  
 }
 
 void MundoTP2::inicializar(){
@@ -67,6 +75,10 @@ void MundoTP2::display(){
   glTranslatef(0,0.8,-0.5);
   menuTexturas.dibujar();
   glPopMatrix();
+  glPushMatrix();
+  glTranslatef(-0.8*(float)ancho_ventana/alto_ventana,0,-0.5);
+  menuFormas.dibujar();
+  glPopMatrix();
   
   //Objeto central
   vistaPerspectiva();
@@ -85,6 +97,7 @@ void MundoTP2::mouse(int button, int state, int x, int y){
  
   if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN){
     menuTexturas.click(x,y+0.8*alto_ventana);
+    menuFormas.click(x+0.8*(float)ancho_ventana/alto_ventana,y);
   }
 }
 
