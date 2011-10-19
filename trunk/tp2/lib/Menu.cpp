@@ -43,24 +43,37 @@ void Menu::dibujar(){
   glGetIntegerv(GL_VIEWPORT, viewport);
 
   int cantidad_elementos = iconos.size();
+  glDisable(GL_LIGHTING);
   glLineWidth(7);
+  
+  float xCord, yCord;
+  
+  xCord=-centro+espacio_total; //x maximo
+  yCord=otro_espacio/2; //y maximo
+  
+  if(orientacion != MENU_HORIZONTAL){
+    float temp=xCord;
+    xCord=yCord;
+    yCord=temp;
+  }
+  
   std::cout << "total: " << espacio_total << " centro: " << centro << " otro: " << otro_espacio << "\n";
   glColor4f(72.0/255, 167.0/255, 255.0/255,0.5);
   glBegin(GL_QUADS);
-  glVertex3f(espacio_total-centro, otro_espacio/2, 0);
-  glVertex3f(espacio_total-centro, -otro_espacio/2, 0);
-  glVertex3f(centro-espacio_total, -otro_espacio/2, 0);
-  glVertex3f(centro-espacio_total, otro_espacio/2, 0);
+  glVertex3f(-xCord, -yCord,0);
+  glVertex3f(-xCord,  yCord,0);
+  glVertex3f(xCord,   yCord,0);
+  glVertex3f(xCord, -yCord,0);
   glEnd();
   
   glColor3f(0.0/255, 255.0/255, 192.0/255);
-  glBegin(GL_LINE_STRIP);
-  glVertex3f(espacio_total-centro, otro_espacio/2, 0);
-  glVertex3f(espacio_total-centro, -otro_espacio/2, 0);
-  glVertex3f(centro-espacio_total, -otro_espacio/2, 0);
-  glVertex3f(centro-espacio_total, otro_espacio/2, 0);
-  glVertex3f(espacio_total-centro, otro_espacio/2, 0);
+  glBegin(GL_LINE_LOOP);
+  glVertex3f(-xCord, -yCord,0);
+  glVertex3f(-xCord,  yCord,0);
+  glVertex3f(xCord,   yCord,0);
+  glVertex3f(xCord, -yCord,0);
   glEnd();
+  glEnable(GL_LIGHTING);
   
   for(int i=0;i<cantidad_elementos;i++){
     glPushMatrix();
@@ -91,6 +104,7 @@ void Menu::click(int x, int y){
   std::cout << "Click: " << x << "  " << y << "\n";
   double xu,yu,zu;
   gluUnProject(x, y, 0, model, proj, viewport, &xu, &yu, &zu);
+  yu=-yu;
   std::cout << "Clicku: " << xu << "  " << yu << " centro " << centro <<  "\n";
   for(int i=0;i<cantidad_elementos;i++){
     float posx, posy;
