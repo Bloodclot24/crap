@@ -6,15 +6,15 @@ class Cuerpo{
   //Shader fragmentShader;
   
   protected:
-  int ancho, alto;
+  float ancho, alto;
   float r,g,b;
   virtual void do_dibujar()=0;
 public:
   Cuerpo();
   void dibujar();
   void setColor(float r, float g, float b);
-  int getAlto();
-  int getAncho();
+  float getAlto();
+  float getAncho();
 };
 
 #endif

@@ -10,16 +10,22 @@ private:
   Cuerpo *figura;
   float rotX, rotY, rotZ;
   static MundoTP2 *te_odio2;
-  Menu menu;
+  Menu menuTexturas;
         
   MundoTP2();
   void display();
   void inicializar();
+  void crearMenues();
+  void vistaPerspectiva();
+  void vistaOrtogonal();
+  virtual void mouse(int button, int state, int x, int y);
 
 public:
   static MundoTP2* get_instance();
   void rotarFigura(float angulo, bool x, bool y, bool z);
   void resetearRotacion();
+  void cambiarFigura(Cuerpo *cuerpo);
+  Cuerpo* obtenerCuerpo();
   ~MundoTP2();
 };
 

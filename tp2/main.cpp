@@ -40,7 +40,7 @@ public:
 
 int main(int argc, char** argv)
 {
-  Mundo *m = MundoTP2::get_instance();
+  MundoTP2 *m = MundoTP2::get_instance();
   TeclaRotarX rotarx; TeclaRotarY rotary; TeclaRotarZ rotarz;
   TeclaResetearRotacion resetr;
   m->crearVentana();

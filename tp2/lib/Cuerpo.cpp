@@ -8,11 +8,11 @@ void Cuerpo::dibujar(){
  do_dibujar();
 }
 
-int Cuerpo::getAlto(){
+float Cuerpo::getAlto(){
   return alto;
 }
 
-int Cuerpo::getAncho(){
+float Cuerpo::getAncho(){
   return ancho;
 }
 
