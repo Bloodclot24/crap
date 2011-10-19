@@ -19,6 +19,10 @@ void Mundo::keyboard(unsigned char key, int x, int y){
 	 glutPostRedisplay();
 }
 
+void Mundo::mouse(int button, int state,int x, int y){
+  
+}
+
 void Mundo::display_static(){
     te_odio->display();
 }
@@ -29,6 +33,10 @@ void Mundo::reshape_static(int x, int y){
 
 void Mundo::keyboard_static(unsigned char key, int x, int y){
     te_odio->keyboard(key, x ,y);
+}
+
+void Mundo::mouse_static(int button, int state, int x, int y){
+    te_odio->mouse(button, state, x ,y);
 }
 
 Mundo* Mundo::get_instance(){
@@ -63,6 +71,7 @@ void Mundo::comenzar() {
     glutDisplayFunc(display_static);
     glutReshapeFunc(reshape_static);
     glutKeyboardFunc(keyboard_static);
+    glutMouseFunc(mouse_static);
     //glutPassiveMotionFunc(Mundo::pmotion_static);
     inicializar();
     glutMainLoop();

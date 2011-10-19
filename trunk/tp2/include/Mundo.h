@@ -21,10 +21,12 @@ private:
     virtual void display();
     virtual void reshape(int x, int y);
     virtual void keyboard(unsigned char key, int x, int y);
+    virtual void mouse(int button, int state, int x, int y);
     
     static void display_static();
     static void reshape_static(int w, int h);
     static void keyboard_static(unsigned char key, int x, int y);
+    static void mouse_static(int button, int state, int x, int y);
     static void pmotion_static(int x, int y);
     Mundo(const Mundo&);
 public:

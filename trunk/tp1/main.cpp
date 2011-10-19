@@ -126,6 +126,7 @@ void DrawXYGrid()
     glEnd();
     glEnable(GL_LIGHTING);
 }
+
 void Set3DEnv()
 {
     glViewport (0, 0, (GLsizei) W_WIDTH, (GLsizei) W_HEIGHT); 

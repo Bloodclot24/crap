@@ -3,9 +3,13 @@
 
 static void cuadradoMedio(){
   glBegin(GL_QUADS);
+    glNormal3f(0,0,1);
     glVertex2f(-0.5,-0.5);
+    glNormal3f(0,0,1);
     glVertex2f(-0.5, 0.5);
+    glNormal3f(0,0,1);
     glVertex2f( 0.5, 0.5);
+    glNormal3f(0,0,1);
     glVertex2f( 0.5,-0.5);
   glEnd();
 }
