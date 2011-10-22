@@ -2,6 +2,7 @@
 #include <iostream>
 #include "Cubo.h"
 #include "Esfera.h"
+#include "Toroide.h"
 #include "ComandoCambiarColor.h"
 #include "ComandoCambiarForma.h"
 
@@ -31,6 +32,8 @@ void MundoTP2::crearMenues(){
   menuFormas.agregarElemento(c,new ComandoCambiarFormaEsfera());
   c=new Cubo();
   menuFormas.agregarElemento(c,new ComandoCambiarFormaCubo());
+  c=new Toroide();
+  menuFormas.agregarElemento(c,new ComandoCambiarFormaToroide());
   
 }
 

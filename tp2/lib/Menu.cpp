@@ -1,5 +1,5 @@
 #include "Menu.h"
-#include "GL/gl.h"
+#include <GL/gl.h>
 #include <algorithm>
 #include <iostream>
 #include <GL/glut.h>
