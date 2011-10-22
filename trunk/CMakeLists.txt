@@ -7,7 +7,7 @@ SET(CMAKE_CXX_FLAGS "-Wall -ggdb")
 find_package(OpenGL)
 find_package(GLUT)
 
-set(CORELIBS ${OPENGL_LIBRARY} ${GLUT_LIBRARY} GLEW)
+set(CORELIBS ${OPENGL_LIBRARY} -lglut GLEW)
 
 add_subdirectory(tp1)
 add_subdirectory(tp2)
