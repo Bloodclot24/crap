@@ -67,23 +67,23 @@ void Esfera::construirEsfera (double R)
     {
         for ( a = 0; a <= 360 - space; a+=space)
         {
-            VERTEX[n].X = R * sin((a) / 180 * M_PI) * sin((b) / 180 * PI);
-            VERTEX[n].Y = R * cos((a) / 180 * M_PI) * sin((b) / 180 * PI);
+            VERTEX[n].X = R * sin((a) / 180 * M_PI) * sin((b) / 180 * M_PI);
+            VERTEX[n].Y = R * cos((a) / 180 * M_PI) * sin((b) / 180 * M_PI);
             VERTEX[n].Z = R * cos((b) / 180 * M_PI);
             VERTEX[n].V = (2 * b) / 360;
             VERTEX[n].U = (a) / 360;
             n++;
 
-            VERTEX[n].X = R * sin((a) / 180 * M_PI) * sin((b + space) / 180 * PI);
-            VERTEX[n].Y = R * cos((a) / 180 * M_PI) * sin((b + space) / 180 * PI);
+            VERTEX[n].X = R * sin((a) / 180 * M_PI) * sin((b + space) / 180 * M_PI);
+            VERTEX[n].Y = R * cos((a) / 180 * M_PI) * sin((b + space) / 180 * M_PI);
 
-            VERTEX[n].Z = R * cos((b + space) / 180 * PI);
+            VERTEX[n].Z = R * cos((b + space) / 180 * M_PI);
             VERTEX[n].V = (2 * (b + space)) / 360;
             VERTEX[n].U = (a) / 360;
             n++;
 
-            VERTEX[n].X = R * sin((a + space) / 180 * M_PI) * sin((b) / 180 * PI);
-            VERTEX[n].Y = R * cos((a + space) / 180 * M_PI) * sin((b) / 180 * PI);
+            VERTEX[n].X = R * sin((a + space) / 180 * M_PI) * sin((b) / 180 * M_PI);
+            VERTEX[n].Y = R * cos((a + space) / 180 * M_PI) * sin((b) / 180 * M_PI);
 
             VERTEX[n].Z = R * cos((b) / 180 * M_PI);
             VERTEX[n].V = (2 * b) / 360;
@@ -91,8 +91,8 @@ void Esfera::construirEsfera (double R)
 
             n++;
 
-            VERTEX[n].X = R * sin((a + space) / 180 * M_PI) * sin((b + space) / 180 * PI);
-            VERTEX[n].Y = R * cos((a + space) / 180 * M_PI) * sin((b + space) / 180 * PI);
+            VERTEX[n].X = R * sin((a + space) / 180 * M_PI) * sin((b + space) / 180 * M_PI);
+            VERTEX[n].Y = R * cos((a + space) / 180 * M_PI) * sin((b + space) / 180 * M_PI);
             VERTEX[n].Z = R * cos((b + space) / 180 * M_PI);
             VERTEX[n].V = (2 * (b + space)) / 360;
             VERTEX[n].U = (a + space) / 360;
