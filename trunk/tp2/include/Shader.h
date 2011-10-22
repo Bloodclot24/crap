@@ -7,13 +7,13 @@
 class Shader{
 private:
   GLuint shader;
+  GLuint program;
   
-  Shader(const Shader&);
-  Shader operator=(const Shader&);
 public:
   Shader();
   bool cargarDesdeArchivo(std::string nombre);
   std::string getInfoLog();
+  GLuint getProgram();
 };
 
 #endif

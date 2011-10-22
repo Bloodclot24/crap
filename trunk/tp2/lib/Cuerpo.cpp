@@ -5,6 +5,7 @@ void Cuerpo::dibujar(){
  //poner shaders
  //estado de animación
  glColor3f(r,g,b);
+ glUseProgram(vertexShader.getProgram());
  do_dibujar();
 }
 
@@ -26,4 +27,9 @@ void Cuerpo::setColor(float r, float g, float b){
   this->r=r;
   this->g=g;
   this->b=b;
+  
+}
+
+void Cuerpo::setVertexShader(Shader s){
+  vertexShader = vertexShader;
 }

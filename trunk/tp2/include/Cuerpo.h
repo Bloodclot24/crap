@@ -1,8 +1,10 @@
 #ifndef CUERPO_H_INCLDED
 #define CUERPO_H_INCLDED
 
+#include "Shader.h"
+
 class Cuerpo{
-  //Shader vertexShader;
+  Shader vertexShader;
   //Shader fragmentShader;
   
   protected:
@@ -15,6 +17,7 @@ public:
   void setColor(float r, float g, float b);
   float getAlto();
   float getAncho();
+  void setVertexShader(Shader s);
 };
 
 #endif
