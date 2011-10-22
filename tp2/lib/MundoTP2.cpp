@@ -3,6 +3,7 @@
 #include "Cubo.h"
 #include "Esfera.h"
 #include "Toroide.h"
+#include "Cilindro.h"
 #include "ComandoCambiarColor.h"
 #include "ComandoCambiarForma.h"
 
@@ -34,7 +35,8 @@ void MundoTP2::crearMenues(){
   menuFormas.agregarElemento(c,new ComandoCambiarFormaCubo());
   c=new Toroide();
   menuFormas.agregarElemento(c,new ComandoCambiarFormaToroide());
-  
+  c=new Cilindro();
+  menuFormas.agregarElemento(c,new ComandoCambiarFormaCilindro());
 }
 
 void MundoTP2::inicializar(){
@@ -43,7 +45,8 @@ void MundoTP2::inicializar(){
   glEnable(GL_DEPTH_TEST);
   glEnable(GL_LIGHTING);
   glEnable(GL_COLOR_MATERIAL);
-  glEnable(GL_LIGHT0); 
+  glEnable(GL_LIGHT0);
+  glEnable(GL_NORMALIZE);
   GLfloat light_position[] = { 5.0, 5.0, 10.0, 0.0 };
   glLightfv(GL_LIGHT0, GL_POSITION, light_position);
 
