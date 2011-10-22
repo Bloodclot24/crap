@@ -6,6 +6,7 @@
 #include "Cilindro.h"
 #include "ComandoCambiarColor.h"
 #include "ComandoCambiarForma.h"
+#include "ComandoCambiarShader.h"
 
 MundoTP2* MundoTP2::te_odio2 = NULL;
 
@@ -18,15 +19,13 @@ void MundoTP2::crearMenues(){
   Cuerpo* c;
   c=new Esfera();
   c->setColor(1,0,0);
-  menuTexturas.agregarElemento(c, new ComandoCambiarColor(1,0,0));
-
+  menuFragmentShader.agregarElemento(c, new ComandoCambiarColor(1,0,0));
   c=new Esfera();
   c->setColor(0,1,0);
-  menuTexturas.agregarElemento(c, new ComandoCambiarColor(0,1,0));
-
+  menuFragmentShader.agregarElemento(c, new ComandoCambiarColor(0,1,0));
   c=new Esfera();
   c->setColor(0,0,1);
-  menuTexturas.agregarElemento(c, new ComandoCambiarColor(0,0,1));
+  menuFragmentShader.agregarElemento(c, new ComandoCambiarColor(0,0,1));
   
   menuFormas.cambiarOrientacion(MENU_VERTICAL);
   c=new Esfera();
@@ -37,6 +36,16 @@ void MundoTP2::crearMenues(){
   menuFormas.agregarElemento(c,new ComandoCambiarFormaToroide());
   c=new Cilindro();
   menuFormas.agregarElemento(c,new ComandoCambiarFormaCilindro());
+  menuVertexShader.cambiarOrientacion(MENU_VERTICAL);
+  c=new Cubo();
+  
+  Shader shaderNulo;
+  Shader shaderSimple;
+  shaderSimple.cargarDesdeArchivo("shaders/simple.vert");
+  std::cout << "LOG:" << shaderSimple.getInfoLog() << "\n";
+  
+  menuVertexShader.agregarElemento(c, new ComandoCambiarShader(shaderSimple));
+  //menuVertexShader.agregarElemento(c, new ComandoCambiarShader(shaderNulo));
 }
 
 void MundoTP2::inicializar(){
@@ -49,8 +58,8 @@ void MundoTP2::inicializar(){
   glEnable(GL_NORMALIZE);
   GLfloat light_position[] = { 5.0, 5.0, 10.0, 0.0 };
   glLightfv(GL_LIGHT0, GL_POSITION, light_position);
-
   crearMenues();
+  
 }
 
 void MundoTP2::vistaOrtogonal(){
@@ -79,12 +88,18 @@ void MundoTP2::display(){
   vistaOrtogonal();
   glPushMatrix();
   glTranslatef(0,0.8,-0.5);
-  menuTexturas.dibujar();
+  menuFragmentShader.dibujar();
   glPopMatrix();
   glPushMatrix();
   glTranslatef(-0.8*(float)ancho_ventana/alto_ventana,0,-0.5);
   menuFormas.dibujar();
   glPopMatrix();
+  
+  glPushMatrix();
+  glTranslatef(0.8*(float)ancho_ventana/alto_ventana,0,-0.5);
+  menuVertexShader.dibujar();
+  glPopMatrix();
+  
   
   //Objeto central
   vistaPerspectiva();
@@ -102,8 +117,9 @@ void MundoTP2::mouse(int button, int state, int x, int y){
   std::cout << "Click b: " << button << " s: " << state << " x: " << x << " y: " << y << "\n";
  
   if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN){
-    menuTexturas.click(x,y+0.8*alto_ventana);
+    menuFragmentShader.click(x,y+0.8*alto_ventana);
     menuFormas.click(x+0.8*(float)ancho_ventana/alto_ventana,y);
+    menuVertexShader.click(x-0.8*(float)ancho_ventana/alto_ventana,y);
   }
 }
 

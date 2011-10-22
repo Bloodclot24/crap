@@ -10,8 +10,9 @@ private:
   Cuerpo *figura;
   float rotX, rotY, rotZ;
   static MundoTP2 *te_odio2;
-  Menu menuTexturas;
+  Menu menuFragmentShader;
   Menu menuFormas;
+  Menu menuVertexShader;
         
   MundoTP2();
   void display();
