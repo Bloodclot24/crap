@@ -23,6 +23,7 @@ void Cuerpo::dibujar(){
  }
  
  do_dibujar();
+ post_dibujar();
 }
 
 float Cuerpo::getAlto(){
@@ -82,3 +83,6 @@ void Cuerpo::cargarTextura( const char * filename ){
     free( data );
 }
 
+void Cuerpo::post_dibujar(){
+  glUseProgram(0);
+}

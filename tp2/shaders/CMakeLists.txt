@@ -1,2 +1,5 @@
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/simple.vert ${CMAKE_CURRENT_BINARY_DIR}/simple.vert COPYONLY)
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/simple.frag ${CMAKE_CURRENT_BINARY_DIR}/simple.frag COPYONLY)
+file(GLOB fragment RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "*.frag")
+file(GLOB vertex RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "*.vert")
+foreach(file ${fragment} ${vertex})
+  configure_file(${CMAKE_CURRENT_SOURCE_DIR}/${file} ${CMAKE_CURRENT_BINARY_DIR}/${file} COPYONLY)  
+endforeach()
