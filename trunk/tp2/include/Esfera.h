@@ -6,7 +6,7 @@
 class Esfera: public Cuerpo{
 private:
 	void construirEsfera(double R);
-	void mostrarEsfera(double R/*, GLuint texture*/);
+	void mostrarEsfera(double R);
 protected:
   virtual void do_dibujar();
 public:

@@ -8,9 +8,11 @@ class Cuerpo{
   //Shader fragmentShader;
   
   protected:
+  GLuint texture;
   float ancho, alto;
   float r,g,b;
   virtual void do_dibujar()=0;
+  void cargarTextura(const char * filename);
 public:
   Cuerpo();
   void dibujar();
