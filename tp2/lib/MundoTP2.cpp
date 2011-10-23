@@ -16,6 +16,7 @@ MundoTP2::MundoTP2(){
 	figura = NULL;
 }
 
+
 void MundoTP2::crearMenues(){
   Cuerpo* c;
   c=new Esfera();
@@ -28,7 +29,7 @@ void MundoTP2::crearMenues(){
   menuFragmentShader.agregarElemento(c, tierra);
   c=new Esfera();
   c->setColor(1,1,1);
-  ComandoCambiarTextura* ladrillo = new ComandoCambiarTextura("ladrillo.raw");
+  ComandoCambiarTextura* ladrillo = new ComandoCambiarTextura("lad.raw");
   c->setTextura(ladrillo->getTextura());
   menuFragmentShader.agregarElemento(c, ladrillo);
   
