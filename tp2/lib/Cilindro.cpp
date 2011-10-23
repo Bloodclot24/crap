@@ -3,7 +3,6 @@
 #include <math.h>
 
 Cilindro::Cilindro(){
-	cargarTextura("ladrillo.raw");
 }
 
 void Cilindro::dibujarCirculo(int segmentos){

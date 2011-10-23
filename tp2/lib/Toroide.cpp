@@ -3,7 +3,6 @@
 #include <math.h>
 
 Toroide::Toroide(){
-	cargarTextura("earth.raw");
 }
 
 void Toroide::do_dibujar(){

@@ -3,7 +3,6 @@
 #include <math.h>
 
 Cono::Cono(){
-	cargarTextura("earth.raw");
 }
 
 void Cono::dibujarCirculo(int segmentos){
@@ -25,7 +24,7 @@ void Cono::do_dibujar() {
 	glPushMatrix();
 	glRotatef(60,0,1,1);
 	glScalef(0.4,0.4,1);
-	/*glBegin(GL_LINE_STRIP);
+	glBegin(GL_TRIANGLE_STRIP);
 	for(float i = 0; i <= 2*M_PI; i += 2*M_PI / segmentos){
 	    float _cos = cos(i);
 	    float _sin = sin(i);
@@ -33,22 +32,9 @@ void Cono::do_dibujar() {
 	    glTexCoord2f(1 - i/(M_PI),0);
 	    glVertex3f(_cos, _sin, -0.5);
 	    glTexCoord2f(1 - i/(M_PI),1);
-	    glVertex3f(0, 0, 0.5);
+	    glVertex3f(0,0, 0.5);
 	}
 	glEnd();
-*/
-    glBegin(GL_TRIANGLE_FAN);
-    glNormal3f(0, 0, 1);
-    glTexCoord2f(0.5,0.5);
-    glVertex3f(0, 0, 0.5);
-    for(float i = 0; i <= 2*M_PI; i += 2*M_PI / segmentos) {
-	    float _cos = cos(i);
-	    float _sin = sin(i);
-    	glNormal3f(_cos, _sin, 0);
-    	glTexCoord2f(1-(_cos + 1)/2, (_sin + 1 )/2);
-    	glVertex3f(_cos, _sin, -0.5);
-    }
-    glEnd();
 
 	//Dibujo la tapa
 	glPushMatrix();
