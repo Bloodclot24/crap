@@ -4,13 +4,12 @@
 #include "Shader.h"
 
 class Cuerpo{
-  Shader vertexShader;
-  //Shader fragmentShader;
-  
   protected:
   GLuint texture;
   float ancho, alto;
   float r,g,b;
+  VertexShader vs;
+  FragmentShader fs;
   virtual void do_dibujar()=0;
   void cargarTextura(const char * filename);
 public:
@@ -19,7 +18,8 @@ public:
   void setColor(float r, float g, float b);
   float getAlto();
   float getAncho();
-  void setVertexShader(Shader s);
+  void setShader(VertexShader vs);
+  void setShader(FragmentShader fs);
 };
 
 #endif
