@@ -2,14 +2,15 @@
 #define CUERPO_H_INCLDED
 
 #include "Shader.h"
+#include "list"
 
 class Cuerpo{
   protected:
   GLuint texture;
   float ancho, alto;
   float r,g,b;
-  VertexShader vs;
-  FragmentShader fs;
+  std::list<VertexShader> vss;
+  std::list<FragmentShader> fss;
   virtual void do_dibujar()=0;
   virtual void post_dibujar();
 public:
@@ -19,8 +20,9 @@ public:
   void setTextura(GLuint t);
   float getAlto();
   float getAncho();
-  void setShader(VertexShader vs);
-  void setShader(FragmentShader fs);
+  void agregarShader(VertexShader vs);
+  void agregarShader(FragmentShader fs);
+  void borrarShaders();
 };
 
 #endif

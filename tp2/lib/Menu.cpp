@@ -57,7 +57,6 @@ void Menu::dibujar(){
     yCord=temp;
   }
   
-  std::cout << "total: " << espacio_total << " centro: " << centro << " otro: " << otro_espacio << "\n";
   glColor4f(72.0/255, 167.0/255, 255.0/255,0.5);
   glBegin(GL_QUADS);
   glVertex3f(-xCord, -yCord,0);
@@ -101,11 +100,9 @@ bool Menu::verificarRango(float posicion, float centro, float longitud){
 
 void Menu::click(int x, int y){
   int cantidad_elementos = iconos.size();
-  std::cout << "Click: " << x << "  " << y << "\n";
   double xu,yu,zu;
   gluUnProject(x, y, 0, model, proj, viewport, &xu, &yu, &zu);
   yu=-yu;
-  std::cout << "Clicku: " << xu << "  " << yu << " centro " << centro <<  "\n";
   for(int i=0;i<cantidad_elementos;i++){
     float posx, posy;
     
@@ -117,8 +114,6 @@ void Menu::click(int x, int y){
      posx=0;
      posy=posiciones[i]-centro;
     }
-    
-    std::cout << "posx " << posx << " posy " << posy << "\n";
     
     if(verificarRango(xu, posx, iconos[i]->getAncho()*MENU_ESCALA_ELEMENTOS))
       if(verificarRango(yu, posy, iconos[i]->getAlto()*MENU_ESCALA_ELEMENTOS)){

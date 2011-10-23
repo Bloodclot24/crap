@@ -2,6 +2,7 @@
 #include "MundoTP2.h"
 #include "ManejadorTecla.h"
 #include "Cubo.h"
+#include <stdlib.h>
 
 #define ANGULO_ROTACION 2
 
