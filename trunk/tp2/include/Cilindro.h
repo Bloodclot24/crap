@@ -9,9 +9,8 @@ private:
 	void dibujarCirculo(int segmentos);
 protected:
   virtual void do_dibujar();
-
+public:
+  Cilindro();
 };
-
-
 
 #endif /* CILINDRO_H_ */

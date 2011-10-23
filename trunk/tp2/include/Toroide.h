@@ -6,7 +6,8 @@
 class Toroide: public Cuerpo{
 protected:
   virtual void do_dibujar();
-  
+public:
+  Toroide();
 };
 
 #endif

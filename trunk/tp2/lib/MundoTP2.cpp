@@ -11,8 +11,6 @@
 MundoTP2* MundoTP2::te_odio2 = NULL;
 
 MundoTP2::MundoTP2(){
-  figura=new Cubo();
-  resetearRotacion();
 }
 
 void MundoTP2::crearMenues(){
@@ -63,7 +61,9 @@ void MundoTP2::inicializar(){
   GLfloat light_position[] = { 5.0, 5.0, 10.0, 0.0 };
   glLightfv(GL_LIGHT0, GL_POSITION, light_position);
   crearMenues();
-  
+  figura=new Cubo();
+  resetearRotacion();
+
 }
 
 void MundoTP2::vistaOrtogonal(){
