@@ -5,9 +5,10 @@
 #include "Shader.h"
 
 class ComandoCambiarShader:public Command{
-  Shader shader;
+  VertexShader vshader;
+  FragmentShader fshader;
 public:
-  ComandoCambiarShader(Shader shader);
+  ComandoCambiarShader(VertexShader vshader, FragmentShader fshader);
   virtual void ejecutar();  
 };
 

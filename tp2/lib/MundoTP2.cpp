@@ -39,12 +39,16 @@ void MundoTP2::crearMenues(){
   menuVertexShader.cambiarOrientacion(MENU_VERTICAL);
   c=new Cubo();
   
-  Shader shaderNulo;
-  Shader shaderSimple;
-  shaderSimple.cargarDesdeArchivo("shaders/simple.vert");
-  std::cout << "LOG:" << shaderSimple.getInfoLog() << "\n";
+  VertexShader vshaderSimple;
+  if(!vshaderSimple.cargarDesdeArchivo("shaders/simple.vert"))
+    std::cout << "LOG:" << vshaderSimple.getInfoLog() << "\n";
   
-  menuVertexShader.agregarElemento(c, new ComandoCambiarShader(shaderSimple));
+  FragmentShader fshaderSimple;
+  if(!fshaderSimple.cargarDesdeArchivo("shaders/simple.frag"))
+    std::cout << "LOG:" << fshaderSimple.getInfoLog() << "\n";
+  
+  
+  menuVertexShader.agregarElemento(c, new ComandoCambiarShader(vshaderSimple, fshaderSimple));
   //menuVertexShader.agregarElemento(c, new ComandoCambiarShader(shaderNulo));
 }
 

@@ -7,13 +7,23 @@
 class Shader{
 private:
   GLuint shader;
-  GLuint program;
   
-public:
+protected:
   Shader();
+  virtual bool cargarDesdeArchivo(std::string nombre, GLenum tipo);
+public:
+  virtual std::string getInfoLog();
+  GLint getId();
+};
+
+class VertexShader:public Shader{
+public:
   bool cargarDesdeArchivo(std::string nombre);
-  std::string getInfoLog();
-  GLuint getProgram();
+};
+
+class FragmentShader:public Shader{
+public:
+  bool cargarDesdeArchivo(std::string nombre);
 };
 
 #endif

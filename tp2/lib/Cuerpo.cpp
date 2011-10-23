@@ -1,13 +1,27 @@
 #include "Cuerpo.h"
 #include <GL/gl.h>
+#include <vector>
 #include <stdio.h>
 #include <stdlib.h>
 
 void Cuerpo::dibujar(){
- //poner shaders
- //estado de animación
  glColor3f(r,g,b);
- glUseProgram(vertexShader.getProgram());
+  
+ //glUseProgram(vertexShader.getProgram());
+ if(vs.getId() != 0){
+  GLint program = glCreateProgram();
+  glAttachShader(program, vs.getId());
+  glAttachShader(program, fs.getId());
+  glLinkProgram(program);
+  glUseProgram(program);
+  std::vector<char> log;
+  log.reserve(500);
+  int longitud;
+  glGetShaderInfoLog(program, 500, &longitud, &log[0]);
+  std::string retorno(&log[0]);  
+  std::cout << "LOGLINK: " << retorno << "\n";
+ }
+ 
  do_dibujar();
 }
 
@@ -32,12 +46,15 @@ void Cuerpo::setColor(float r, float g, float b){
   
 }
 
-void Cuerpo::setVertexShader(Shader s){
-  vertexShader = s;
+void Cuerpo::setShader(VertexShader vs){
+  this->vs = vs;
 }
 
-void Cuerpo::cargarTextura( const char * filename )
-{
+void Cuerpo::setShader(FragmentShader fs){
+  this->fs =fs;
+}
+
+void Cuerpo::cargarTextura( const char * filename ){
     int width, height;
     unsigned char * data;
 
@@ -64,3 +81,4 @@ void Cuerpo::cargarTextura( const char * filename )
 
     free( data );
 }
+
