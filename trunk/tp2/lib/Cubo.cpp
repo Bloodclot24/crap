@@ -7,22 +7,27 @@ Cubo::Cubo(){
 void Cubo::cuadradoMedio(){
   glBegin(GL_QUADS);
     glNormal3f(0,0,1);
-    glTexCoord2f(1,1);
-    glVertex2f(-0.5,-0.5);
-    glNormal3f(0,0,1);
-    glTexCoord2f(0,1);
-    glVertex2f(-0.5, 0.5);
-    glNormal3f(0,0,1);
-    glTexCoord2f(0,0);
-    glVertex2f( 0.5, 0.5);
-    glNormal3f(0,0,1);
-    glTexCoord2f(1,0);
-    glVertex2f( 0.5,-0.5);
-  glEnd();
+    float incremento = 0.1;
+    for(float incy=0; incy < 1; incy += incremento){
+    	for(float incx=0; incx < 1; incx += incremento){
+    		glTexCoord2f(1 - incy, 1 - incx);
+			glVertex2f(-0.5 + incx, -0.5 + incy);
+			glTexCoord2f(1 - incremento - incy, 1 - incx);
+			glVertex2f(-0.5 + incx, -0.5 + incremento + incy);
+			glTexCoord2f(1 - incremento - incy, 1 - incremento - incx);
+			glVertex2f(-0.5 + incremento + incx, -0.5 + incremento + incy);
+			glTexCoord2f(1 - incy, 1 - incremento - incx);
+			glVertex2f(-0.5 + incremento + incx, -0.5 + incy);
+    	}
+    }
+ glEnd();
 }
 
 void Cubo::do_dibujar() {
 
+	glPushMatrix();
+	glScalef(0.8,0.8,0.8);
+	glRotatef(45,0,1,1);
 	glBindTexture(GL_TEXTURE_2D, texture);
 	float angulos[4] = { 0, 90, 180, 270 };
 	for (int i = 0; i < 4; i++) {
@@ -43,6 +48,7 @@ void Cubo::do_dibujar() {
     glRotatef(-90, 0, 1, 0);
     glTranslatef(0,0,0.5);
     cuadradoMedio();
+  glPopMatrix();
   glPopMatrix();
   glBindTexture(GL_TEXTURE_2D, NULL);
 }
