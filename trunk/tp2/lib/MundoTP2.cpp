@@ -14,6 +14,9 @@ MundoTP2* MundoTP2::te_odio2 = NULL;
 
 MundoTP2::MundoTP2(){
 	figura = NULL;
+	x_mouse = 0;
+	y_mouse = 0;
+	mouse_capturado = false;
 }
 
 
@@ -147,6 +150,42 @@ void MundoTP2::mouse(int button, int state, int x, int y){
     menuFormas.click(x+0.8*(float)ancho_ventana/alto_ventana,y);
     menuVertexShader.click(x-0.8*(float)ancho_ventana/alto_ventana,y);
   }
+}
+
+void MundoTP2::motion(int x, int y) {
+	if (mouse_capturado) {
+		if (x_mouse < x)
+			rotX += 1;
+		else if(x_mouse > x)
+				rotX -= 1;
+		x_mouse = x;
+		if (y_mouse < y)
+			rotY += 1;
+		else
+			if(y_mouse > y)
+				rotY -= 1;
+		y_mouse = y;
+		glutPostRedisplay();
+		if (x_mouse < ancho_ventana / 3 || x_mouse > 2 * ancho_ventana / 3) {
+			x_mouse = ancho_ventana / 2;
+			glutWarpPointer(x_mouse, alto_ventana / 2);
+		}
+		if(y_mouse < alto_ventana / 3 || y_mouse > 2* alto_ventana / 3){
+			y_mouse = alto_ventana / 2;
+			glutWarpPointer(x_mouse, y_mouse);
+		}
+	}
+}
+
+void MundoTP2::capturar_mouse(){
+	if(mouse_capturado){
+		mouse_capturado = false;
+		glutSetCursor(GLUT_CURSOR_INHERIT);
+	}
+	else{
+		mouse_capturado = true;
+		glutSetCursor(GLUT_CURSOR_NONE);
+	}
 }
 
 MundoTP2* MundoTP2::get_instance(){

@@ -16,7 +16,8 @@ private:
   Menu menuFragmentShader;
   Menu menuFormas;
   Menu menuVertexShader;
-
+  int x_mouse, y_mouse;
+  bool mouse_capturado;
 
   MundoTP2();
   void display();
@@ -26,6 +27,7 @@ private:
   void vistaOrtogonal();
   virtual void mouse(int button, int state, int x, int y);
   void destruirMenu(Menu menu);
+  virtual void motion(int x, int y);
 
 public:
   static MundoTP2* get_instance();
@@ -33,6 +35,7 @@ public:
   void resetearRotacion();
   void cambiarFigura(Cuerpo *cuerpo);
   Cuerpo* obtenerCuerpo();
+  void capturar_mouse();
   static void destruir();
   ~MundoTP2();
 };

@@ -46,6 +46,14 @@ public:
     }
 };
 
+class TeclaCapturarMouse: public ManejadorTecla{
+public:
+    virtual bool press(){
+     MundoTP2::get_instance()->capturar_mouse();
+     return true;
+    }
+};
+
 
 
 int main(int argc, char** argv)
@@ -54,12 +62,14 @@ int main(int argc, char** argv)
   TeclaRotarX rotarx; TeclaRotarY rotary; TeclaRotarZ rotarz;
   TeclaResetearRotacion resetr;
   TeclaSalir salir;
+  TeclaCapturarMouse capturar;
   m->crearVentana();
   m->agregarTecla('x', &rotarx);
   m->agregarTecla('y', &rotary);
   m->agregarTecla('z', &rotarz);
   m->agregarTecla('r', &resetr);
   m->agregarTecla('q', &salir);
+  m->agregarTecla('c', &capturar);
   atexit(MundoTP2::destruir);
   m->comenzar();
   return 0;
