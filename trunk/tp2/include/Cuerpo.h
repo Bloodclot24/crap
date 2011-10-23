@@ -11,6 +11,7 @@ class Cuerpo{
   VertexShader vs;
   FragmentShader fs;
   virtual void do_dibujar()=0;
+  virtual void post_dibujar();
   void cargarTextura(const char * filename);
 public:
   Cuerpo();

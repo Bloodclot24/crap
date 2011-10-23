@@ -38,12 +38,12 @@ void MundoTP2::crearMenues(){
   c=new Cubo();
   
   VertexShader vshaderSimple;
-  if(!vshaderSimple.cargarDesdeArchivo("shaders/simple.vert"))
-    std::cout << "LOG:" << vshaderSimple.getInfoLog() << "\n";
+  if(!vshaderSimple.cargarDesdeArchivo("shaders/wtf.vert"))
+    std::cout << "VLOG:" << vshaderSimple.getInfoLog() << "\n";
   
   FragmentShader fshaderSimple;
-  if(!fshaderSimple.cargarDesdeArchivo("shaders/simple.frag"))
-    std::cout << "LOG:" << fshaderSimple.getInfoLog() << "\n";
+  if(!fshaderSimple.cargarDesdeArchivo("shaders/textura.frag"))
+    std::cout << "FLOG:" << fshaderSimple.getInfoLog() << "\n";
   
   
   menuVertexShader.agregarElemento(c, new ComandoCambiarShader(vshaderSimple, fshaderSimple));
