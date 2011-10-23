@@ -22,6 +22,7 @@ private:
     virtual void reshape(int x, int y);
     virtual void keyboard(unsigned char key, int x, int y);
     virtual void mouse(int button, int state, int x, int y);
+    virtual void motion(int x, int y);
     
     static void display_static();
     static void reshape_static(int w, int h);
