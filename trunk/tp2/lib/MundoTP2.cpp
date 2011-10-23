@@ -180,11 +180,15 @@ void MundoTP2::destruirMenu(Menu menu) {
 }
 
 
-MundoTP2::~MundoTP2() {
+void MundoTP2::destruir() {
+ delete te_odio2;
+}
 
+MundoTP2::~MundoTP2() {
 	if (figura != NULL)
 		delete figura;
 	destruirMenu(menuFormas);
 	destruirMenu(menuVertexShader);
 	destruirMenu(menuFragmentShader);
+
 }

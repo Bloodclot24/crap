@@ -33,6 +33,7 @@ public:
   void resetearRotacion();
   void cambiarFigura(Cuerpo *cuerpo);
   Cuerpo* obtenerCuerpo();
+  static void destruir();
   ~MundoTP2();
 };
 
