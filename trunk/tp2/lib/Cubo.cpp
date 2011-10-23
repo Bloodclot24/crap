@@ -32,7 +32,6 @@ void Cubo::do_dibujar() {
 		glTranslatef(0, 0, 0.5);
 		cuadradoMedio();
 		glPopMatrix();
-		glBindTexture(GL_TEXTURE_2D, NULL);
 	}
   
   glPushMatrix();
