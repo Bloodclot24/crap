@@ -6,15 +6,21 @@
 
 
 void Cilindro::dibujarCirculo(int segmentos){
+
     glBegin(GL_TRIANGLE_FAN);
     glNormal3f(0, 0, 1);
+    glTexCoord2f(0.5,0.5);
     glVertex3f(0, 0, 0);
-    for(float i = 0; i <= 2*M_PI; i += 2*M_PI / segmentos)
-	glVertex3f(cos(i), sin(i), 0);
+    for(float i = 0; i <= 2*M_PI; i += 2*M_PI / segmentos) {
+    	glTexCoord2f(1-(cos(i) + 1)/2, (sin(i) + 1 )/2);
+    	glVertex3f(cos(i), sin(i), 0);
+    }
     glEnd();
 }
 
 void Cilindro::do_dibujar() {
+	cargarTextura("earth.raw");
+	glBindTexture (GL_TEXTURE_2D, texture);
 	int segmentos = 30;
 	glPushMatrix();
 	glRotatef(60,0,1,1);
@@ -24,7 +30,9 @@ void Cilindro::do_dibujar() {
 	    float _cos = cos(i);
 	    float _sin = sin(i);
 	    glNormal3f(_cos, _sin, 0);
+	    glTexCoord2f(1 - i/(2*M_PI),0);
 	    glVertex3f(_cos, _sin, -0.5);
+	    glTexCoord2f(1 - i/(2*M_PI),1);
 	    glVertex3f(_cos, _sin, 0.5);
 	}
 	glEnd();
@@ -42,5 +50,6 @@ void Cilindro::do_dibujar() {
 	dibujarCirculo(segmentos);
 	glPopMatrix();
 	glPopMatrix();
+	glBindTexture(GL_TEXTURE_2D, NULL);
 }
 

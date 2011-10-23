@@ -2,7 +2,6 @@
 #include <GL/glut.h>
 #include <math.h>
 
-
 typedef struct
 {
     int X;
@@ -25,34 +24,37 @@ Esfera::Esfera(){
 
 void Esfera::do_dibujar(){
     //glutSolidSphere(0.5, 20, 20);
-	mostrarEsfera(0.5/*,0*/);
+	mostrarEsfera(0.5);
 }
 
 
 
-void Esfera::mostrarEsfera (double R/*, GLuint texture*/)
+void Esfera::mostrarEsfera (double R)
 {
-
+	cargarTextura("earth.raw");
+	glColor3f(1, 1, 1);
+	glEnable( GL_TEXTURE_2D );
     int b;
     glScalef (0.0125 * R, 0.0125 * R, 0.0125 * R);
     glRotatef (90, 1, 0, 0);
-//    glBindTexture (GL_TEXTURE_2D, texture);
+    glBindTexture (GL_TEXTURE_2D, texture);
     glBegin (GL_TRIANGLE_STRIP);
     for ( b = 0; b < VertexCount; b++)
     {
-       // glTexCoord2f (VERTEX[b].U, VERTEX[b].V);
+        glTexCoord2f (VERTEX[b].U, VERTEX[b].V);
         glNormal3f(VERTEX[b].X, VERTEX[b].Y, -VERTEX[b].Z);
         glVertex3f (VERTEX[b].X, VERTEX[b].Y, -VERTEX[b].Z);
     }
 
     for ( b = 1; b < VertexCount; b++)
     {
-        //glTexCoord2f (VERTEX[b].U, -VERTEX[b].V);
+        glTexCoord2f (VERTEX[b].U, -VERTEX[b].V);
         glNormal3f(VERTEX[b].X, VERTEX[b].Y, VERTEX[b].Z);
         glVertex3f (VERTEX[b].X, VERTEX[b].Y, VERTEX[b].Z);
     }
 
     glEnd();
+    glBindTexture(GL_TEXTURE_2D, NULL);
 }
 
 void Esfera::construirEsfera (double R)
@@ -101,3 +103,5 @@ void Esfera::construirEsfera (double R)
         }
     }
 }
+
+
