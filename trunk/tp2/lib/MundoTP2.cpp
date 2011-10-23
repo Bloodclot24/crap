@@ -44,19 +44,33 @@ void MundoTP2::crearMenues(){
   c=new Cono();
   menuFormas.agregarElemento(c,new ComandoCambiarFormaCono());
   menuVertexShader.cambiarOrientacion(MENU_VERTICAL);
-  c=new Cubo();
   
   VertexShader vshaderSimple;
   if(!vshaderSimple.cargarDesdeArchivo("shaders/textura.vert"))
     std::cout << "VLOG:" << vshaderSimple.getInfoLog() << "\n";
   
+  VertexShader vshaderWtf;
+  if(!vshaderWtf.cargarDesdeArchivo("shaders/wtf.vert"))
+    std::cout << "VLOG:" << vshaderWtf.getInfoLog() << "\n";
+  
   FragmentShader fshaderSimple;
   if(!fshaderSimple.cargarDesdeArchivo("shaders/textura.frag"))
     std::cout << "FLOG:" << fshaderSimple.getInfoLog() << "\n";
-  
-  
+  c=new Esfera();
+  c->agregarShader(vshaderSimple);
+  c->agregarShader(fshaderSimple);
   menuVertexShader.agregarElemento(c, new ComandoCambiarShader(vshaderSimple, fshaderSimple));
-  //menuVertexShader.agregarElemento(c, new ComandoCambiarShader(shaderNulo));
+
+  c=new Esfera();
+  c->agregarShader(vshaderWtf);
+  c->agregarShader(fshaderSimple);
+  menuVertexShader.agregarElemento(c, new ComandoCambiarShader(vshaderWtf, fshaderSimple));
+  
+  c=new Esfera();
+  VertexShader vshaderNulo;
+  FragmentShader fshaderNulo;
+  menuVertexShader.agregarElemento(c, new ComandoCambiarShader(vshaderNulo, fshaderNulo));
+
 }
 
 void MundoTP2::inicializar(){
@@ -126,9 +140,7 @@ void MundoTP2::display(){
   glutSwapBuffers();
 }
 
-void MundoTP2::mouse(int button, int state, int x, int y){
-  std::cout << "Click b: " << button << " s: " << state << " x: " << x << " y: " << y << "\n";
- 
+void MundoTP2::mouse(int button, int state, int x, int y){ 
   if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN){
     menuFragmentShader.click(x,y+0.8*alto_ventana);
     menuFormas.click(x+0.8*(float)ancho_ventana/alto_ventana,y);

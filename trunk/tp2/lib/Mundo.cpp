@@ -13,7 +13,6 @@ void Mundo::display(){
 }
 
 void Mundo::keyboard(unsigned char key, int x, int y){
-  std::cout << "Tecla " << key << "\n";
     if(teclas[key] != NULL)
       if(teclas[key]->press())
 	 glutPostRedisplay();

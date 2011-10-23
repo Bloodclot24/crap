@@ -1,23 +1,11 @@
 #include "Cuerpo.h"
 #include <GL/gl.h>
 #include <vector>
+#include <Programa.h>
 
 void Cuerpo::dibujar(){
  glColor3f(r,g,b);
- //glUseProgram(vertexShader.getProgram());
- if(vs.getId() != 0){
-  GLint program = glCreateProgram();
-  glAttachShader(program, vs.getId());
-  glAttachShader(program, fs.getId());
-  glLinkProgram(program);
-  glUseProgram(program);
-  std::vector<char> log;
-  log.reserve(500);
-  int longitud;
-  glGetShaderInfoLog(program, 500, &longitud, &log[0]);
-  std::string retorno(&log[0]);  
-  std::cout << "LOGLINK: " << retorno << "\n";
- }
+ Programa::crearPrograma(vss, fss)->usar();
  
  do_dibujar();
  post_dibujar();
@@ -45,16 +33,21 @@ void Cuerpo::setColor(float r, float g, float b){
   
 }
 
+void Cuerpo::agregarShader(VertexShader vs){
+  vss.push_back(vs);
+}
+
+void Cuerpo::agregarShader(FragmentShader fs){
+  fss.push_back(fs);
+}
+
+void Cuerpo::borrarShaders(){
+  vss.clear();
+  fss.clear();
+}
+
 void Cuerpo::setTextura(GLuint t){
 	texture = t;
-}
-
-void Cuerpo::setShader(VertexShader vs){
-  this->vs = vs;
-}
-
-void Cuerpo::setShader(FragmentShader fs){
-  this->fs =fs;
 }
 
 void Cuerpo::post_dibujar(){
