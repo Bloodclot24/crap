@@ -19,4 +19,8 @@ class ComandoCambiarFormaCilindro: public Command{
     virtual void ejecutar();
 };
 
+class ComandoCambiarFormaCono: public Command{
+    virtual void ejecutar();
+};
+
 #endif

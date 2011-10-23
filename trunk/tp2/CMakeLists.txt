@@ -6,6 +6,10 @@ add_subdirectory(lib)
 
 TARGET_LINK_LIBRARIES(tp2 framework_lib cuerpos_lib ${CORELIBS})
 
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/grilla.raw ${CMAKE_CURRENT_BINARY_DIR}/grilla.raw COPYONLY)
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/earth.raw ${CMAKE_CURRENT_BINARY_DIR}/earth.raw COPYONLY)
+file(GLOB fragment RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "*.raw")
+foreach(file ${fragment} ${vertex})
+  configure_file(${CMAKE_CURRENT_SOURCE_DIR}/${file} ${CMAKE_CURRENT_BINARY_DIR}/${file} COPYONLY)  
+endforeach()
+
+
 add_subdirectory(shaders)
