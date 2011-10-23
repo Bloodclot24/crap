@@ -22,12 +22,15 @@ void MundoTP2::crearMenues(){
   c->setColor(1,0,0);
   menuFragmentShader.agregarElemento(c, new ComandoCambiarColor(1,0,0));
   c=new Esfera();
+  ComandoCambiarTextura* tierra = new ComandoCambiarTextura("earth.raw");
   c->setColor(1,1,1);
-  menuFragmentShader.agregarElemento(c, new ComandoCambiarTextura("earth.raw"));
+  c->setTextura(tierra->getTextura());
+  menuFragmentShader.agregarElemento(c, tierra);
   c=new Esfera();
   c->setColor(1,1,1);
-
-  menuFragmentShader.agregarElemento(c, new ComandoCambiarTextura("ladrillo.raw"));
+  ComandoCambiarTextura* ladrillo = new ComandoCambiarTextura("ladrillo.raw");
+  c->setTextura(ladrillo->getTextura());
+  menuFragmentShader.agregarElemento(c, ladrillo);
   
   menuFormas.cambiarOrientacion(MENU_VERTICAL);
   c=new Esfera();
