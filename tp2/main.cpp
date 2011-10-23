@@ -37,17 +37,29 @@ public:
     }
 };
 
+class TeclaSalir: public ManejadorTecla{
+public:
+    virtual bool press(){
+     exit(0);
+     return true;
+    }
+};
+
+
 
 int main(int argc, char** argv)
 {
   MundoTP2 *m = MundoTP2::get_instance();
   TeclaRotarX rotarx; TeclaRotarY rotary; TeclaRotarZ rotarz;
   TeclaResetearRotacion resetr;
+  TeclaSalir salir;
   m->crearVentana();
   m->agregarTecla('x', &rotarx);
   m->agregarTecla('y', &rotary);
   m->agregarTecla('z', &rotarz);
   m->agregarTecla('r', &resetr);
+  m->agregarTecla('q', &salir);
+  atexit(MundoTP2::destruir);
   m->comenzar();
   return 0;
 }
