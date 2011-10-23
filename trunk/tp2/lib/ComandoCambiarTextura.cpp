@@ -8,10 +8,13 @@ ComandoCambiarTextura::ComandoCambiarTextura(const char * filename){
 }
 
 void ComandoCambiarTextura::ejecutar(){
-  //MundoTP2::get_instance()->obtenerCuerpo()->setColor(1,1,1);
+  MundoTP2::get_instance()->obtenerCuerpo()->setColor(1,1,1);
   MundoTP2::get_instance()->obtenerCuerpo()->setTextura(texture);
 }
 
+GLuint ComandoCambiarTextura::getTextura(){
+	return texture;
+}
 void ComandoCambiarTextura::cargarTextura( const char * filename ){
     int width, height;
     unsigned char * data;

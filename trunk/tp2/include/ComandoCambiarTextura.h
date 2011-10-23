@@ -13,6 +13,7 @@ private:
 public:
   ComandoCambiarTextura(const char * filename);
   virtual void ejecutar();
+  GLuint getTextura();
 };
 
 #endif
