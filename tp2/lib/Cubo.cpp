@@ -1,6 +1,10 @@
 #include "Cubo.h"
 #include "GL/gl.h"
 
+Cubo::Cubo(){
+	cargarTextura("earth.raw");
+}
+
 void Cubo::cuadradoMedio(){
   glBegin(GL_QUADS);
     glNormal3f(0,0,1);
@@ -18,18 +22,18 @@ void Cubo::cuadradoMedio(){
   glEnd();
 }
 
-void Cubo::do_dibujar(){
+void Cubo::do_dibujar() {
 
-	cargarTextura("earth.raw");
-	 glBindTexture (GL_TEXTURE_2D, texture);
-  float angulos[4] = {0, 90, 180, 270};
-  for(int i=0;i<4;i++){
-    glPushMatrix();
-      glRotatef(angulos[i], 1, 0, 0);
-      glTranslatef(0,0,0.5);
-      cuadradoMedio();
-    glPopMatrix();
-  }
+	glBindTexture(GL_TEXTURE_2D, texture);
+	float angulos[4] = { 0, 90, 180, 270 };
+	for (int i = 0; i < 4; i++) {
+		glPushMatrix();
+		glRotatef(angulos[i], 1, 0, 0);
+		glTranslatef(0, 0, 0.5);
+		cuadradoMedio();
+		glPopMatrix();
+		glBindTexture(GL_TEXTURE_2D, NULL);
+	}
   
   glPushMatrix();
     glRotatef(90, 0, 1, 0);

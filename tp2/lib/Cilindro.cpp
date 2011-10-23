@@ -2,8 +2,9 @@
 #include <GL/glut.h>
 #include <math.h>
 
-
-
+Cilindro::Cilindro(){
+	cargarTextura("earth.raw");
+}
 
 void Cilindro::dibujarCirculo(int segmentos){
 
@@ -19,7 +20,6 @@ void Cilindro::dibujarCirculo(int segmentos){
 }
 
 void Cilindro::do_dibujar() {
-	cargarTextura("earth.raw");
 	glBindTexture (GL_TEXTURE_2D, texture);
 	int segmentos = 30;
 	glPushMatrix();

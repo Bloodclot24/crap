@@ -2,8 +2,11 @@
 #include <GL/glut.h>
 #include <math.h>
 
-void Toroide::do_dibujar(){
+Toroide::Toroide(){
 	cargarTextura("earth.raw");
+}
+
+void Toroide::do_dibujar(){
 	glBindTexture (GL_TEXTURE_2D, texture);
 	glEnable(GL_NORMALIZE);
 	glPushMatrix();

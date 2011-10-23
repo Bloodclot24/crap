@@ -8,7 +8,8 @@ private:
 	void cuadradoMedio();
 protected:
   virtual void do_dibujar();
-  
+public:
+  Cubo();
 };
 
 #endif
