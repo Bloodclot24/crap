@@ -4,6 +4,7 @@
 #include "Esfera.h"
 #include "Toroide.h"
 #include "Cilindro.h"
+#include "Cono.h"
 #include "ComandoCambiarColor.h"
 #include "ComandoCambiarForma.h"
 #include "ComandoCambiarShader.h"
@@ -34,11 +35,13 @@ void MundoTP2::crearMenues(){
   menuFormas.agregarElemento(c,new ComandoCambiarFormaToroide());
   c=new Cilindro();
   menuFormas.agregarElemento(c,new ComandoCambiarFormaCilindro());
+  c=new Cono();
+  menuFormas.agregarElemento(c,new ComandoCambiarFormaCono());
   menuVertexShader.cambiarOrientacion(MENU_VERTICAL);
   c=new Cubo();
   
   VertexShader vshaderSimple;
-  if(!vshaderSimple.cargarDesdeArchivo("shaders/wtf.vert"))
+  if(!vshaderSimple.cargarDesdeArchivo("shaders/textura.vert"))
     std::cout << "VLOG:" << vshaderSimple.getInfoLog() << "\n";
   
   FragmentShader fshaderSimple;
