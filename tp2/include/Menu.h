@@ -30,6 +30,8 @@ public:
   void dibujar();
   void click(int x, int y);
   void cambiarOrientacion(MENU_ORIENTACION orientacion);
+  std::vector<Cuerpo*> getCuerpos();
+  std::vector<Command*> getComandos();
 };
 
 #endif

@@ -133,3 +133,11 @@ void Menu::click(int x, int y){
 void Menu::cambiarOrientacion(MENU_ORIENTACION orientacion){
   this->orientacion = orientacion;
 }
+
+std::vector<Cuerpo*> Menu::getCuerpos() {
+	return iconos;
+}
+
+std::vector<Command*> Menu::getComandos(){
+	return comandos;
+}
