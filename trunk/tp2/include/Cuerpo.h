@@ -12,11 +12,11 @@ class Cuerpo{
   FragmentShader fs;
   virtual void do_dibujar()=0;
   virtual void post_dibujar();
-  void cargarTextura(const char * filename);
 public:
   Cuerpo();
   void dibujar();
   void setColor(float r, float g, float b);
+  void setTextura(GLuint t);
   float getAlto();
   float getAncho();
   void setShader(VertexShader vs);

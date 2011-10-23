@@ -8,7 +8,7 @@
 #include "ComandoCambiarColor.h"
 #include "ComandoCambiarForma.h"
 #include "ComandoCambiarShader.h"
-
+#include "ComandoCambiarTextura.h"
 
 MundoTP2* MundoTP2::te_odio2 = NULL;
 
@@ -22,11 +22,12 @@ void MundoTP2::crearMenues(){
   c->setColor(1,0,0);
   menuFragmentShader.agregarElemento(c, new ComandoCambiarColor(1,0,0));
   c=new Esfera();
-  c->setColor(0,1,0);
-  menuFragmentShader.agregarElemento(c, new ComandoCambiarColor(0,1,0));
+  c->setColor(1,1,1);
+  menuFragmentShader.agregarElemento(c, new ComandoCambiarTextura("earth.raw"));
   c=new Esfera();
-  c->setColor(0,0,1);
-  menuFragmentShader.agregarElemento(c, new ComandoCambiarColor(0,0,1));
+  c->setColor(1,1,1);
+
+  menuFragmentShader.agregarElemento(c, new ComandoCambiarTextura("ladrillo.raw"));
   
   menuFormas.cambiarOrientacion(MENU_VERTICAL);
   c=new Esfera();

@@ -2,7 +2,6 @@
 #include "GL/gl.h"
 
 Cubo::Cubo(){
-	cargarTextura("earth.raw");
 }
 
 void Cubo::cuadradoMedio(){

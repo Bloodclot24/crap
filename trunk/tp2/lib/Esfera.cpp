@@ -20,7 +20,6 @@ VERTICES VERTEX[VertexCount];
 
 Esfera::Esfera(){
 	construirEsfera(70);
-	cargarTextura("earth.raw");
 }
 
 void Esfera::do_dibujar(){
@@ -32,7 +31,6 @@ void Esfera::do_dibujar(){
 
 void Esfera::mostrarEsfera (double R)
 {
-	glColor3f(1, 1, 1);
 	glEnable( GL_TEXTURE_2D );
     int b;
     glScalef (0.0125 * R, 0.0125 * R, 0.0125 * R);
