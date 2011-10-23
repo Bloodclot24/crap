@@ -1,6 +1,9 @@
 #ifndef MUNDOTP2_H_INCLUDED
 #define MUNDOTP2_H_INCLUDED
 
+
+#include <vector>
+
 #include "Mundo.h"
 #include "Cuerpo.h"
 #include "Menu.h"
@@ -13,7 +16,8 @@ private:
   Menu menuFragmentShader;
   Menu menuFormas;
   Menu menuVertexShader;
-        
+
+
   MundoTP2();
   void display();
   void inicializar();
@@ -21,6 +25,7 @@ private:
   void vistaPerspectiva();
   void vistaOrtogonal();
   virtual void mouse(int button, int state, int x, int y);
+  void destruirMenu(Menu menu);
 
 public:
   static MundoTP2* get_instance();

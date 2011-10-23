@@ -9,9 +9,11 @@
 #include "ComandoCambiarForma.h"
 #include "ComandoCambiarShader.h"
 
+
 MundoTP2* MundoTP2::te_odio2 = NULL;
 
 MundoTP2::MundoTP2(){
+	figura = NULL;
 }
 
 void MundoTP2::crearMenues(){
@@ -149,6 +151,9 @@ void MundoTP2::rotarFigura(float angulo, bool x, bool y, bool z){
 }
 
 void MundoTP2::cambiarFigura(Cuerpo* cuerpo){
+  if(figura != NULL){
+	  delete figura;
+  }
   figura=cuerpo;
 }
 
@@ -160,7 +165,25 @@ Cuerpo* MundoTP2::obtenerCuerpo(){
  return figura; 
 }
 
+void MundoTP2::destruirMenu(Menu menu) {
 
-MundoTP2::~MundoTP2(){
- delete figura; 
+	std::vector<Cuerpo*> cuerpos = menu.getCuerpos();
+	std::vector<Cuerpo*>::iterator it;
+	for (it = cuerpos.begin(); it != cuerpos.end(); it++)
+		delete *it;
+	std::vector<Command*> comandos = menu.getComandos();
+	std::vector<Command*>::iterator it1;
+	for (it1 = comandos.begin(); it1 != comandos.end(); it1++)
+		delete *it1;
+
+}
+
+
+MundoTP2::~MundoTP2() {
+
+	if (figura != NULL)
+		delete figura;
+	destruirMenu(menuFormas);
+	destruirMenu(menuVertexShader);
+	destruirMenu(menuFragmentShader);
 }
