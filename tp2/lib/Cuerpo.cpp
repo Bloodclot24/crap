@@ -5,7 +5,11 @@
 
 void Cuerpo::dibujar(){
  glColor3f(r,g,b);
- Programa::crearPrograma(vss, fss)->usar();
+ 
+ Programa* p = Programa::crearPrograma(vss, fss);
+ if(p)
+   p->usar();
+ 
  
  do_dibujar();
  post_dibujar();
