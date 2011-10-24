@@ -25,6 +25,9 @@ Programa* Programa::crearPrograma(std::list< VertexShader > vss, std::list< Frag
 Programa* Programa::compilarPrograma(std::list< VertexShader > vss, std::list< FragmentShader > fss){
   GLint program = glCreateProgram();
   
+  if(vss.size() == 0 || fss.size() == 0)
+     return NULL;
+  
   std::list<VertexShader>::iterator itv;
   for(itv=vss.begin(); itv != vss.end(); itv++){
     glAttachShader(program, itv->getId()); 
@@ -59,9 +62,38 @@ void Programa::mostrarLog(GLuint program){
   int longitud;
   glGetShaderInfoLog(program, 500, &longitud, &log[0]);
   std::string texto(&log[0]);
-  std::cout << texto << "\n";
+  std::cout << "LOG: " << texto.c_str() << "\n";
 }
 
 void Programa::usar(){
    glUseProgram(idPrograma);
+}
+
+
+
+void Programa::cambiarUniforme(const char* nombre, GLfloat valor){
+  if(idPrograma == 0)
+    return;
+
+  GLint id = glGetUniformLocation(idPrograma, nombre);
+  if(id == -1){
+   std::cout << "NO Existe la variable uniforme " << nombre << " en este programa ("<< idPrograma <<")\n";
+   return; 
+  }
+  
+  glUniform1f(id, valor);
+}
+
+
+void Programa::cambiarUniforme(const char* nombre, GLfloat valor[16]){
+  if(idPrograma == 0)
+    return;
+
+  GLint id = glGetUniformLocation(idPrograma, nombre);
+  if(id == -1){
+   std::cout << "NO Existe la variable uniforme " << nombre << " en este programa ("<< idPrograma <<")\n";
+   return; 
+  }
+  
+  glUniformMatrix4fv(id, 1, false, valor);
 }

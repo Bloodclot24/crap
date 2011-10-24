@@ -13,6 +13,10 @@ private:
 public:
   static Programa* crearPrograma(std::list<VertexShader> vss, std::list<FragmentShader> fss);
   void usar();
+  void cambiarUniforme(const char* nombre, GLfloat valor);
+  void cambiarUniforme(const char* nombre, GLfloat valor[16]);
+
 };
+
 
 #endif

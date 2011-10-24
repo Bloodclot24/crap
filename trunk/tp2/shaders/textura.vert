@@ -1,3 +1,4 @@
+uniform float t;
 varying vec3 lightDir,normal;
 
 void main()
@@ -13,12 +14,13 @@ void main()
 	float y = posicion.y;
 	float z = posicion.z;
 
-	float _sin = sin(z*3.141592654);
-	float _cos = cos(z*3.141592654);
+	float angulo = z*3.141592654;
+
+	float _sin = sin(angulo);
+	float _cos = cos(angulo);
 
 	posicion.x = x*_cos-y*_sin;
 	posicion.y = x*_sin+y*_cos;
 
 	gl_Position = gl_ModelViewProjectionMatrix * posicion;
-	//gl_Position = ftransform();
 }
