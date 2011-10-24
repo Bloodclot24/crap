@@ -28,14 +28,16 @@ void Cilindro::do_dibujar() {
 	glRotatef(60,0,1,1);
 	glScalef(0.4,0.4,1);
 	glBegin(GL_TRIANGLE_STRIP);
+	float inc = 0.1;
+	for(float incremento = 0; incremento < 1; incremento += inc)
 	for(float i = 0; i <= 2*M_PI; i += 2*M_PI / segmentos){
 	    float _cos = cos(i);
 	    float _sin = sin(i);
 	    glNormal3f(_cos, _sin, 0);
-	    glTexCoord2f(1 - i/(2*M_PI),0);
-	    glVertex3f(_cos, _sin, -0.5);
-	    glTexCoord2f(1 - i/(2*M_PI),1);
-	    glVertex3f(_cos, _sin, 0.5);
+	    glTexCoord2f(1 - i/(2*M_PI),incremento);
+	    glVertex3f(_cos, _sin, -0.5 + incremento);
+	    glTexCoord2f(1 - i/(2*M_PI), inc + incremento);
+	    glVertex3f(_cos, _sin, -0.5 + inc + incremento);
 	}
 	glEnd();
 
