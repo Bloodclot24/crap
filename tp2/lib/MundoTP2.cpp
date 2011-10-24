@@ -9,11 +9,13 @@
 #include "ComandoCambiarForma.h"
 #include "ComandoCambiarShader.h"
 #include "ComandoCambiarTextura.h"
+#include "stdlib.h"
 
 MundoTP2* MundoTP2::te_odio2 = NULL;
 
 MundoTP2::MundoTP2(){
 	figura = NULL;
+	animando=false;
 	x_mouse = 0;
 	y_mouse = 0;
 	mouse_capturado = false;
@@ -50,20 +52,32 @@ void MundoTP2::crearMenues(){
   menuVertexShader.cambiarOrientacion(MENU_VERTICAL);
   
   VertexShader vshaderSimple;
-  if(!vshaderSimple.cargarDesdeArchivo("shaders/achatado.vert"))
+  if(!vshaderSimple.cargarDesdeArchivo("shaders/achatado.vert")){
     std::cout << "VLOG:" << vshaderSimple.getInfoLog() << "\n";
+    exit(0);
+  }
   
   VertexShader vshaderWtf;
-  if(!vshaderWtf.cargarDesdeArchivo("shaders/wtf.vert"))
+  if(!vshaderWtf.cargarDesdeArchivo("shaders/simple.vert")){
     std::cout << "VLOG:" << vshaderWtf.getInfoLog() << "\n";
+    exit(0);
+  }
   
   FragmentShader fshaderSimple;
-  if(!fshaderSimple.cargarDesdeArchivo("shaders/textura.frag"))
+  if(!fshaderSimple.cargarDesdeArchivo("shaders/simple.frag")){
     std::cout << "FLOG:" << fshaderSimple.getInfoLog() << "\n";
+    exit(0);
+  }
+  
+  FragmentShader fshaderTextura;
+  if(!fshaderTextura.cargarDesdeArchivo("shaders/textura.frag")){
+    std::cout << "FLOG:" << fshaderTextura.getInfoLog() << "\n";
+    exit(0);
+  }
   c=new Esfera();
   c->agregarShader(vshaderSimple);
   c->agregarShader(fshaderSimple);
-  menuVertexShader.agregarElemento(c, new ComandoCambiarShader(vshaderSimple, fshaderSimple));
+  menuVertexShader.agregarElemento(c, new ComandoCambiarShader(vshaderSimple, fshaderTextura));
 
   c=new Esfera();
   c->agregarShader(vshaderWtf);
@@ -87,8 +101,8 @@ void MundoTP2::inicializar(){
   glEnable(GL_NORMALIZE);
   GLfloat light_position[] = { 5.0, 5.0, 10.0, 0.0 };
   glLightfv(GL_LIGHT0, GL_POSITION, light_position);
-  crearMenues();
   figura=new Cubo();
+  crearMenues();
   resetearRotacion();
 
 }
@@ -208,6 +222,8 @@ void MundoTP2::rotarFigura(float angulo, bool x, bool y, bool z){
 
 void MundoTP2::cambiarFigura(Cuerpo* cuerpo){
   if(figura != NULL){
+    
+	  desanimar(figura);
 	  delete figura;
   }
   figura=cuerpo;
@@ -234,6 +250,91 @@ void MundoTP2::destruirMenu(Menu menu) {
 
 }
 
+void MundoTP2::animame(Animable* animable, int milis){
+  std::list<Animable*>::iterator itan;
+  std::list<int>::iterator itmil;
+  
+  for(itan = animables.begin(), itmil = tiemposDeAnimacion.begin();
+      itmil != tiemposDeAnimacion.end() && *itmil < milis;
+      itmil++, itan++){}
+      
+  animables.insert(itan, animable);
+  tiemposDeAnimacion.insert(itmil, milis);
+  
+  if(!animando){
+    //poner timer
+    glutTimerFunc(*(tiemposDeAnimacion.begin()), MundoTP2::static_timer_callback,0);
+    animando=true;
+  }
+  
+  std::cout << "Agregado \n";
+  
+}
+
+void MundoTP2::desanimar(Animable* animable){
+  std::list<Animable*>::iterator itan;
+  std::list<int>::iterator itmil;
+  std::list<Animable*> nuevosAnimables;
+  std::list<int> nuevosTiempos;
+  
+  for(itan = animables.begin(), itmil = tiemposDeAnimacion.begin();
+      itmil != tiemposDeAnimacion.end();
+      itmil++, itan++){
+      if(*itan != animable){
+	  nuevosTiempos.push_back(*itmil);
+	  nuevosAnimables.push_back(*itan);
+      }
+  }
+  animables = nuevosAnimables;
+  tiemposDeAnimacion = nuevosTiempos;
+}
+
+
+void MundoTP2::timer_callback(){
+  
+  std::cout << "Tiempo\n";
+  std::list<Animable*>::iterator itan;
+  std::list<Animable*> nuevosAnimables;
+  std::list<Animable*> animados;
+  std::list<int>::iterator itmil;
+  std::list<int> nuevosTiempos;
+  int tiempo = *tiemposDeAnimacion.begin();
+  
+  for(itan = animables.begin(), itmil = tiemposDeAnimacion.begin();
+      itmil != tiemposDeAnimacion.end();
+      itmil++, itan++){
+    
+    int actual = *itmil-tiempo;
+    if(actual<=0)
+      animados.push_back(*itan);
+    
+    else{ 
+	nuevosTiempos.push_back(actual);
+	nuevosAnimables.push_back(*itan);
+    }
+  }
+  
+  animables = nuevosAnimables;
+  tiemposDeAnimacion = nuevosTiempos;
+  
+  for(std::list<Animable*>::iterator it=animados.begin(); it!= animados.end(); it++)
+      (*it)->animar();
+  
+  
+  if(tiemposDeAnimacion.size() > 0){
+     std::cout << "Proximo en " << *(tiemposDeAnimacion.begin()) << "\n";
+    glutTimerFunc(*(tiemposDeAnimacion.begin()), MundoTP2::static_timer_callback,0);
+  }
+  else{
+    std::cout << "No queda nadie?\n";
+     animando=false;
+  }
+  glutPostRedisplay();
+}
+
+void MundoTP2::static_timer_callback(int ignorar){
+  MundoTP2::get_instance()->timer_callback();
+}
 
 void MundoTP2::destruir() {
  delete te_odio2;

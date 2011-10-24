@@ -17,9 +17,9 @@ void main()
 //	float _cos = cos(z*3.141592654);
 	
 
-	posicion.x = posicion.x*2;
-	posicion.y = posicion.y/2;
-	posicion.z = posicion.z/2;
+	posicion.x = posicion.x*2.0;
+	posicion.y = posicion.y/2.0;
+	posicion.z = posicion.z/2.0;
 
 
 	gl_Position = gl_ModelViewProjectionMatrix * posicion;

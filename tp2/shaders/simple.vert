@@ -1,7 +1,9 @@
 void main(){
-  gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;
-  gl_FrontColor = gl_Color;
-  //gl_Position = ftransform();
 
+  gl_FrontColor = gl_Color;
+  vec4 v = vec4(gl_Vertex);
+  v.z = sin(5.0*v.x )*0.25;
+
+  gl_Position = gl_ModelViewProjectionMatrix * v;
 }
 
