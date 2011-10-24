@@ -35,6 +35,8 @@ private:
   void destruirMenu(Menu menu);
     void desanimar(Animable* animable);
   virtual void motion(int x, int y);
+  FragmentShader cargarFshader(const char *archivo);
+  VertexShader cargarVshader(const char *archivo);
 
 public:
   static MundoTP2* get_instance();
