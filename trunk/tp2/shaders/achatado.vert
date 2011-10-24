@@ -13,10 +13,10 @@ void main()
 	float y0 = posicion.y;
 	float z0 = posicion.z;
 
-	float factor = 1;
+	float factor = 1.0;
 	float radio = 1.0;
 	
-	if(z0!=0) {
+	if(z0!=0.0) {
 		float divisor = pow(x0/z0,2.0) + pow(y0/z0,2.0) + 1.0;
 		float radicando = pow(radio,2.0) / divisor;
 		float ze = pow(radicando,0.5);
@@ -30,7 +30,7 @@ void main()
 		posicion.x = x0 + factor * (xe - x0);
 		posicion.y = y0 + factor * (ye - y0);
 		posicion.z = z0 + factor * (ze - z0);
-	} else if (x0 != 0) {
+	} else if (x0 != 0.0) {
 		float divisor = pow(z0/x0,2.0) + pow(y0/x0,2.0) + 1.0;
 		float radicando = pow(radio,2.0) / divisor;
 		float xe = pow(radicando,0.5);
@@ -44,7 +44,7 @@ void main()
 		posicion.x = x0 + factor * (xe - x0);
 		posicion.y = y0 + factor * (ye - y0);
 		posicion.z = z0 + factor * (ze - z0);
-	} else if (y0 != 0) {
+	} else if (y0 != 0.0) {
 		float divisor = pow(x0/y0,2.0) + pow(z0/y0,2.0) + 1.0;
 		float radicando = pow(radio,2.0) / divisor;
 		float ye = pow(radicando,0.5);
