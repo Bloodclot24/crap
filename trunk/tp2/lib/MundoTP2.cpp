@@ -50,7 +50,7 @@ void MundoTP2::crearMenues(){
   menuVertexShader.cambiarOrientacion(MENU_VERTICAL);
   
   VertexShader vshaderSimple;
-  if(!vshaderSimple.cargarDesdeArchivo("shaders/textura.vert"))
+  if(!vshaderSimple.cargarDesdeArchivo("shaders/achatado.vert"))
     std::cout << "VLOG:" << vshaderSimple.getInfoLog() << "\n";
   
   VertexShader vshaderWtf;

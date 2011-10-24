@@ -5,15 +5,18 @@
 Cilindro::Cilindro(){
 }
 
-void Cilindro::dibujarCirculo(int segmentos){
+void Cilindro::dibujarCirculo(int segmentos, float z){
 
     glBegin(GL_TRIANGLE_FAN);
-    glNormal3f(0, 0, 1);
+    if(z>0)
+    	glNormal3f(0, 0, 1);
+    else
+    	glNormal3f(0, 0, -1);
     glTexCoord2f(0.5,0.5);
-    glVertex3f(0, 0, 0);
+    glVertex3f(0, 0, z);
     for(float i = 0; i <= 2*M_PI; i += 2*M_PI / segmentos) {
     	glTexCoord2f(1-(cos(i) + 1)/2, (sin(i) + 1 )/2);
-    	glVertex3f(cos(i), sin(i), 0);
+    	glVertex3f(cos(i), sin(i), z);
     }
     glEnd();
 }
@@ -38,15 +41,15 @@ void Cilindro::do_dibujar() {
 
 	//Dibujo las tapas
 	glPushMatrix();
-	glTranslatef(0, 0, 0.5);
+//	glTranslatef(0, 0, 0.5);
 	glScalef(1, 1, 1);
-	dibujarCirculo(segmentos);
+	dibujarCirculo(segmentos, 0.5);
 	glPopMatrix();
 
 	glPushMatrix();
-	glTranslatef(0, 0, -0.5);
-	glRotatef(180, 1, 0, 0);
-	dibujarCirculo(segmentos);
+//	glTranslatef(0, 0, -0.5);
+//	glRotatef(180, 1, 0, 0);
+	dibujarCirculo(segmentos,-0.5);
 	glPopMatrix();
 	glPopMatrix();
 	glBindTexture(GL_TEXTURE_2D, NULL);

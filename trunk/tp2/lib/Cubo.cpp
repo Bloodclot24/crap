@@ -11,20 +11,108 @@ void Cubo::cuadradoMedio(){
     for(float incy=0; incy < 1; incy += incremento){
     	for(float incx=0; incx < 1; incx += incremento){
     		glTexCoord2f(1 - incy, 1 - incx);
-			glVertex2f(-0.5 + incx, -0.5 + incy);
+			glVertex3f(-0.5 + incx, -0.5 + incy,0.5);
 			glTexCoord2f(1 - incremento - incy, 1 - incx);
-			glVertex2f(-0.5 + incx, -0.5 + incremento + incy);
+			glVertex3f(-0.5 + incx, -0.5 + incremento + incy,0.5);
 			glTexCoord2f(1 - incremento - incy, 1 - incremento - incx);
-			glVertex2f(-0.5 + incremento + incx, -0.5 + incremento + incy);
+			glVertex3f(-0.5 + incremento + incx, -0.5 + incremento + incy,0.5);
 			glTexCoord2f(1 - incy, 1 - incremento - incx);
-			glVertex2f(-0.5 + incremento + incx, -0.5 + incy);
+			glVertex3f(-0.5 + incremento + incx, -0.5 + incy,0.5);
     	}
     }
  glEnd();
+
+ glBegin(GL_QUADS);
+   glNormal3f(0,0,-1);
+  // float incremento = 0.1;
+   for(float incy=0; incy < 1; incy += incremento){
+   	for(float incx=0; incx < 1; incx += incremento){
+   		glTexCoord2f(1 - incy, 1 - incx);
+			glVertex3f(-0.5 + incx, -0.5 + incy,-0.5);
+			glTexCoord2f(1 - incremento - incy, 1 - incx);
+			glVertex3f(-0.5 + incx, -0.5 + incremento + incy,-0.5);
+			glTexCoord2f(1 - incremento - incy, 1 - incremento - incx);
+			glVertex3f(-0.5 + incremento + incx, -0.5 + incremento + incy,-0.5);
+			glTexCoord2f(1 - incy, 1 - incremento - incx);
+			glVertex3f(-0.5 + incremento + incx, -0.5 + incy,-0.5);
+   	}
+   }
+glEnd();
+
+glBegin(GL_QUADS);
+  glNormal3f(-1,0,0);
+ // float incremento = 0.1;
+  for(float incy=0; incy < 1; incy += incremento){
+  	for(float incx=0; incx < 1; incx += incremento){
+  		glTexCoord2f(1 - incy, 1 - incx);
+			glVertex3f(-0.5,-0.5 + incx, -0.5 + incy);
+			glTexCoord2f(1 - incremento - incy, 1 - incx);
+			glVertex3f(-0.5,-0.5 + incx, -0.5 + incremento + incy);
+			glTexCoord2f(1 - incremento - incy, 1 - incremento - incx);
+			glVertex3f(-0.5,-0.5 + incremento + incx, -0.5 + incremento + incy);
+			glTexCoord2f(1 - incy, 1 - incremento - incx);
+			glVertex3f(-0.5,-0.5 + incremento + incx, -0.5 + incy);
+  	}
+  }
+glEnd();
+
+glBegin(GL_QUADS);
+  glNormal3f(1,0,0);
+ // float incremento = 0.1;
+  for(float incy=0; incy < 1; incy += incremento){
+  	for(float incx=0; incx < 1; incx += incremento){
+  		glTexCoord2f(1 - incy, 1 - incx);
+			glVertex3f(0.5,-0.5 + incx, -0.5 + incy);
+			glTexCoord2f(1 - incremento - incy, 1 - incx);
+			glVertex3f(0.5,-0.5 + incx, -0.5 + incremento + incy);
+			glTexCoord2f(1 - incremento - incy, 1 - incremento - incx);
+			glVertex3f(0.5,-0.5 + incremento + incx, -0.5 + incremento + incy);
+			glTexCoord2f(1 - incy, 1 - incremento - incx);
+			glVertex3f(0.5,-0.5 + incremento + incx, -0.5 + incy);
+  	}
+  }
+glEnd();
+
+glBegin(GL_QUADS);
+  glNormal3f(0,-1,0);
+ // float incremento = 0.1;
+  for(float incy=0; incy < 1; incy += incremento){
+  	for(float incx=0; incx < 1; incx += incremento){
+  		glTexCoord2f(1 - incy, 1 - incx);
+			glVertex3f(-0.5 + incx,-0.5, -0.5 + incy);
+			glTexCoord2f(1 - incremento - incy, 1 - incx);
+			glVertex3f(-0.5 + incx,-0.5, -0.5 + incremento + incy);
+			glTexCoord2f(1 - incremento - incy, 1 - incremento - incx);
+			glVertex3f(-0.5 + incremento + incx,-0.5, -0.5 + incremento + incy);
+			glTexCoord2f(1 - incy, 1 - incremento - incx);
+			glVertex3f(-0.5 + incremento + incx,-0.5, -0.5 + incy);
+  	}
+  }
+glEnd();
+
+glBegin(GL_QUADS);
+  glNormal3f(0,1,0);
+ // float incremento = 0.1;
+  for(float incy=0; incy < 1; incy += incremento){
+  	for(float incx=0; incx < 1; incx += incremento){
+  		glTexCoord2f(1 - incy, 1 - incx);
+			glVertex3f(-0.5 + incx,0.5, -0.5 + incy);
+			glTexCoord2f(1 - incremento - incy, 1 - incx);
+			glVertex3f(-0.5 + incx,0.5, -0.5 + incremento + incy);
+			glTexCoord2f(1 - incremento - incy, 1 - incremento - incx);
+			glVertex3f(-0.5 + incremento + incx,0.5, -0.5 + incremento + incy);
+			glTexCoord2f(1 - incy, 1 - incremento - incx);
+			glVertex3f(-0.5 + incremento + incx,0.5, -0.5 + incy);
+  	}
+  }
+glEnd();
 }
 
-void Cubo::do_dibujar() {
 
+void Cubo::do_dibujar() {
+	glBindTexture(GL_TEXTURE_2D, texture);
+	cuadradoMedio();
+/*
 	glPushMatrix();
 	glScalef(0.8,0.8,0.8);
 	glRotatef(45,0,1,1);
@@ -51,4 +139,5 @@ void Cubo::do_dibujar() {
   glPopMatrix();
   glPopMatrix();
   glBindTexture(GL_TEXTURE_2D, NULL);
+  */
 }

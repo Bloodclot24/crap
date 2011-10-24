@@ -6,7 +6,7 @@
 
 class Cilindro: public Cuerpo{
 private:
-	void dibujarCirculo(int segmentos);
+	void dibujarCirculo(int segmentos, float z);
 protected:
   virtual void do_dibujar();
 public:
