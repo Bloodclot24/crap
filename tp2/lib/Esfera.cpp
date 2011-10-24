@@ -4,9 +4,9 @@
 
 typedef struct
 {
-    int X;
-    int Y;
-    int Z;
+    float X;
+    float Y;
+    float Z;
     double U;
     double V;
 }VERTICES;
@@ -19,12 +19,12 @@ VERTICES VERTEX[VertexCount];
 
 
 Esfera::Esfera(){
-	construirEsfera(70);
+	construirEsfera(0.5);
 }
 
 void Esfera::do_dibujar(){
     //glutSolidSphere(0.5, 20, 20);
-	mostrarEsfera(0.5);
+	mostrarEsfera(1);
 }
 
 
@@ -33,7 +33,7 @@ void Esfera::mostrarEsfera (double R)
 {
     glEnable( GL_TEXTURE_2D );
     int b;
-    glScalef (0.0125 * R, 0.0125 * R, 0.0125 * R);
+    //glScalef (0.0125 * R, 0.0125 * R, 0.0125 * R);
     glRotatef (90, 1, 0, 0);
     glBegin (GL_TRIANGLE_STRIP);
     for ( b = 0; b < VertexCount; b++)

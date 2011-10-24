@@ -14,12 +14,16 @@ void main()
 	af = gl_FrontMaterial.diffuse.a;
 	texel = texture2D(tex,gl_TexCoord[0].st);
 
-	if(usar_textura == 0.0)
-	   ct = +gl_Color.rgb;
-	else
+	if(usar_textura == 0.0){
+	   ct = gl_Color.rgb;
+	   at = gl_Color.a;
+	}
+	else{
 	  ct = texel.rgb;
+	  at = texel.a;
+	}
 
-	at = texel.a;
+	
 	gl_FragColor = vec4(ct * cf, at * af);
 
 }

@@ -7,7 +7,7 @@ Cubo::Cubo(){
 void Cubo::cuadradoMedio(){
   glBegin(GL_QUADS);
     glNormal3f(0,0,1);
-    float incremento = 0.1;
+    float incremento = 0.05;
     for(float incy=0; incy < 1; incy += incremento){
     	for(float incx=0; incx < 1; incx += incremento){
     		glTexCoord2f(1 - incy, 1 - incx);

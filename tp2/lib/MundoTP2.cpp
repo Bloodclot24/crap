@@ -51,45 +51,66 @@ void MundoTP2::crearMenues(){
   menuFormas.agregarElemento(c,new ComandoCambiarFormaCono());
   menuVertexShader.cambiarOrientacion(MENU_VERTICAL);
   
-  VertexShader vshaderSimple;
-  if(!vshaderSimple.cargarDesdeArchivo("shaders/achatado.vert")){
-    std::cout << "VLOG:" << vshaderSimple.getInfoLog() << "\n";
-    exit(0);
-  }
+  VertexShader vshaderEsferizar = cargarVshader("shaders/esferizar.vert");
+  VertexShader vshaderSimple = cargarVshader("shaders/simple.vert");
+  VertexShader vshaderOndas = cargarVshader("shaders/ondas.vert");
+  VertexShader vshaderTorcido = cargarVshader("shaders/torcido.vert");
+  VertexShader vshaderRotado = cargarVshader("shaders/rotar.vert");
+  FragmentShader fshaderSimple = cargarFshader("shaders/simple.frag");
+  FragmentShader fshaderTextura = cargarFshader("shaders/textura.frag");
   
-  VertexShader vshaderWtf;
-  if(!vshaderWtf.cargarDesdeArchivo("shaders/simple.vert")){
-    std::cout << "VLOG:" << vshaderWtf.getInfoLog() << "\n";
-    exit(0);
-  }
   
-  FragmentShader fshaderSimple;
-  if(!fshaderSimple.cargarDesdeArchivo("shaders/simple.frag")){
-    std::cout << "FLOG:" << fshaderSimple.getInfoLog() << "\n";
-    exit(0);
-  }
-  
-  FragmentShader fshaderTextura;
-  if(!fshaderTextura.cargarDesdeArchivo("shaders/textura.frag")){
-    std::cout << "FLOG:" << fshaderTextura.getInfoLog() << "\n";
-    exit(0);
-  }
-  c=new Esfera();
+  c=new Cubo();
   c->agregarShader(vshaderSimple);
   c->agregarShader(fshaderSimple);
   menuVertexShader.agregarElemento(c, new ComandoCambiarShader(vshaderSimple, fshaderTextura));
 
-  c=new Esfera();
-  c->agregarShader(vshaderWtf);
+  c=new Cubo();
+  c->agregarShader(vshaderEsferizar);
   c->agregarShader(fshaderSimple);
-  menuVertexShader.agregarElemento(c, new ComandoCambiarShader(vshaderWtf, fshaderTextura));
+  menuVertexShader.agregarElemento(c, new ComandoCambiarShader(vshaderEsferizar, fshaderTextura));
   
-  c=new Esfera();
+  c=new Cubo();
+  c->agregarShader(vshaderOndas);
+  c->agregarShader(fshaderSimple);
+  menuVertexShader.agregarElemento(c, new ComandoCambiarShader(vshaderOndas, fshaderTextura));
+  
+  c=new Cubo();
+  c->agregarShader(vshaderTorcido);
+  c->agregarShader(fshaderSimple);
+  menuVertexShader.agregarElemento(c, new ComandoCambiarShader(vshaderTorcido, fshaderTextura));
+  
+  c=new Cubo();
+  c->agregarShader(vshaderRotado);
+  c->agregarShader(fshaderSimple);
+  menuVertexShader.agregarElemento(c, new ComandoCambiarShader(vshaderRotado, fshaderTextura));
+  
+  c=new Cubo();
   VertexShader vshaderNulo;
   FragmentShader fshaderNulo;
   menuVertexShader.agregarElemento(c, new ComandoCambiarShader(vshaderNulo, fshaderNulo));
-
 }
+
+
+FragmentShader MundoTP2::cargarFshader(const char* archivo){
+  FragmentShader fshader;
+  if(!fshader.cargarDesdeArchivo(archivo)){
+    std::cout << "FLOG:" << fshader.getInfoLog() << "\n";
+    exit(0);
+  }
+  return fshader;
+}
+
+VertexShader MundoTP2::cargarVshader(const char* archivo){
+ VertexShader vshader;
+  if(!vshader.cargarDesdeArchivo(archivo)){
+    std::cout << "VLOG:" << vshader.getInfoLog() << "\n";
+    exit(0);
+  }
+  return vshader;
+}
+
+
 
 void MundoTP2::inicializar(){
   glClearColor (0.02f, 0.02f, 0.04f, 0.0f);

@@ -21,6 +21,6 @@ void main()
 
 	posicion.x = x*_cos-y*_sin;
 	posicion.y = x*_sin+y*_cos;
-
+	gl_FrontColor = gl_Color;
 	gl_Position = gl_ModelViewProjectionMatrix * posicion;
 }
