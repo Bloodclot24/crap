@@ -6,7 +6,6 @@ Toroide::Toroide(){
 }
 
 void Toroide::do_dibujar(){
-	glBindTexture (GL_TEXTURE_2D, texture);
 	glEnable(GL_NORMALIZE);
 	glPushMatrix();
 	glRotatef(90, 1,0,0);
@@ -38,5 +37,4 @@ void Toroide::do_dibujar(){
 		glPopMatrix();
 	}
 	glPopMatrix();
-	glBindTexture(GL_TEXTURE_2D, NULL);
 }

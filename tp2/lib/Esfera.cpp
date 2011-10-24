@@ -31,11 +31,10 @@ void Esfera::do_dibujar(){
 
 void Esfera::mostrarEsfera (double R)
 {
-	glEnable( GL_TEXTURE_2D );
+    glEnable( GL_TEXTURE_2D );
     int b;
     glScalef (0.0125 * R, 0.0125 * R, 0.0125 * R);
     glRotatef (90, 1, 0, 0);
-    glBindTexture (GL_TEXTURE_2D, texture);
     glBegin (GL_TRIANGLE_STRIP);
     for ( b = 0; b < VertexCount; b++)
     {
@@ -52,7 +51,6 @@ void Esfera::mostrarEsfera (double R)
     }
 
     glEnd();
-    glBindTexture(GL_TEXTURE_2D, NULL);
 }
 
 void Esfera::construirEsfera (double R)

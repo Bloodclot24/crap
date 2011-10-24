@@ -1,6 +1,7 @@
 uniform float t;
 varying vec3 lightDir,normal;
 uniform sampler2D tex;
+uniform float usar_textura;
 
 void main()
 {
@@ -13,7 +14,10 @@ void main()
 	af = gl_FrontMaterial.diffuse.a;
 	texel = texture2D(tex,gl_TexCoord[0].st);
 
-	ct = texel.rgb;
+	if(usar_textura == 0.0)
+	   ct = +gl_Color.rgb;
+	else
+	  ct = texel.rgb;
 
 	at = texel.a;
 	gl_FragColor = vec4(ct * cf, at * af);

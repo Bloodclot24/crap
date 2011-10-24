@@ -22,7 +22,6 @@ void Cilindro::dibujarCirculo(int segmentos, float z){
 }
 
 void Cilindro::do_dibujar() {
-	glBindTexture (GL_TEXTURE_2D, texture);
 	int segmentos = 30;
 	glPushMatrix();
 	glRotatef(60,0,1,1);
@@ -54,6 +53,5 @@ void Cilindro::do_dibujar() {
 	dibujarCirculo(segmentos,-0.5);
 	glPopMatrix();
 	glPopMatrix();
-	glBindTexture(GL_TEXTURE_2D, NULL);
 }
 

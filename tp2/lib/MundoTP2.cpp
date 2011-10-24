@@ -82,7 +82,7 @@ void MundoTP2::crearMenues(){
   c=new Esfera();
   c->agregarShader(vshaderWtf);
   c->agregarShader(fshaderSimple);
-  menuVertexShader.agregarElemento(c, new ComandoCambiarShader(vshaderWtf, fshaderSimple));
+  menuVertexShader.agregarElemento(c, new ComandoCambiarShader(vshaderWtf, fshaderTextura));
   
   c=new Esfera();
   VertexShader vshaderNulo;
@@ -266,9 +266,7 @@ void MundoTP2::animame(Animable* animable, int milis){
     glutTimerFunc(*(tiemposDeAnimacion.begin()), MundoTP2::static_timer_callback,0);
     animando=true;
   }
-  
-  std::cout << "Agregado \n";
-  
+    
 }
 
 void MundoTP2::desanimar(Animable* animable){
@@ -292,7 +290,6 @@ void MundoTP2::desanimar(Animable* animable){
 
 void MundoTP2::timer_callback(){
   
-  std::cout << "Tiempo\n";
   std::list<Animable*>::iterator itan;
   std::list<Animable*> nuevosAnimables;
   std::list<Animable*> animados;
@@ -322,11 +319,9 @@ void MundoTP2::timer_callback(){
   
   
   if(tiemposDeAnimacion.size() > 0){
-     std::cout << "Proximo en " << *(tiemposDeAnimacion.begin()) << "\n";
     glutTimerFunc(*(tiemposDeAnimacion.begin()), MundoTP2::static_timer_callback,0);
   }
   else{
-    std::cout << "No queda nadie?\n";
      animando=false;
   }
   glutPostRedisplay();
