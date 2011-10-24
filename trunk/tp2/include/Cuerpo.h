@@ -6,7 +6,7 @@
 #include "Animable.h"
 #include "Programa.h"
 
-#define INCREMENTO_ANIMACION 0.1
+#define INCREMENTO_ANIMACION 0.05
 
 class Cuerpo:public Animable{
   protected:

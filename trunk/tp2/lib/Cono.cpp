@@ -19,7 +19,6 @@ void Cono::dibujarCirculo(int segmentos){
 }
 
 void Cono::do_dibujar() {
-	glBindTexture (GL_TEXTURE_2D, texture);
 	int segmentos = 30;
 	glPushMatrix();
 //	glRotatef(60,0,1,1);
@@ -43,6 +42,5 @@ void Cono::do_dibujar() {
 	dibujarCirculo(segmentos);
 	glPopMatrix();
 	glPopMatrix();
-	glBindTexture(GL_TEXTURE_2D, NULL);
 }
 

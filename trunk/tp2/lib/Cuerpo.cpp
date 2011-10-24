@@ -6,10 +6,14 @@
 
 void Cuerpo::dibujar(){
  glColor3f(r,g,b);
+ glBindTexture (GL_TEXTURE_2D, texture);
  
  Programa* p = getProgram();
- if(p)
+ if(p){
    p->usar();
+   p->cambiarUniforme("usar_textura",texture);
+   p->cambiarUniforme("t", pasoAnimacion);
+ }
  
  do_dibujar();
  post_dibujar();
@@ -28,8 +32,8 @@ Cuerpo::Cuerpo(){
     ancho=1;
     r=g=b=0.5;
     texture = NULL;
-    pasoAnimacion=0.1;
-    //MundoTP2::get_instance()->animame(this,5);
+    pasoAnimacion=0;
+    MundoTP2::get_instance()->animame(this,10);
 }
 
 void Cuerpo::setColor(float r, float g, float b){
@@ -39,17 +43,11 @@ void Cuerpo::setColor(float r, float g, float b){
 }
 
 void Cuerpo::agregarShader(VertexShader vs){
-  //if(pasoAnimacion > 0)
-  //  vssSiguiente.push_back(vs);
-  //else
-    vss.push_back(vs);
+    vssSiguiente.push_back(vs);
 }
 
 void Cuerpo::agregarShader(FragmentShader fs){
-  //if(pasoAnimacion > 0)
-  //  fssSiguiente.push_back(fs);
-  //else
-    fss.push_back(fs);
+    fssSiguiente.push_back(fs);
 }
 
 Programa* Cuerpo::getProgram(){
@@ -59,8 +57,6 @@ Programa* Cuerpo::getProgram(){
 void Cuerpo::borrarShaders(){
   vssSiguiente.clear();
   fssSiguiente.clear();
-  vss.clear();
-  fss.clear();
 }
 
 void Cuerpo::setTextura(GLuint t){
@@ -69,6 +65,7 @@ void Cuerpo::setTextura(GLuint t){
 
 void Cuerpo::post_dibujar(){
   glUseProgram(0);
+  glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 void Cuerpo::animar(){
@@ -87,10 +84,6 @@ void Cuerpo::animar(){
       pasoAnimacion += INCREMENTO_ANIMACION; 
   }
   
-  Programa* p = Programa::crearPrograma(vss, fss);
-  if(p)
-    p->cambiarUniforme("t", pasoAnimacion);
-  std::cout << "t: " << pasoAnimacion << "\n";
-  MundoTP2::get_instance()->animame(this,500);
+  MundoTP2::get_instance()->animame(this,50);
 }
 

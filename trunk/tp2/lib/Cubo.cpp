@@ -110,7 +110,6 @@ glEnd();
 
 
 void Cubo::do_dibujar() {
-	glBindTexture(GL_TEXTURE_2D, texture);
 	cuadradoMedio();
 /*
 	glPushMatrix();
@@ -138,6 +137,5 @@ void Cubo::do_dibujar() {
     cuadradoMedio();
   glPopMatrix();
   glPopMatrix();
-  glBindTexture(GL_TEXTURE_2D, NULL);
   */
 }
