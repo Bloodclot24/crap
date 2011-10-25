@@ -33,7 +33,7 @@ private:
   void vistaOrtogonal();
   virtual void mouse(int button, int state, int x, int y);
   void destruirMenu(Menu menu);
-    void desanimar(Animable* animable);
+  void desanimar(Animable* animable);
   virtual void motion(int x, int y);
   FragmentShader cargarFshader(const char *archivo);
   VertexShader cargarVshader(const char *archivo);
