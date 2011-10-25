@@ -9,7 +9,7 @@ void Toroide::do_dibujar(){
 	glEnable(GL_NORMALIZE);
 	glPushMatrix();
 	glRotatef(90, 1,0,0);
-	glScalef(0.1,0.1,0.1);
+//	glScalef(0.1,0.1,0.1);
 	float incremento=6;
 	for(float angulo = 0; angulo < 360; angulo +=incremento){
 		glPushMatrix();
@@ -26,11 +26,10 @@ void Toroide::do_dibujar(){
 		    glTexCoord2f(angulo/360,1 - i/(2*M_PI) + 0.5);
 		    float x = 4+_cos;
 		    float z = -(_cos + 4)*tan(incremento/2*M_PI/180);
-		    glVertex3f(x*cos(angulor) + z*sin(angulor), _sin, -x*sin(angulor) + z*cos(angulor));
+		    glVertex3f((x*cos(angulor) + z*sin(angulor))/10, _sin/10,(-x*sin(angulor) + z*cos(angulor))/10);
 		    glTexCoord2f((angulo - incremento)/360 ,1 - i/(2*M_PI)+ 0.5);
 		    z = -z;
-		    glVertex3f(x*cos(angulor) + z*sin(angulor), _sin, -x*sin(angulor) + z*cos(angulor));
-		   // glVertex3f(4 + _cos, _sin, (_cos + 4)*tan(incremento/2*M_PI/180));
+		    glVertex3f((x*cos(angulor) + z*sin(angulor))/10, _sin/10, (-x*sin(angulor) + z*cos(angulor))/10);
 		}
 		glEnd();
 

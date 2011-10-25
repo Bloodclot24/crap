@@ -5,7 +5,7 @@
 
 class Cono: public Cuerpo{
 private:
-	void dibujarCirculo(int segmentos);
+	void dibujarCirculo(int segmentos, float radio, float z);
 protected:
   virtual void do_dibujar();
 public:
