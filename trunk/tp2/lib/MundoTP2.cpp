@@ -243,7 +243,6 @@ void MundoTP2::rotarFigura(float angulo, bool x, bool y, bool z){
 
 void MundoTP2::cambiarFigura(Cuerpo* cuerpo){
   if(figura != NULL){
-    
 	  desanimar(figura);
 	  delete figura;
   }

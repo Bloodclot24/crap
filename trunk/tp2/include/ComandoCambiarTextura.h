@@ -14,6 +14,7 @@ public:
   ComandoCambiarTextura(const char * filename);
   virtual void ejecutar();
   GLuint getTextura();
+  void cargarTextura3D(const char * filename);
 };
 
 #endif
