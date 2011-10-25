@@ -9,4 +9,4 @@ void main(void){
 	v.x /= 2.0;
 
 	gl_Position = gl_ProjectionMatrix * matriz_mv * v;
-}
+}     
