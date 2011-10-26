@@ -33,6 +33,7 @@ Cuerpo::Cuerpo(){
     r=g=b=0.5;
     texture = NULL;
     pasoAnimacion=0;
+    cambiarShaders=0;
     MundoTP2::get_instance()->animame(this,10);
 }
 
@@ -42,21 +43,41 @@ void Cuerpo::setColor(float r, float g, float b){
   this->b=b;
 }
 
-void Cuerpo::agregarShader(VertexShader vs){
-    vssSiguiente.push_back(vs);
+
+void Cuerpo::setFshader(FragmentShader fs){
+  if(!cambiarShaders){
+    vsFormaSiguiente = vsforma;
+    vsiluminacionSiguiente = vsiluminacion;
+  }
+  fsSiguiente = fs;
+  cambiarShaders = true;
 }
 
-void Cuerpo::agregarShader(FragmentShader fs){
-    fssSiguiente.push_back(fs);
+void Cuerpo::setVshaderForma(VertexShader vs){
+  if(!cambiarShaders){
+    fsSiguiente = fs;
+    vsiluminacionSiguiente = vsiluminacion;
+  }
+  vsFormaSiguiente = vs;
+  cambiarShaders = true;
+}
+
+void Cuerpo::setVshaderIluminacion(VertexShader vs){
+  std::cout << "Cambio el shader de iluminacion por " << vs.getId() << "\n";
+  if(!cambiarShaders){
+    fsSiguiente = fs;
+    vsFormaSiguiente = vsforma;
+  }
+  vsiluminacionSiguiente = vs;
+  cambiarShaders = true;
 }
 
 Programa* Cuerpo::getProgram(){
+  std::list<VertexShader> vss;
+  std::list<FragmentShader> fss;
+  vss.push_back(vsforma); vss.push_back(vsiluminacion);
+  fss.push_back(fs);
   return Programa::crearPrograma(vss, fss);
-}
-
-void Cuerpo::borrarShaders(){
-  vssSiguiente.clear();
-  fssSiguiente.clear();
 }
 
 void Cuerpo::setTextura(GLuint t){
@@ -73,14 +94,14 @@ void Cuerpo::post_dibujar(){
 }
 
 void Cuerpo::animar(){
-  if(vssSiguiente.size() > 0){ //animacion para abajo
+  if(cambiarShaders){ //animacion para abajo
       if(pasoAnimacion > 0)
 	pasoAnimacion -= INCREMENTO_ANIMACION;
       else{
-	vss = vssSiguiente;
-	vssSiguiente.clear();
-	fss = fssSiguiente;
-	fssSiguiente.clear();
+	vsforma = vsFormaSiguiente;
+	vsiluminacion = vsiluminacionSiguiente;
+	fs = fsSiguiente;
+	cambiarShaders = false;
       }
   }
   else{
@@ -89,12 +110,4 @@ void Cuerpo::animar(){
   }
   
   MundoTP2::get_instance()->animame(this,50);
-}
-
-FragmentShader Cuerpo::obtenerFshader(){
-  return fss.front();
-}
-
-VertexShader Cuerpo::obtenerVshader(){
-  return vss.front();
 }

@@ -4,18 +4,17 @@
 #include "Command.h"
 #include "Shader.h"
 
-class ComandoCambiarShader:public Command{
+class ComandoCambiarVShaderForma:public Command{
   VertexShader vshader;
-  FragmentShader fshader;
 public:
-  ComandoCambiarShader(VertexShader vshader, FragmentShader fshader);
-  virtual void ejecutar();  
+  ComandoCambiarVShaderForma(VertexShader vshader);
+  virtual void ejecutar();
 };
 
-class ComandoCambiarVShader:public Command{
+class ComandoCambiarVShaderIluminacion:public Command{
   VertexShader vshader;
 public:
-  ComandoCambiarVShader(VertexShader vshader);
+  ComandoCambiarVShaderIluminacion(VertexShader vshader);
   virtual void ejecutar();
 };
 

@@ -1,38 +1,30 @@
 #include "ComandoCambiarShader.h"
 #include "MundoTP2.h"
 
-ComandoCambiarShader::ComandoCambiarShader(VertexShader vshader, FragmentShader fshader): Command(){
-  this->vshader = vshader;
-  this->fshader = fshader;
-}
-
-void ComandoCambiarShader::ejecutar(){
-    Cuerpo *c = MundoTP2::get_instance()->obtenerCuerpo();
-    c->borrarShaders();
-    c->agregarShader(vshader);
-    c->agregarShader(fshader);
-}
-
 ComandoCambiarFShader::ComandoCambiarFShader(FragmentShader fshader){
   this->fshader = fshader;
 }
 
 void ComandoCambiarFShader::ejecutar(){
   Cuerpo *c = MundoTP2::get_instance()->obtenerCuerpo();
-  VertexShader vshader = c->obtenerVshader();
-  c->borrarShaders();
-  c->agregarShader(vshader);
-  c->agregarShader(fshader);
+  c->setFshader(fshader);
 }
 
-ComandoCambiarVShader::ComandoCambiarVShader(VertexShader vshader){
+ComandoCambiarVShaderForma::ComandoCambiarVShaderForma(VertexShader vshader){
   this->vshader = vshader;
 }
 
-void ComandoCambiarVShader::ejecutar(){
+void ComandoCambiarVShaderForma::ejecutar(){
   Cuerpo *c = MundoTP2::get_instance()->obtenerCuerpo();
-  FragmentShader fshader = c->obtenerFshader();
-  c->borrarShaders();
-  c->agregarShader(vshader);
-  c->agregarShader(fshader);
+  c->setVshaderForma(vshader);
+}
+
+
+ComandoCambiarVShaderIluminacion::ComandoCambiarVShaderIluminacion(VertexShader vshader){
+  this->vshader = vshader;
+}
+
+void ComandoCambiarVShaderIluminacion::ejecutar(){
+  Cuerpo *c = MundoTP2::get_instance()->obtenerCuerpo();
+  c->setVshaderIluminacion(vshader);
 }

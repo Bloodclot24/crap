@@ -10,110 +10,124 @@
 #include "ComandoCambiarShader.h"
 #include "ComandoCambiarTextura.h"
 #include "ComandoCambiarTexturaCubica.h"
+#include "ComandoCompuesto.h"
 #include "stdlib.h"
 
 MundoTP2* MundoTP2::te_odio2 = NULL;
 
-MundoTP2::MundoTP2() {
-    figura = NULL;
-    animando=false;
-    x_mouse = 0;
-    y_mouse = 0;
-    mouse_capturado = false;
+MundoTP2::MundoTP2(){
+	figura = NULL;
+	animando=false;
+	x_mouse = 0;
+	y_mouse = 0;
+	mouse_capturado = false;
 }
 
 
-void MundoTP2::crearMenues() {
-    Cuerpo* c;
-    c=new Esfera();
-    c->setColor(1,0,0);
-    menuFragmentShader.agregarElemento(c, new ComandoCambiarColor(1,0,0));
-    c=new Esfera();
-    ComandoCambiarTextura* tierra = new ComandoCambiarTextura("earth.raw");
-    c->setColor(1,1,1);
-    c->setTextura(tierra->getTextura());
-    menuFragmentShader.agregarElemento(c, tierra);
-    c=new Esfera();
-    c->setColor(1,1,1);
-    ComandoCambiarTextura* ladrillo = new ComandoCambiarTextura("lad.raw");
-    c->setTextura(ladrillo->getTextura());
-    menuFragmentShader.agregarElemento(c, ladrillo);
-    c=new Esfera();
-    c->setColor(1,1,1);
-    ComandoCambiarTexturaCubica* cubo = new ComandoCambiarTexturaCubica("cubemaps/cubemap_landscape/landscape");
-    c->setTexturaCubica(cubo->getTextura());
-    menuFragmentShader.agregarElemento(c, cubo);
+void MundoTP2::crearMenues(){
+  Cuerpo* c;  
+  menuFormas.cambiarOrientacion(MENU_VERTICAL);
+  c=new Esfera();
+  menuFormas.agregarElemento(c,new ComandoCambiarFormaEsfera());
+  c=new Cubo();
+  menuFormas.agregarElemento(c,new ComandoCambiarFormaCubo());
+  c=new Toroide();
+  menuFormas.agregarElemento(c,new ComandoCambiarFormaToroide());
+  c=new Cilindro();
+  menuFormas.agregarElemento(c,new ComandoCambiarFormaCilindro());
+  c=new Cono();
+  menuFormas.agregarElemento(c,new ComandoCambiarFormaCono());
+  menuVertexShader.cambiarOrientacion(MENU_VERTICAL);
+  
+  VertexShader vshaderEsferizar = cargarVshader("shaders/esferizar.vert");
+  VertexShader vshaderSimple = cargarVshader("shaders/simple.vert");
+  VertexShader vshaderIlumSimple = cargarVshader("shaders/simple_ilum.vert");
+  VertexShader vshaderOndas = cargarVshader("shaders/ondas.vert");
+  VertexShader vshaderTorcido = cargarVshader("shaders/torcido.vert");
+  VertexShader vshaderRotado = cargarVshader("shaders/rotar.vert");
+  FragmentShader fshaderSimple = cargarFshader("shaders/simple.frag");
+  FragmentShader fshaderTextura = cargarFshader("shaders/textura.frag");
 
-    menuFormas.cambiarOrientacion(MENU_VERTICAL);
-    c=new Esfera();
-    menuFormas.agregarElemento(c,new ComandoCambiarFormaEsfera());
-    c=new Cubo();
-    menuFormas.agregarElemento(c,new ComandoCambiarFormaCubo());
-    c=new Toroide();
-    menuFormas.agregarElemento(c,new ComandoCambiarFormaToroide());
-    c=new Cilindro();
-    menuFormas.agregarElemento(c,new ComandoCambiarFormaCilindro());
-    c=new Cono();
-    menuFormas.agregarElemento(c,new ComandoCambiarFormaCono());
-    menuVertexShader.cambiarOrientacion(MENU_VERTICAL);
+  
+  figura->setVshaderIluminacion(vshaderIlumSimple);
+  figura->setVshaderForma(vshaderSimple);
+  figura->setFshader(fshaderSimple);
+  
+  c=new Esfera();
+  c->setColor(1,0,0);
+  c->setVshaderForma(vshaderSimple); 
+  c->setVshaderIluminacion(vshaderIlumSimple);
+  c->setFshader(fshaderSimple);
+  ComandoCompuesto *cc1 = new ComandoCompuesto;
+  cc1->agregarComando(new ComandoCambiarColor(1,0,0));
+  cc1->agregarComando(new ComandoCambiarVShaderIluminacion(vshaderIlumSimple));
+  cc1->agregarComando(new ComandoCambiarFShader(fshaderSimple));
+  menuFragmentShader.agregarElemento(c, cc1);
+  
+  c=new Esfera();
+  ComandoCambiarTextura* tierra = new ComandoCambiarTextura("earth.raw");
+  c->setColor(1,1,1);
+  c->setTextura(tierra->getTextura());
+  menuFragmentShader.agregarElemento(c, tierra);
+  c=new Esfera();
+  c->setColor(1,1,1);
+  ComandoCambiarTextura* ladrillo = new ComandoCambiarTextura("lad.raw");
+  c->setTextura(ladrillo->getTextura());
+  menuFragmentShader.agregarElemento(c, ladrillo);
+  c=new Esfera();
+  c->setColor(1,1,1);
+  ComandoCambiarTexturaCubica* cubo = new ComandoCambiarTexturaCubica("cubemaps/cubemap_landscape/landscape");
+  c->setTexturaCubica(cubo->getTextura());
+  menuFragmentShader.agregarElemento(c, cubo);
 
-    VertexShader vshaderEsferizar = cargarVshader("shaders/esferizar.vert");
-    VertexShader vshaderSimple = cargarVshader("shaders/simple.vert");
-    VertexShader vshaderOndas = cargarVshader("shaders/ondas.vert");
-    VertexShader vshaderTorcido = cargarVshader("shaders/torcido.vert");
-    VertexShader vshaderRotado = cargarVshader("shaders/rotar.vert");
-    FragmentShader fshaderSimple = cargarFshader("shaders/simple.frag");
-    FragmentShader fshaderTextura = cargarFshader("shaders/textura.frag");
+  c=new Cubo();
+  c->setVshaderForma(vshaderSimple);
+  c->setVshaderIluminacion(vshaderIlumSimple);
+  c->setFshader(fshaderSimple);
+  menuVertexShader.agregarElemento(c, new ComandoCambiarVShaderForma(vshaderSimple));
 
-
-    c=new Cubo();
-    c->agregarShader(vshaderSimple);
-    c->agregarShader(fshaderSimple);
-    menuVertexShader.agregarElemento(c, new ComandoCambiarShader(vshaderSimple, fshaderTextura));
-
-    c=new Cubo();
-    c->agregarShader(vshaderEsferizar);
-    c->agregarShader(fshaderSimple);
-    menuVertexShader.agregarElemento(c, new ComandoCambiarShader(vshaderEsferizar, fshaderTextura));
-
-    c=new Cubo();
-    c->agregarShader(vshaderOndas);
-    c->agregarShader(fshaderSimple);
-    menuVertexShader.agregarElemento(c, new ComandoCambiarShader(vshaderOndas, fshaderTextura));
-
-    c=new Cubo();
-    c->agregarShader(vshaderTorcido);
-    c->agregarShader(fshaderSimple);
-    menuVertexShader.agregarElemento(c, new ComandoCambiarShader(vshaderTorcido, fshaderTextura));
-
-    c=new Cubo();
-    c->agregarShader(vshaderRotado);
-    c->agregarShader(fshaderSimple);
-    menuVertexShader.agregarElemento(c, new ComandoCambiarShader(vshaderRotado, fshaderTextura));
-
-    c=new Cubo();
-    VertexShader vshaderNulo;
-    FragmentShader fshaderNulo;
-    menuVertexShader.agregarElemento(c, new ComandoCambiarShader(vshaderNulo, fshaderNulo));
+  c=new Cubo();
+  c->setVshaderForma(vshaderEsferizar);
+  c->setVshaderIluminacion(vshaderIlumSimple);
+  c->setFshader(fshaderSimple);
+  menuVertexShader.agregarElemento(c, new ComandoCambiarVShaderForma(vshaderEsferizar));
+  
+  c=new Cubo();
+  c->setVshaderIluminacion(vshaderIlumSimple);
+  c->setVshaderForma(vshaderOndas);
+  c->setFshader(fshaderSimple);
+  menuVertexShader.agregarElemento(c, new ComandoCambiarVShaderForma(vshaderOndas));
+  
+  c=new Cubo();
+  c->setVshaderForma(vshaderTorcido);
+  c->setVshaderIluminacion(vshaderIlumSimple);
+  c->setFshader(fshaderSimple);
+  menuVertexShader.agregarElemento(c, new ComandoCambiarVShaderForma(vshaderTorcido));
+  
+  c=new Cubo();
+  c->setVshaderForma(vshaderRotado);
+  c->setVshaderIluminacion(vshaderIlumSimple);
+  c->setFshader(fshaderSimple);
+  menuVertexShader.agregarElemento(c, new ComandoCambiarVShaderForma(vshaderRotado));
 }
 
 
-FragmentShader MundoTP2::cargarFshader(const char* archivo) {
-    FragmentShader fshader;
-    if (!fshader.cargarDesdeArchivo(archivo)) {
-        std::cout << "FLOG:" << fshader.getInfoLog() << "\n";
-        exit(0);
-    }
-    return fshader;
+FragmentShader MundoTP2::cargarFshader(const char* archivo){
+  FragmentShader fshader;
+  if(!fshader.cargarDesdeArchivo(archivo)){
+    std::cout << "FLOG:" << fshader.getInfoLog() << "\n";
+    exit(0);
+  }
+  return fshader;
 }
 
-VertexShader MundoTP2::cargarVshader(const char* archivo) {
-    VertexShader vshader;
-    if (!vshader.cargarDesdeArchivo(archivo)) {
-        std::cout << "VLOG:" << vshader.getInfoLog() << "\n";
-        exit(0);
-    }
-    return vshader;
+VertexShader MundoTP2::cargarVshader(const char* archivo){
+ VertexShader vshader;
+  if(!vshader.cargarDesdeArchivo(archivo)){
+    std::cout << "VLOG:" << vshader.getInfoLog() << "\n";
+    exit(0);
+  }
+  return vshader;
 }
 
 
@@ -158,99 +172,100 @@ void MundoTP2::inicializar() {
 
 }
 
-void MundoTP2::vistaOrtogonal() {
-    glMatrixMode (GL_PROJECTION);
-    glLoadIdentity ();
-    glOrtho(-(float)ancho_ventana/alto_ventana,(float)ancho_ventana/alto_ventana,-1,1,-30,30);
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-    gluLookAt (0,0,2,0,0,0,0,1,0);
+
+void MundoTP2::vistaOrtogonal(){
+  glMatrixMode (GL_PROJECTION);
+  glLoadIdentity ();
+  glOrtho(-(float)ancho_ventana/alto_ventana,(float)ancho_ventana/alto_ventana,-1,1,-30,30);
+  glMatrixMode(GL_MODELVIEW);
+  glLoadIdentity();
+  gluLookAt (0,0,2,0,0,0,0,1,0);
 }
 
-void MundoTP2::vistaPerspectiva() {
-    glMatrixMode (GL_PROJECTION);
-    glLoadIdentity ();
-    gluPerspective(60.0, (GLfloat)ancho_ventana/(GLfloat)alto_ventana, 0.10, 100.0);
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-    gluLookAt (0,0,2,0,0,0,0,1,0);
+void MundoTP2::vistaPerspectiva(){
+  glMatrixMode (GL_PROJECTION);
+  glLoadIdentity ();
+  gluPerspective(60.0, (GLfloat)ancho_ventana/(GLfloat)alto_ventana, 0.10, 100.0);
+  glMatrixMode(GL_MODELVIEW);
+  glLoadIdentity();
+  gluLookAt (0,0,2,0,0,0,0,1,0);
 }
 
-void MundoTP2::display() {
-    glViewport (0, 0, (GLsizei) ancho_ventana, (GLsizei) alto_ventana);
-    glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-    // Menues
-    vistaOrtogonal();
-    glPushMatrix();
-    glTranslatef(0,0.8,-0.5);
-    menuFragmentShader.dibujar();
-    glPopMatrix();
-    glPushMatrix();
-    glTranslatef(-0.8*(float)ancho_ventana/alto_ventana,0,-0.5);
-    menuFormas.dibujar();
-    glPopMatrix();
-
-    glPushMatrix();
-    glTranslatef(0.8*(float)ancho_ventana/alto_ventana,0,-0.5);
-    menuVertexShader.dibujar();
-    glPopMatrix();
-
-
-    //Objeto central
-    vistaPerspectiva();
-    glColor3f(1,0,0);
-    glTranslatef(0,-0.25,0);
-    glRotatef(rotX, 1,0,0);
-    glRotatef(rotY, 0,1,0);
-    glRotatef(rotZ, 0,0,1);
-    figura->dibujar();
-
-    glutSwapBuffers();
+void MundoTP2::display(){
+  glViewport (0, 0, (GLsizei) ancho_ventana, (GLsizei) alto_ventana);
+  glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  
+  // Menues
+  vistaOrtogonal();
+  glPushMatrix();
+  glTranslatef(0,0.8,-0.5);
+  menuFragmentShader.dibujar();
+  glPopMatrix();
+  glPushMatrix();
+  glTranslatef(-0.8*(float)ancho_ventana/alto_ventana,0,-0.5);
+  menuFormas.dibujar();
+  glPopMatrix();
+  
+  glPushMatrix();
+  glTranslatef(0.8*(float)ancho_ventana/alto_ventana,0,-0.5);
+  menuVertexShader.dibujar();
+  glPopMatrix();
+  
+  
+  //Objeto central
+  vistaPerspectiva();
+  glColor3f(1,0,0);
+  glTranslatef(0,-0.25,0);
+  glRotatef(rotX, 1,0,0);
+  glRotatef(rotY, 0,1,0);
+  glRotatef(rotZ, 0,0,1);
+  figura->dibujar();
+  
+  glutSwapBuffers();
 }
 
-void MundoTP2::mouse(int button, int state, int x, int y) {
-    if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
-        menuFragmentShader.click(x,y+0.8*alto_ventana);
-        menuFormas.click(x+0.8*(float)ancho_ventana/alto_ventana,y);
-        menuVertexShader.click(x-0.8*(float)ancho_ventana/alto_ventana,y);
-    }
+void MundoTP2::mouse(int button, int state, int x, int y){ 
+  if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN){
+    menuFragmentShader.click(x,y+0.8*alto_ventana);
+    menuFormas.click(x+0.8*(float)ancho_ventana/alto_ventana,y);
+    menuVertexShader.click(x-0.8*(float)ancho_ventana/alto_ventana,y);
+  }
 }
 
 void MundoTP2::motion(int x, int y) {
-    if (mouse_capturado) {
-        if (x_mouse < x)
-            rotX += 1;
-        else if (x_mouse > x)
-            rotX -= 1;
-        x_mouse = x;
-        if (y_mouse < y)
-            rotY += 1;
-        else
-            if (y_mouse > y)
-                rotY -= 1;
-        y_mouse = y;
-        glutPostRedisplay();
-        if (x_mouse < ancho_ventana / 3 || x_mouse > 2 * ancho_ventana / 3) {
-            x_mouse = ancho_ventana / 2;
-            glutWarpPointer(x_mouse, alto_ventana / 2);
-        }
-        if (y_mouse < alto_ventana / 3 || y_mouse > 2* alto_ventana / 3) {
-            y_mouse = alto_ventana / 2;
-            glutWarpPointer(x_mouse, y_mouse);
-        }
-    }
+	if (mouse_capturado) {
+		if (x_mouse < x)
+			rotX += 1;
+		else if(x_mouse > x)
+				rotX -= 1;
+		x_mouse = x;
+		if (y_mouse < y)
+			rotY += 1;
+		else
+			if(y_mouse > y)
+				rotY -= 1;
+		y_mouse = y;
+		glutPostRedisplay();
+		if (x_mouse < ancho_ventana / 3 || x_mouse > 2 * ancho_ventana / 3) {
+			x_mouse = ancho_ventana / 2;
+			glutWarpPointer(x_mouse, alto_ventana / 2);
+		}
+		if(y_mouse < alto_ventana / 3 || y_mouse > 2* alto_ventana / 3){
+			y_mouse = alto_ventana / 2;
+			glutWarpPointer(x_mouse, y_mouse);
+		}
+	}
 }
 
-void MundoTP2::capturar_mouse() {
-    if (mouse_capturado) {
-        mouse_capturado = false;
-        glutSetCursor(GLUT_CURSOR_INHERIT);
-    }
-    else {
-        mouse_capturado = true;
-        glutSetCursor(GLUT_CURSOR_NONE);
-    }
+void MundoTP2::capturar_mouse(){
+	if(mouse_capturado){
+		mouse_capturado = false;
+		glutSetCursor(GLUT_CURSOR_INHERIT);
+	}
+	else{
+		mouse_capturado = true;
+		glutSetCursor(GLUT_CURSOR_NONE);
+	}
 }
 
 void MundoTP2::cambiar_estado_luz_1() {
@@ -275,143 +290,143 @@ void MundoTP2::cambiar_estado_luz_2() {
     }
 }
 
-MundoTP2* MundoTP2::get_instance() {
-    if (te_odio2 == NULL) {
-        te_odio2=new MundoTP2();
-        te_odio = te_odio2;
-    }
-
-    return te_odio2;
+MundoTP2* MundoTP2::get_instance(){
+  if(te_odio2 == NULL){
+    te_odio2=new MundoTP2();
+    te_odio = te_odio2;
+  }
+    
+  return te_odio2;
 }
 
-void MundoTP2::rotarFigura(float angulo, bool x, bool y, bool z) {
-    if (x)
-        rotX+=angulo;
-    if (y)
-        rotY+=angulo;
-    if (z)
-        rotZ+=angulo;
+void MundoTP2::rotarFigura(float angulo, bool x, bool y, bool z){
+	if(x)
+	  rotX+=angulo;
+	if(y)
+	  rotY+=angulo;
+	if(z)
+	  rotZ+=angulo;
 }
 
-void MundoTP2::cambiarFigura(Cuerpo* cuerpo) {
-    if (figura != NULL) {
-        desanimar(figura);
-        delete figura;
-    }
-    figura=cuerpo;
+void MundoTP2::cambiarFigura(Cuerpo* cuerpo){
+  if(figura != NULL){
+	  desanimar(figura);
+	  delete figura;
+  }
+  figura=cuerpo;
 }
 
-void MundoTP2::resetearRotacion() {
-    rotX=rotY=rotZ=0;
+void MundoTP2::resetearRotacion(){
+ rotX=rotY=rotZ=0; 
 }
 
-Cuerpo* MundoTP2::obtenerCuerpo() {
-    return figura;
+Cuerpo* MundoTP2::obtenerCuerpo(){
+ return figura; 
 }
 
 void MundoTP2::destruirMenu(Menu menu) {
 
-    std::vector<Cuerpo*> cuerpos = menu.getCuerpos();
-    std::vector<Cuerpo*>::iterator it;
-    for (it = cuerpos.begin(); it != cuerpos.end(); it++)
-        delete *it;
-    std::vector<Command*> comandos = menu.getComandos();
-    std::vector<Command*>::iterator it1;
-    for (it1 = comandos.begin(); it1 != comandos.end(); it1++)
-        delete *it1;
+	std::vector<Cuerpo*> cuerpos = menu.getCuerpos();
+	std::vector<Cuerpo*>::iterator it;
+	for (it = cuerpos.begin(); it != cuerpos.end(); it++)
+		delete *it;
+	std::vector<Command*> comandos = menu.getComandos();
+	std::vector<Command*>::iterator it1;
+	for (it1 = comandos.begin(); it1 != comandos.end(); it1++)
+		delete *it1;
 
 }
 
-void MundoTP2::animame(Animable* animable, int milis) {
-    std::list<Animable*>::iterator itan;
-    std::list<int>::iterator itmil;
-
-    for (itan = animables.begin(), itmil = tiemposDeAnimacion.begin();
-            itmil != tiemposDeAnimacion.end() && *itmil < milis;
-            itmil++, itan++) {}
-
-    animables.insert(itan, animable);
-    tiemposDeAnimacion.insert(itmil, milis);
-
-    if (!animando) {
-        //poner timer
-        glutTimerFunc(*(tiemposDeAnimacion.begin()), MundoTP2::static_timer_callback,0);
-        animando=true;
-    }
-
+void MundoTP2::animame(Animable* animable, int milis){
+  std::list<Animable*>::iterator itan;
+  std::list<int>::iterator itmil;
+  
+  for(itan = animables.begin(), itmil = tiemposDeAnimacion.begin();
+      itmil != tiemposDeAnimacion.end() && *itmil < milis;
+      itmil++, itan++){}
+      
+  animables.insert(itan, animable);
+  tiemposDeAnimacion.insert(itmil, milis);
+  
+  if(!animando){
+    //poner timer
+    glutTimerFunc(*(tiemposDeAnimacion.begin()), MundoTP2::static_timer_callback,0);
+    animando=true;
+  }
+    
 }
 
-void MundoTP2::desanimar(Animable* animable) {
-    std::list<Animable*>::iterator itan;
-    std::list<int>::iterator itmil;
-    std::list<Animable*> nuevosAnimables;
-    std::list<int> nuevosTiempos;
-
-    for (itan = animables.begin(), itmil = tiemposDeAnimacion.begin();
-            itmil != tiemposDeAnimacion.end();
-            itmil++, itan++) {
-        if (*itan != animable) {
-            nuevosTiempos.push_back(*itmil);
-            nuevosAnimables.push_back(*itan);
-        }
-    }
-    animables = nuevosAnimables;
-    tiemposDeAnimacion = nuevosTiempos;
+void MundoTP2::desanimar(Animable* animable){
+  std::list<Animable*>::iterator itan;
+  std::list<int>::iterator itmil;
+  std::list<Animable*> nuevosAnimables;
+  std::list<int> nuevosTiempos;
+  
+  for(itan = animables.begin(), itmil = tiemposDeAnimacion.begin();
+      itmil != tiemposDeAnimacion.end();
+      itmil++, itan++){
+      if(*itan != animable){
+	  nuevosTiempos.push_back(*itmil);
+	  nuevosAnimables.push_back(*itan);
+      }
+  }
+  animables = nuevosAnimables;
+  tiemposDeAnimacion = nuevosTiempos;
 }
 
 
-void MundoTP2::timer_callback() {
-
-    std::list<Animable*>::iterator itan;
-    std::list<Animable*> nuevosAnimables;
-    std::list<Animable*> animados;
-    std::list<int>::iterator itmil;
-    std::list<int> nuevosTiempos;
-    int tiempo = *tiemposDeAnimacion.begin();
-
-    for (itan = animables.begin(), itmil = tiemposDeAnimacion.begin();
-            itmil != tiemposDeAnimacion.end();
-            itmil++, itan++) {
-
-        int actual = *itmil-tiempo;
-        if (actual<=0)
-            animados.push_back(*itan);
-
-        else {
-            nuevosTiempos.push_back(actual);
-            nuevosAnimables.push_back(*itan);
-        }
+void MundoTP2::timer_callback(){
+  
+  std::list<Animable*>::iterator itan;
+  std::list<Animable*> nuevosAnimables;
+  std::list<Animable*> animados;
+  std::list<int>::iterator itmil;
+  std::list<int> nuevosTiempos;
+  int tiempo = *tiemposDeAnimacion.begin();
+  
+  for(itan = animables.begin(), itmil = tiemposDeAnimacion.begin();
+      itmil != tiemposDeAnimacion.end();
+      itmil++, itan++){
+    
+    int actual = *itmil-tiempo;
+    if(actual<=0)
+      animados.push_back(*itan);
+    
+    else{ 
+	nuevosTiempos.push_back(actual);
+	nuevosAnimables.push_back(*itan);
     }
-
-    animables = nuevosAnimables;
-    tiemposDeAnimacion = nuevosTiempos;
-
-    for (std::list<Animable*>::iterator it=animados.begin(); it!= animados.end(); it++)
-        (*it)->animar();
-
-
-    if (tiemposDeAnimacion.size() > 0) {
-        glutTimerFunc(*(tiemposDeAnimacion.begin()), MundoTP2::static_timer_callback,0);
-    }
-    else {
-        animando=false;
-    }
-    glutPostRedisplay();
+  }
+  
+  animables = nuevosAnimables;
+  tiemposDeAnimacion = nuevosTiempos;
+  
+  for(std::list<Animable*>::iterator it=animados.begin(); it!= animados.end(); it++)
+      (*it)->animar();
+  
+  
+  if(tiemposDeAnimacion.size() > 0){
+    glutTimerFunc(*(tiemposDeAnimacion.begin()), MundoTP2::static_timer_callback,0);
+  }
+  else{
+     animando=false;
+  }
+  glutPostRedisplay();
 }
 
-void MundoTP2::static_timer_callback(int ignorar) {
-    MundoTP2::get_instance()->timer_callback();
+void MundoTP2::static_timer_callback(int ignorar){
+  MundoTP2::get_instance()->timer_callback();
 }
 
 void MundoTP2::destruir() {
-    delete te_odio2;
+ delete te_odio2;
 }
 
 MundoTP2::~MundoTP2() {
-    if (figura != NULL)
-        delete figura;
-    destruirMenu(menuFormas);
-    destruirMenu(menuVertexShader);
-    destruirMenu(menuFragmentShader);
+	if (figura != NULL)
+		delete figura;
+	destruirMenu(menuFormas);
+	destruirMenu(menuVertexShader);
+	destruirMenu(menuFragmentShader);
 
 }

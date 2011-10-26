@@ -1,14 +1,11 @@
 uniform float t;
 varying vec3 lightDir,normal;
 
+void calcular_iluminacion(vec3 orig_normal);
+
 void main(){
 
-  normal = normalize(gl_NormalMatrix * gl_Normal);
-
-  lightDir = normalize(vec3(gl_LightSource[0].position));
-  gl_TexCoord[0] = gl_MultiTexCoord0;
-
-  gl_FrontColor = gl_Color;
+  calcular_iluminacion(gl_Normal);
 
   vec4 v = vec4(gl_Vertex);
   float alfa = 3.141592654/4.0;

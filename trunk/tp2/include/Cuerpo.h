@@ -15,10 +15,12 @@ class Cuerpo:public Animable{
   float ancho, alto;
   float r,g,b;
   float pasoAnimacion;
-  std::list<VertexShader> vss;
-  std::list<FragmentShader> fss;
-  std::list<VertexShader> vssSiguiente;
-  std::list<FragmentShader> fssSiguiente;
+  
+  VertexShader vsforma; VertexShader vsFormaSiguiente;
+  VertexShader vsiluminacion; VertexShader vsiluminacionSiguiente;
+  FragmentShader fs; FragmentShader fsSiguiente;
+  bool cambiarShaders;
+  
   virtual void do_dibujar()=0;
   virtual void post_dibujar();
   Programa* getProgram();
@@ -31,12 +33,12 @@ public:
   void setTexturaCubica(GLuint t);
   float getAlto();
   float getAncho();
-  void agregarShader(VertexShader vs);
-  void agregarShader(FragmentShader fs);
-  void borrarShaders();
+  
+  void setVshaderForma(VertexShader vs);
+  void setVshaderIluminacion(VertexShader vs);
+  void setFshader(FragmentShader fs);
+  
   void animar();
-  VertexShader   obtenerVshader();
-  FragmentShader obtenerFshader();
 };
 
 

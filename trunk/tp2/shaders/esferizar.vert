@@ -1,6 +1,7 @@
 varying vec3 lightDir,normal;
 uniform float t;
 
+void calcular_iluminacion(vec3 orig_normal);
 
 vec4 deformar(vec4 posicion){
 	float x0 = posicion.x;
@@ -57,11 +58,7 @@ vec4 deformar(vec4 posicion){
 }
 
 void main(){
-	normal = normalize(gl_NormalMatrix * gl_Normal);
-
-	lightDir = normalize(vec3(gl_LightSource[0].position));
-	gl_TexCoord[0] = gl_MultiTexCoord0;
-
+	calcular_iluminacion(gl_Normal);
 	vec4 posicion = gl_Vertex;
 
 	posicion = deformar(posicion);
@@ -69,6 +66,4 @@ void main(){
 	normal = vec3(deformar(aux));
 	
 	gl_Position = gl_ModelViewProjectionMatrix * posicion;
-	gl_FrontColor = gl_Color;
-
 }
