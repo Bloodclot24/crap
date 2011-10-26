@@ -9,6 +9,7 @@
 #include "ComandoCambiarForma.h"
 #include "ComandoCambiarShader.h"
 #include "ComandoCambiarTextura.h"
+#include "ComandoCambiarTexturaCubica.h"
 #include "stdlib.h"
 
 MundoTP2* MundoTP2::te_odio2 = NULL;
@@ -37,6 +38,11 @@ void MundoTP2::crearMenues(){
   ComandoCambiarTextura* ladrillo = new ComandoCambiarTextura("lad.raw");
   c->setTextura(ladrillo->getTextura());
   menuFragmentShader.agregarElemento(c, ladrillo);
+  c=new Esfera();
+  c->setColor(1,1,1);
+  ComandoCambiarTexturaCubica* cubo = new ComandoCambiarTexturaCubica("cubemaps/cubemap_landscape/landscape");
+  c->setTexturaCubica(cubo->getTextura());
+  menuFragmentShader.agregarElemento(c, cubo);
   
   menuFormas.cambiarOrientacion(MENU_VERTICAL);
   c=new Esfera();

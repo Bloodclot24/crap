@@ -63,6 +63,10 @@ void Cuerpo::setTextura(GLuint t){
   texture = t;
 }
 
+void Cuerpo::setTexturaCubica(GLuint t){
+  texturaCubica = t;
+}
+
 void Cuerpo::post_dibujar(){
   glUseProgram(0);
   glBindTexture(GL_TEXTURE_2D, 0);
