@@ -3,7 +3,12 @@ uniform float t;
 
 void calcular_iluminacion(vec3 orig_normal);
 
-vec4 deformar(vec4 posicion){
+
+void main(){
+
+	normal = gl_Normal;
+	vec4 posicion = gl_Vertex;
+
 	float x0 = posicion.x;
 	float y0 = posicion.y;
 	float z0 = posicion.z;
@@ -25,6 +30,11 @@ vec4 deformar(vec4 posicion){
 		posicion.x = x0 + factor * (xe - x0);
 		posicion.y = y0 + factor * (ye - y0);
 		posicion.z = z0 + factor * (ze - z0);
+  
+		normal.x = normal.x*(1.0 - factor) + xe * factor;
+		normal.y = normal.y*(1.0 - factor) + ye * factor;
+		normal.z = normal.z*(1.0 - factor) + ze * factor;
+
 	} else if (x0 != 0.0) {
 		float divisor = pow(z0/x0,2.0) + pow(y0/x0,2.0) + 1.0;
 		float radicando = pow(radio,2.0) / divisor;
@@ -39,6 +49,11 @@ vec4 deformar(vec4 posicion){
 		posicion.x = x0 + factor * (xe - x0);
 		posicion.y = y0 + factor * (ye - y0);
 		posicion.z = z0 + factor * (ze - z0);
+
+		normal.x = normal.x*(1.0 - factor) + xe * factor;
+		normal.y = normal.y*(1.0 - factor) + ye * factor;
+		normal.z = normal.z*(1.0 - factor) + ze * factor;
+
 	} else if (y0 != 0.0) {
 		float divisor = pow(x0/y0,2.0) + pow(z0/y0,2.0) + 1.0;
 		float radicando = pow(radio,2.0) / divisor;
@@ -53,17 +68,13 @@ vec4 deformar(vec4 posicion){
 		posicion.x = x0 + factor * (xe - x0);
 		posicion.y = y0 + factor * (ye - y0);
 		posicion.z = z0 + factor * (ze - z0);
+
+		normal.x = normal.x*(1.0 - factor) + xe * factor;
+		normal.y = normal.y*(1.0 - factor) + ye * factor;
+		normal.z = normal.z*(1.0 - factor) + ze * factor;
 	}
-  return posicion;
-}
 
-void main(){
-	calcular_iluminacion(gl_Normal);
-	vec4 posicion = gl_Vertex;
-
-	posicion = deformar(posicion);
-	vec4 aux = vec4(normal,1);
-	normal = vec3(deformar(aux));
+	calcular_iluminacion(normal);
 	
 	gl_Position = gl_ModelViewProjectionMatrix * posicion;
 }
