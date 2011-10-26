@@ -11,6 +11,7 @@
 class Cuerpo:public Animable{
   protected:
   GLuint texture;
+  GLuint texturaCubica;
   float ancho, alto;
   float r,g,b;
   float pasoAnimacion;
@@ -26,6 +27,7 @@ public:
   void dibujar();
   void setColor(float r, float g, float b);
   void setTextura(GLuint t);
+  void setTexturaCubica(GLuint t);
   float getAlto();
   float getAncho();
   void agregarShader(VertexShader vs);
