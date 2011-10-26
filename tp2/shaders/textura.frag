@@ -19,10 +19,9 @@ void main()
 	   at = gl_Color.a;
 	}
 	else{
-	  ct = texel.rgb;
+	  ct = mix(vec3(texel), vec3(gl_Color), 0);
 	  at = texel.a;
 	}
-
 	
 	gl_FragColor = vec4(ct * cf, at * af);
 

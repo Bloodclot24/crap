@@ -6,8 +6,6 @@ void calcular_iluminacion(vec3 orig_normal);
 void main()
 {
 	
-	calcular_iluminacion(gl_Normal);
-
 	vec4 posicion = gl_Vertex;
 
 	float x = posicion.x;
@@ -21,5 +19,17 @@ void main()
 
 	posicion.x = x*_cos-y*_sin;
 	posicion.y = x*_sin+y*_cos;
+
+	vec3 normal = gl_Normal;
+	x = normal.x;
+	y = normal.y;
+	z = normal.z;
+
+	normal.x = x*_cos-y*_sin;
+	normal.y = x*_sin+y*_cos;
+
+
+	calcular_iluminacion(normal);
+
 	gl_Position = gl_ModelViewProjectionMatrix * posicion;
 }
