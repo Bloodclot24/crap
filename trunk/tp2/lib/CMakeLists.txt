@@ -14,4 +14,5 @@ add_library(cuerpos_lib
   Cono.cpp
   Programa.cpp
   ComandoCambiarTextura.cpp
-  ComandoCambiarTexturaCubica.cpp)
+  ComandoCambiarTexturaCubica.cpp
+  ComandoCompuesto.cpp)

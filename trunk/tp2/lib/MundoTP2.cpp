@@ -10,6 +10,7 @@
 #include "ComandoCambiarShader.h"
 #include "ComandoCambiarTextura.h"
 #include "ComandoCambiarTexturaCubica.h"
+#include "ComandoCompuesto.h"
 #include "stdlib.h"
 
 MundoTP2* MundoTP2::te_odio2 = NULL;
@@ -24,26 +25,7 @@ MundoTP2::MundoTP2(){
 
 
 void MundoTP2::crearMenues(){
-  Cuerpo* c;
-  c=new Esfera();
-  c->setColor(1,0,0);
-  menuFragmentShader.agregarElemento(c, new ComandoCambiarColor(1,0,0));
-  c=new Esfera();
-  ComandoCambiarTextura* tierra = new ComandoCambiarTextura("earth.raw");
-  c->setColor(1,1,1);
-  c->setTextura(tierra->getTextura());
-  menuFragmentShader.agregarElemento(c, tierra);
-  c=new Esfera();
-  c->setColor(1,1,1);
-  ComandoCambiarTextura* ladrillo = new ComandoCambiarTextura("lad.raw");
-  c->setTextura(ladrillo->getTextura());
-  menuFragmentShader.agregarElemento(c, ladrillo);
-  c=new Esfera();
-  c->setColor(1,1,1);
-  ComandoCambiarTexturaCubica* cubo = new ComandoCambiarTexturaCubica("cubemaps/cubemap_landscape/landscape");
-  c->setTexturaCubica(cubo->getTextura());
-  menuFragmentShader.agregarElemento(c, cubo);
-  
+  Cuerpo* c;  
   menuFormas.cambiarOrientacion(MENU_VERTICAL);
   c=new Esfera();
   menuFormas.agregarElemento(c,new ComandoCambiarFormaEsfera());
@@ -64,12 +46,36 @@ void MundoTP2::crearMenues(){
   VertexShader vshaderRotado = cargarVshader("shaders/rotar.vert");
   FragmentShader fshaderSimple = cargarFshader("shaders/simple.frag");
   FragmentShader fshaderTextura = cargarFshader("shaders/textura.frag");
+
+  c=new Esfera();
+  c->setColor(1,0,0);
+  c->agregarShader(vshaderSimple); c->agregarShader(fshaderSimple);
+  ComandoCompuesto *cc1 = new ComandoCompuesto;
+  cc1->agregarComando(new ComandoCambiarColor(1,0,0));
+  cc1->agregarComando(new ComandoCambiarFShader(fshaderSimple));
+  menuFragmentShader.agregarElemento(c, cc1);
   
   
+  c=new Esfera();
+  ComandoCambiarTextura* tierra = new ComandoCambiarTextura("earth.raw");
+  c->setColor(1,1,1);
+  c->setTextura(tierra->getTextura());
+  menuFragmentShader.agregarElemento(c, tierra);
+  c=new Esfera();
+  c->setColor(1,1,1);
+  ComandoCambiarTextura* ladrillo = new ComandoCambiarTextura("lad.raw");
+  c->setTextura(ladrillo->getTextura());
+  menuFragmentShader.agregarElemento(c, ladrillo);
+  c=new Esfera();
+  c->setColor(1,1,1);
+  ComandoCambiarTexturaCubica* cubo = new ComandoCambiarTexturaCubica("cubemaps/cubemap_landscape/landscape");
+  c->setTexturaCubica(cubo->getTextura());
+  menuFragmentShader.agregarElemento(c, cubo);
+
   c=new Cubo();
   c->agregarShader(vshaderSimple);
   c->agregarShader(fshaderSimple);
-  menuVertexShader.agregarElemento(c, new ComandoCambiarShader(vshaderSimple, fshaderTextura));
+  menuVertexShader.agregarElemento(c, new ComandoCambiarShader(vshaderSimple, fshaderSimple));
 
   c=new Cubo();
   c->agregarShader(vshaderEsferizar);
@@ -90,11 +96,6 @@ void MundoTP2::crearMenues(){
   c->agregarShader(vshaderRotado);
   c->agregarShader(fshaderSimple);
   menuVertexShader.agregarElemento(c, new ComandoCambiarShader(vshaderRotado, fshaderTextura));
-  
-  c=new Cubo();
-  VertexShader vshaderNulo;
-  FragmentShader fshaderNulo;
-  menuVertexShader.agregarElemento(c, new ComandoCambiarShader(vshaderNulo, fshaderNulo));
 }
 
 

@@ -91,3 +91,10 @@ void Cuerpo::animar(){
   MundoTP2::get_instance()->animame(this,50);
 }
 
+FragmentShader Cuerpo::obtenerFshader(){
+  return fss.front();
+}
+
+VertexShader Cuerpo::obtenerVshader(){
+  return vss.front();
+}
