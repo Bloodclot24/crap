@@ -24,7 +24,10 @@ private:
   
   int x_mouse, y_mouse;
   bool mouse_capturado;
-
+  
+  bool luz_1_encendida;
+  bool luz_2_encendida;
+  
   MundoTP2();
   void display();
   void inicializar();
@@ -46,8 +49,11 @@ public:
   Cuerpo* obtenerCuerpo();
   void animame(Animable* animable, int milis);
   void capturar_mouse();
+  void cambiar_estado_luz_1();
+  void cambiar_estado_luz_2();
   static void destruir();
   ~MundoTP2();
+   
 };
 
 
