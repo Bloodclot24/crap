@@ -12,4 +12,18 @@ public:
   virtual void ejecutar();  
 };
 
+class ComandoCambiarVShader:public Command{
+  VertexShader vshader;
+public:
+  ComandoCambiarVShader(VertexShader vshader);
+  virtual void ejecutar();
+};
+
+class ComandoCambiarFShader:public Command{
+  FragmentShader fshader;
+public:
+  ComandoCambiarFShader(FragmentShader vshader);
+  virtual void ejecutar();
+};
+
 #endif

@@ -83,6 +83,17 @@ void Programa::cambiarUniforme(const char* nombre, GLfloat valor){
   glUniform1f(id, valor);
 }
 
+void Programa::cambiarUniformeVec3(const char* nombre, GLfloat valor[3]){
+  if(idPrograma == 0)
+    return;
+
+  GLint id = glGetUniformLocation(idPrograma, nombre);
+  if(id == -1){
+   return; 
+  }
+  
+  glUniform3fv(id, 1, valor);
+}
 
 void Programa::cambiarUniforme(const char* nombre, GLfloat valor[16]){
   if(idPrograma == 0)

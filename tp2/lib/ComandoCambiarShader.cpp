@@ -7,7 +7,32 @@ ComandoCambiarShader::ComandoCambiarShader(VertexShader vshader, FragmentShader 
 }
 
 void ComandoCambiarShader::ejecutar(){
-      MundoTP2::get_instance()->obtenerCuerpo()->borrarShaders();
-      MundoTP2::get_instance()->obtenerCuerpo()->agregarShader(vshader);
-      MundoTP2::get_instance()->obtenerCuerpo()->agregarShader(fshader);
+    Cuerpo *c = MundoTP2::get_instance()->obtenerCuerpo();
+    c->borrarShaders();
+    c->agregarShader(vshader);
+    c->agregarShader(fshader);
+}
+
+ComandoCambiarFShader::ComandoCambiarFShader(FragmentShader fshader){
+  this->fshader = fshader;
+}
+
+void ComandoCambiarFShader::ejecutar(){
+  Cuerpo *c = MundoTP2::get_instance()->obtenerCuerpo();
+  VertexShader vshader = c->obtenerVshader();
+  c->borrarShaders();
+  c->agregarShader(vshader);
+  c->agregarShader(fshader);
+}
+
+ComandoCambiarVShader::ComandoCambiarVShader(VertexShader vshader){
+  this->vshader = vshader;
+}
+
+void ComandoCambiarVShader::ejecutar(){
+  Cuerpo *c = MundoTP2::get_instance()->obtenerCuerpo();
+  FragmentShader fshader = c->obtenerFshader();
+  c->borrarShaders();
+  c->agregarShader(vshader);
+  c->agregarShader(fshader);
 }

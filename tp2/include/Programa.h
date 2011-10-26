@@ -15,6 +15,8 @@ public:
   void usar();
   void cambiarUniforme(const char* nombre, GLfloat valor);
   void cambiarUniforme(const char* nombre, GLfloat valor[16]);
+  void cambiarUniformeVec3(const char* nombre, GLfloat valor[3]);
+
 
 };
 

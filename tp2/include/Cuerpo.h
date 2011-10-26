@@ -22,6 +22,7 @@ class Cuerpo:public Animable{
   virtual void do_dibujar()=0;
   virtual void post_dibujar();
   Programa* getProgram();
+  
 public:
   Cuerpo();
   void dibujar();
@@ -34,6 +35,9 @@ public:
   void agregarShader(FragmentShader fs);
   void borrarShaders();
   void animar();
+  VertexShader   obtenerVshader();
+  FragmentShader obtenerFshader();
 };
+
 
 #endif
