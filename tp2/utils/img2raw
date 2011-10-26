@@ -1,0 +1,11 @@
+#!/bin/bash
+
+ENTRADA=${@}
+SALIDA1=${@}.bmp
+SALIDA2=${@}.raw
+
+convert ${ENTRADA} -resize 1024x512! ${SALIDA1}
+
+dd if=${SALIDA1} of=${SALIDA2} skip=1 ibs=54
+
+
