@@ -28,13 +28,17 @@ Programa* Programa::compilarPrograma(std::list< VertexShader > vss, std::list< F
   if(vss.size() == 0 || fss.size() == 0)
      return NULL;
   
+  std::cout << "Compilar shaders con:\n";
+  
   std::list<VertexShader>::iterator itv;
   for(itv=vss.begin(); itv != vss.end(); itv++){
-    glAttachShader(program, itv->getId()); 
+    std::cout << "VSHADER: " << itv->getId() << "\n";
+    glAttachShader(program, itv->getId());
   }
   
   std::list<FragmentShader>::iterator itf;
   for(itf=fss.begin(); itf != fss.end(); itf++){
+    std::cout << "FSHADER: " << itf->getId() << "\n";
     glAttachShader(program, itf->getId()); 
   }
   
