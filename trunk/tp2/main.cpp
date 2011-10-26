@@ -54,7 +54,21 @@ public:
     }
 };
 
+class TeclaLuz1: public ManejadorTecla{
+public:
+    virtual bool press(){
+     MundoTP2::get_instance()->cambiar_estado_luz_1();
+     return true;
+    }
+};
 
+class TeclaLuz2: public ManejadorTecla{
+public:
+    virtual bool press(){
+     MundoTP2::get_instance()->cambiar_estado_luz_2();
+     return true;
+    }
+};
 
 int main(int argc, char** argv)
 {
@@ -63,6 +77,8 @@ int main(int argc, char** argv)
   TeclaResetearRotacion resetr;
   TeclaSalir salir;
   TeclaCapturarMouse capturar;
+  TeclaLuz1 luz1;
+  TeclaLuz2 luz2;
   m->crearVentana();
   m->agregarTecla('x', &rotarx);
   m->agregarTecla('y', &rotary);
@@ -70,7 +86,10 @@ int main(int argc, char** argv)
   m->agregarTecla('r', &resetr);
   m->agregarTecla('q', &salir);
   m->agregarTecla('c', &capturar);
+  m->agregarTecla('1', &luz1);
+  m->agregarTecla('2', &luz2);
   atexit(MundoTP2::destruir);
   m->comenzar();
   return 0;
 }
+
