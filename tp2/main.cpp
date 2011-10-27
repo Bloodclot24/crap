@@ -70,6 +70,14 @@ public:
     }
 };
 
+class TeclaMenu: public ManejadorTecla{
+public:
+    virtual bool press(){
+     MundoTP2::get_instance()->cambiar_estado_menu();
+     return true;
+    }
+};
+
 int main(int argc, char** argv)
 {
   MundoTP2 *m = MundoTP2::get_instance();
@@ -79,6 +87,7 @@ int main(int argc, char** argv)
   TeclaCapturarMouse capturar;
   TeclaLuz1 luz1;
   TeclaLuz2 luz2;
+  TeclaMenu menu;
   m->crearVentana();
   m->agregarTecla('x', &rotarx);
   m->agregarTecla('y', &rotary);
@@ -88,6 +97,7 @@ int main(int argc, char** argv)
   m->agregarTecla('c', &capturar);
   m->agregarTecla('1', &luz1);
   m->agregarTecla('2', &luz2);
+  m->agregarTecla('m', &menu);
   atexit(MundoTP2::destruir);
   m->comenzar();
   return 0;

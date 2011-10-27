@@ -29,6 +29,8 @@ private:
   bool luz_1_encendida;
   bool luz_2_encendida;
   
+  bool mostrar_menu;
+  
   MundoTP2();
   void display();
   void inicializar();
@@ -52,6 +54,7 @@ public:
   void capturar_mouse();
   void cambiar_estado_luz_1();
   void cambiar_estado_luz_2();
+  void cambiar_estado_menu();
   std::vector<bool> obtenerEstadoLuces();
   static void destruir();
   ~MundoTP2();

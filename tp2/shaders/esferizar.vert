@@ -1,9 +1,7 @@
 varying vec3 lightDir,normal;
 uniform float t;
 
-void calcular_iluminacion(vec3 orig_normal);
-
-void calcular_iluminacion_especular(vec3 orig_normal, vec4 posicion);
+void calcular_iluminacion(vec3 orig_normal, vec4 posicion);
 
 void main(){
 
@@ -75,8 +73,7 @@ void main(){
 		normal.z = normal.z*(1.0 - factor) + ze * factor;
 	}
 
-	calcular_iluminacion(normal);
-	calcular_iluminacion_especular(normal,posicion);
+	calcular_iluminacion(normal,posicion);
 	
 	gl_Position = gl_ModelViewProjectionMatrix * posicion;
 }

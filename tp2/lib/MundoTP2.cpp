@@ -21,6 +21,9 @@ MundoTP2::MundoTP2(){
 	x_mouse = 0;
 	y_mouse = 0;
 	mouse_capturado = false;
+	luz_1_encendida = true;
+	luz_2_encendida = true;
+	mostrar_menu = true;
 }
 
 void MundoTP2::crearMenues(){
@@ -154,25 +157,22 @@ void MundoTP2::inicializar() {
     glEnable(GL_LIGHT0);
 
     
-    GLfloat light1_ambient[] = { 0.2, 0.2, 0.2, 1.0 };
+    GLfloat light1_ambient[] = { 0.0, 0.0, 0.0, 1.0 };
     GLfloat light1_diffuse[] = { 1.0, 1.0, 1.0, 1.0 };
     GLfloat light1_specular[] = { 1.0, 1.0, 1.0, 1.0 };
     GLfloat light1_position[] = { - 5.0, 5.0, 5.0, 0.0 };
     GLfloat spot_direction[] = { 1.0, -1.0, 0.0 };
-    glLightfv(GL_LIGHT1, GL_AMBIENT, light1_ambient);
-    glLightfv(GL_LIGHT1, GL_DIFFUSE, light1_diffuse);
+//    glLightfv(GL_LIGHT1, GL_AMBIENT, light1_ambient);
+//    glLightfv(GL_LIGHT1, GL_DIFFUSE, light1_diffuse);
     glLightfv(GL_LIGHT1, GL_SPECULAR, light1_specular);
     glLightfv(GL_LIGHT1, GL_POSITION, light1_position);
-    glLightf(GL_LIGHT1, GL_CONSTANT_ATTENUATION, 1.5);
-    glLightf(GL_LIGHT1, GL_LINEAR_ATTENUATION, 0.5);
-    glLightf(GL_LIGHT1, GL_QUADRATIC_ATTENUATION, 0.2);
+//    glLightf(GL_LIGHT1, GL_CONSTANT_ATTENUATION, 1.5);
+//    glLightf(GL_LIGHT1, GL_LINEAR_ATTENUATION, 0.5);
+//    glLightf(GL_LIGHT1, GL_QUADRATIC_ATTENUATION, 0.2);
     glLightf(GL_LIGHT1, GL_SPOT_CUTOFF, 45.0);
     glLightfv(GL_LIGHT1, GL_SPOT_DIRECTION, spot_direction);
-    glLightf(GL_LIGHT1, GL_SPOT_EXPONENT, 2.0);
+//    glLightf(GL_LIGHT1, GL_SPOT_EXPONENT, 2.0);
     glEnable(GL_LIGHT1);
-
-    luz_1_encendida = true;
-    luz_2_encendida = true;
     crearMenues();
     cambiarFigura(new Cubo);
 }
@@ -199,23 +199,24 @@ void MundoTP2::vistaPerspectiva(){
 void MundoTP2::display(){
   glViewport (0, 0, (GLsizei) ancho_ventana, (GLsizei) alto_ventana);
   glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  
-  // Menues
-  vistaOrtogonal();
-  glPushMatrix();
-  glTranslatef(0,0.8,-0.5);
-  menuFragmentShader.dibujar();
-  glPopMatrix();
-  glPushMatrix();
-  glTranslatef(-0.8*(float)ancho_ventana/alto_ventana,0,-0.5);
-  menuFormas.dibujar();
-  glPopMatrix();
-  
-  glPushMatrix();
-  glTranslatef(0.8*(float)ancho_ventana/alto_ventana,0,-0.5);
-  menuVertexShader.dibujar();
-  glPopMatrix();
-  
+ 
+  // Menues  
+  if(mostrar_menu) { 
+    vistaOrtogonal();
+    glPushMatrix();
+    glTranslatef(0,0.8,-0.5);
+    menuFragmentShader.dibujar();
+    glPopMatrix();
+    glPushMatrix();
+    glTranslatef(-0.8*(float)ancho_ventana/alto_ventana,0,-0.5);
+    menuFormas.dibujar();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(0.8*(float)ancho_ventana/alto_ventana,0,-0.5);
+    menuVertexShader.dibujar();
+    glPopMatrix();
+  }
   
   //Objeto central
   vistaPerspectiva();
@@ -290,6 +291,10 @@ void MundoTP2::cambiar_estado_luz_2() {
         glEnable(GL_LIGHT1);
         luz_2_encendida = true;
     }
+}
+
+void MundoTP2::cambiar_estado_menu() {
+    mostrar_menu = !mostrar_menu;
 }
 
 MundoTP2* MundoTP2::get_instance(){

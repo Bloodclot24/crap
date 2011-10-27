@@ -1,6 +1,6 @@
 uniform float t;
 
-void calcular_iluminacion(vec3 orig_normal);
+void calcular_iluminacion(vec3 orig_normal, vec4 posicion);
 
 vec3 ondular(vec3 entrada);
 
@@ -16,7 +16,7 @@ void main(){
 
   vec3 normal = gl_Normal* (1.0-t) + vec3(xt, yt, zt) * t;
   
-  calcular_iluminacion(normal);
+  calcular_iluminacion(normal, v);
 
   gl_Position = gl_ModelViewProjectionMatrix * v;
 }
