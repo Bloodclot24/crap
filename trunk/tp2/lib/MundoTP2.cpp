@@ -35,10 +35,13 @@ void MundoTP2::crearMenues(){
   c->setRotacion(20,10,0);
   menuFormas.agregarElemento(c,new ComandoCambiarFormaCubo());
   c=new Toroide();
+  c->setRotacion(40,20,0);
   menuFormas.agregarElemento(c,new ComandoCambiarFormaToroide());
   c=new Cilindro();
+  c->setRotacion(40,40,0);
   menuFormas.agregarElemento(c,new ComandoCambiarFormaCilindro());
   c=new Cono();
+  c->setRotacion(-90,0,0);
   menuFormas.agregarElemento(c,new ComandoCambiarFormaCono());
   menuVertexShader.cambiarOrientacion(MENU_VERTICAL);
   
@@ -76,6 +79,8 @@ void MundoTP2::crearMenues(){
   c->setColor(1,1,1);
   c->setTextura(ladrillo->getTextura());
   menuFragmentShader.agregarElemento(c, cc2);
+  
+  
   c=new Esfera();
   c->setColor(1,1,1);
   ComandoCambiarTexturaCubica* cubo = new ComandoCambiarTexturaCubica("cubemaps/cubemap_landscape/landscape");
@@ -153,10 +158,10 @@ void MundoTP2::inicializar() {
     GLfloat light1_ambient[] = { 0.0, 0.0, 0.0, 1.0 };
     GLfloat light1_diffuse[] = { 1.0, 1.0, 1.0, 1.0 };
     GLfloat light1_specular[] = { 1.0, 1.0, 1.0, 1.0 };
-    GLfloat light1_position[] = { - 5.0, 5.0, 5.0, 0.0 };
+    GLfloat light1_position[] = { - 5.0, -15.0, 5.0, 0.0 };
     GLfloat spot_direction[] = { 1.0, -1.0, 0.0 };
-//    glLightfv(GL_LIGHT1, GL_AMBIENT, light1_ambient);
-//    glLightfv(GL_LIGHT1, GL_DIFFUSE, light1_diffuse);
+    glLightfv(GL_LIGHT1, GL_AMBIENT, light1_ambient);
+    glLightfv(GL_LIGHT1, GL_DIFFUSE, light1_diffuse);
     glLightfv(GL_LIGHT1, GL_SPECULAR, light1_specular);
     glLightfv(GL_LIGHT1, GL_POSITION, light1_position);
 //    glLightf(GL_LIGHT1, GL_CONSTANT_ATTENUATION, 1.5);
