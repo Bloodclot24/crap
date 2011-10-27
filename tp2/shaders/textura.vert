@@ -1,3 +1,5 @@
+varying vec3 _lightDir,_normalFinal;
+
 void calcular_iluminacion(vec3 orig_normal){
 
 	vec3 normal, lightDir;
@@ -15,5 +17,6 @@ void calcular_iluminacion(vec3 orig_normal){
 	gl_FrontColor =  NdotL * diffuse + globalAmbient + ambient;
 
 	gl_TexCoord[0] = gl_MultiTexCoord0;
-
+	_normalFinal = normal;
+	_lightDir = lightDir;
 }
