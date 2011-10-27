@@ -1,6 +1,6 @@
 uniform float t;
 
-void calcular_iluminacion(vec3 orig_normal);
+void calcular_iluminacion(vec3 orig_normal, vec4 posicion);
 
 vec3 torcer(vec3 original);
 
@@ -10,7 +10,7 @@ void main(){
   
   vec3 normal = torcer(gl_Normal);
 
-  calcular_iluminacion(normal);
+  calcular_iluminacion(normal,v);
 
   gl_Position = gl_ModelViewProjectionMatrix * v;
 }

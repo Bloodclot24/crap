@@ -69,15 +69,9 @@ void MundoTP2::crearMenues(){
   menuFragmentShader.agregarElemento(c, cc1);
   
   c=new Esfera();
-  ComandoCambiarTextura* tierra = new ComandoCambiarTextura("earth.raw");
-  c->setColor(1,1,1);
-  c->setTextura(tierra->getTextura());
-  menuFragmentShader.agregarElemento(c, tierra);
-  
-  c=new Esfera();
   ComandoCompuesto *cc2 = new ComandoCompuesto;
-  cc2->agregarComando(new ComandoCambiarVShaderIluminacion(vshaderIlumTextura));
-  cc2->agregarComando(new ComandoCambiarFShader(fshaderTextura));
+/*  cc2->agregarComando(new ComandoCambiarVShaderIluminacion(vshaderIlumTextura));
+  cc2->agregarComando(new ComandoCambiarFShader(fshaderTextura));*/
   ComandoCambiarTextura* ladrillo = new ComandoCambiarTextura("lad.raw");
   cc2->agregarComando(ladrillo);
   c->setColor(1,1,1);
