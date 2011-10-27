@@ -4,7 +4,6 @@ varying vec4 _posicion;
 uniform bool light0, light1;
 uniform mat4 matriz_mv;
 
-
 vec4 calcular_iluminacion(int);
 
 void main(){
@@ -12,14 +11,14 @@ void main(){
       vec4 globalAmbient = gl_LightModel.ambient * gl_FrontMaterial.ambient;      
 
       vec4 iluminacion0 = vec4(0.0,0.0,0.0,0.0);
-      //if(light0)
+//      if(light0)
             iluminacion0 = calcular_iluminacion(0);
       
       vec4 iluminacion1 = vec4(0.0,0.0,0.0,0.0);
-      //if(light1)
+//      if(light1)
             iluminacion1 = calcular_iluminacion(1);
 
-      gl_FragColor = (iluminacion0 + iluminacion1 + globalAmbient )*t;
+      gl_FragColor = (gl_Color + iluminacion0 + iluminacion1 + globalAmbient)*t;
 }
 
 

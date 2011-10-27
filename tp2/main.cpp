@@ -7,25 +7,40 @@
 #define ANGULO_ROTACION 2
 
 class TeclaRotarX: public ManejadorTecla{
+private:
+  int signo;
 public:
+    TeclaRotarX(int s) {
+      signo = s;
+    }
     virtual bool press(){
-     MundoTP2::get_instance()->rotarFigura(ANGULO_ROTACION, 1, 0, 0);
+     MundoTP2::get_instance()->rotarFigura(signo*ANGULO_ROTACION, 1, 0, 0);
      return true;
     }
 };
 
 class TeclaRotarY: public ManejadorTecla{
+private:
+  int signo;
 public:
+    TeclaRotarY(int s) {
+      signo = s;
+    }
     virtual bool press(){
-     MundoTP2::get_instance()->rotarFigura(ANGULO_ROTACION, 0, 1, 0);
+     MundoTP2::get_instance()->rotarFigura(signo*ANGULO_ROTACION, 0, 1, 0);
      return true;
     }
 };
 
 class TeclaRotarZ: public ManejadorTecla{
+private:
+  int signo;
 public:
+    TeclaRotarZ(int s) {
+      signo = s;
+    }
     virtual bool press(){
-     MundoTP2::get_instance()->rotarFigura(ANGULO_ROTACION, 0, 0, 1);
+     MundoTP2::get_instance()->rotarFigura(signo*ANGULO_ROTACION, 0, 0, 1);
      return true;
     }
 };
@@ -81,7 +96,8 @@ public:
 int main(int argc, char** argv)
 {
   MundoTP2 *m = MundoTP2::get_instance();
-  TeclaRotarX rotarx; TeclaRotarY rotary; TeclaRotarZ rotarz;
+  TeclaRotarX rotarx(1); TeclaRotarY rotary(1); TeclaRotarZ rotarz(1);
+  TeclaRotarX rotarMenosx(-1); TeclaRotarY rotarMenosy(-1); TeclaRotarZ rotarMenosz(-1);
   TeclaResetearRotacion resetr;
   TeclaSalir salir;
   TeclaCapturarMouse capturar;
@@ -90,8 +106,11 @@ int main(int argc, char** argv)
   TeclaMenu menu;
   m->crearVentana();
   m->agregarTecla('x', &rotarx);
+  m->agregarTecla('s', &rotarMenosx);
   m->agregarTecla('y', &rotary);
+  m->agregarTecla('h', &rotarMenosy);
   m->agregarTecla('z', &rotarz);
+  m->agregarTecla('a', &rotarMenosz);
   m->agregarTecla('r', &resetr);
   m->agregarTecla('q', &salir);
   m->agregarTecla('c', &capturar);

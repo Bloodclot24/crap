@@ -278,10 +278,22 @@ void MundoTP2::capturar_mouse(){
 void MundoTP2::cambiar_estado_luz_1() {
     if (luz_1_encendida) {
         glDisable(GL_LIGHT0);
+	GLfloat light_ambient[] = { 0.0, 0.0, 0.0, 1.0 };
+        GLfloat light_diffuse[] = { 0.0, 0.0, 0.0, 1.0 };
+        GLfloat light_specular[] = { 0.0, 0.0, 0.0, 1.0 };
+	glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+	glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
         luz_1_encendida = false;
     }
     else {
         glEnable(GL_LIGHT0);
+	GLfloat light_ambient[] = { 0.0, 0.0, 0.0, 1.0 };
+	GLfloat light_diffuse[] = { 1.0, 1.0, 1.0, 1.0 };
+	GLfloat light_specular[] = { 1.0, 1.0, 1.0, 1.0 };
+	glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+	glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
         luz_1_encendida = true;
     }
 }
@@ -289,10 +301,23 @@ void MundoTP2::cambiar_estado_luz_1() {
 void MundoTP2::cambiar_estado_luz_2() {
     if (luz_2_encendida) {
         glDisable(GL_LIGHT1);
-        luz_2_encendida = false;
+	glLightf(GL_LIGHT1, GL_SPOT_CUTOFF, 0.0);
+        GLfloat light_ambient[] = { 0.0, 0.0, 0.0, 1.0 };
+        GLfloat light_diffuse[] = { 0.0, 0.0, 0.0, 1.0 };
+        GLfloat light_specular[] = { 0.0, 0.0, 0.0, 1.0 };
+	glLightfv(GL_LIGHT1, GL_AMBIENT, light_ambient);
+	glLightfv(GL_LIGHT1, GL_DIFFUSE, light_diffuse);
+	glLightfv(GL_LIGHT1, GL_SPECULAR, light_specular);
+	luz_2_encendida = false;
     }
     else {
         glEnable(GL_LIGHT1);
+	GLfloat light_ambient[] = { 0.0, 0.0, 0.0, 1.0 };
+	GLfloat light_diffuse[] = { 1.0, 1.0, 1.0, 1.0 };
+	GLfloat light_specular[] = { 1.0, 1.0, 1.0, 1.0 };
+	glLightfv(GL_LIGHT1, GL_AMBIENT, light_ambient);
+	glLightfv(GL_LIGHT1, GL_DIFFUSE, light_diffuse);
+	glLightfv(GL_LIGHT1, GL_SPECULAR, light_specular);
         luz_2_encendida = true;
     }
 }
