@@ -70,8 +70,7 @@ void MundoTP2::crearMenues(){
   
   c=new Esfera();
   ComandoCompuesto *cc2 = new ComandoCompuesto;
-/*  cc2->agregarComando(new ComandoCambiarVShaderIluminacion(vshaderIlumTextura));
-  cc2->agregarComando(new ComandoCambiarFShader(fshaderTextura));*/
+  cc2->agregarComando(new ComandoCambiarFShader(fshaderTextura));
   ComandoCambiarTextura* ladrillo = new ComandoCambiarTextura("lad.raw");
   cc2->agregarComando(ladrillo);
   c->setColor(1,1,1);
@@ -141,7 +140,7 @@ void MundoTP2::inicializar() {
     glShadeModel (GL_SMOOTH);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_LIGHTING);
-    glEnable(GL_COLOR_MATERIAL);
+    //glEnable(GL_COLOR_MATERIAL);
     glEnable(GL_NORMALIZE);
 
     GLfloat light[] = { 1.0, 1.0, 1.0, 1.0 };
