@@ -14,7 +14,10 @@ void Cuerpo::dibujar(){
    p->cambiarUniforme("usar_textura",texture);
    p->cambiarUniforme("t", pasoAnimacion);
  }
- 
+  glRotatef(ax, 1,0,0);
+  glRotatef(ay, 0,1,0);
+  glRotatef(az, 0,0,1);
+
  do_dibujar();
  post_dibujar();
 }
@@ -35,6 +38,7 @@ Cuerpo::Cuerpo(){
     pasoAnimacion=0;
     cambiarShaders=0;
     MundoTP2::get_instance()->animame(this,10);
+    ax=ay=az=0;
 }
 
 void Cuerpo::setColor(float r, float g, float b){
@@ -110,4 +114,21 @@ void Cuerpo::animar(){
   }
   
   MundoTP2::get_instance()->animame(this,50);
+}
+
+
+
+void Cuerpo::rotarX(float angulo){
+  ax += angulo;
+}
+void Cuerpo::rotarY(float angulo){
+  ay += angulo;
+}
+void Cuerpo::rotarZ(float angulo){
+  az += angulo;
+}
+void Cuerpo::setRotacion(float ax, float ay, float az){
+  this->ax = ax;
+  this->ay=ay;
+  this->az=az;
 }

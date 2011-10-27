@@ -5,7 +5,7 @@
 #include <vector>
 
 enum MENU_ORIENTACION { MENU_HORIZONTAL, MENU_VERTICAL};
-#define MENU_ESCALA_ELEMENTOS        0.3
+#define MENU_ESCALA_ELEMENTOS        0.25
 #define MENU_ESPACIO_ENTRE_ELEMENTOS 0.1
 
 class Menu{

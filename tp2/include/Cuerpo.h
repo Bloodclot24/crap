@@ -15,6 +15,7 @@ class Cuerpo:public Animable{
   float ancho, alto;
   float r,g,b;
   float pasoAnimacion;
+  float ax,ay,az;  //angulo de rotación inicial
   
   VertexShader vsforma; VertexShader vsFormaSiguiente;
   VertexShader vsiluminacion; VertexShader vsiluminacionSiguiente;
@@ -33,7 +34,11 @@ public:
   void setTexturaCubica(GLuint t);
   float getAlto();
   float getAncho();
-  
+  void rotarX(float angulo);
+  void rotarY(float angulo);
+  void rotarZ(float angulo);
+  void setRotacion(float ax, float ay, float az);
+
   void setVshaderForma(VertexShader vs);
   void setVshaderIluminacion(VertexShader vs);
   void setFshader(FragmentShader fs);

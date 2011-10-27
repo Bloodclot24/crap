@@ -8,18 +8,15 @@ void main(){
 
   vec4 v = vec4(ondular(vec3(gl_Vertex)),1);
 
-  vec3 normal = gl_Normal;
-  float inc = 0.01;
+  float escala = 6.0*3.141592654*t;
+
+  float xt = 1.0 + 0.03*escala*cos(v.x*escala);
+  float yt = 1.0 + 0.02*escala*cos(v.y*escala);
+  float zt = 1.0 + 0.035*escala*cos(v.z*escala);
+
+  vec3 normal = gl_Normal* (1.0-t) + vec3(xt, yt, zt) * t;
   
-  vec3 normalx1 = vec3(normal.x + inc, normal.y, normal.z);
-  vec3 normalx2 = vec3(normal.x - inc, normal.y, normal.z);
-
-  normalx1 = ondular(normalx1);
-  normalx2 = ondular(normalx2);
-
-  float xn = (normalx1.x-normalx2.x)/(2.0*inc);
-
-  calcular_iluminacion(vec3(xn, normal.y, normal.z));
+  calcular_iluminacion(normal);
 
   gl_Position = gl_ModelViewProjectionMatrix * v;
 }
@@ -34,6 +31,6 @@ vec3 ondular(vec3 entrada){
   float pz = 0.035;
   entrada.x = x + px*sin(x*escala) + py*cos(y*escala) + pz*sin(z*escala);
   entrada.y = y + px*cos(x*escala) + py*sin(y*escala) + pz*cos(z*escala);
-  entrada.z = z + px*sin(x*escala) + py*sin(y*escala) + pz*sin(z*escala);
+  entrada.z = z + px*sin(x*escala) + py*cos(y*escala) + pz*sin(z*escala);
   return entrada;
 }

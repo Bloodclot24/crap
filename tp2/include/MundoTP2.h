@@ -10,7 +10,6 @@
 class MundoTP2: public Mundo{
 private:
   Cuerpo *figura;
-  float rotX, rotY, rotZ;
   static MundoTP2 *te_odio2;
   Menu menuFragmentShader;
   Menu menuFormas;
@@ -18,6 +17,8 @@ private:
   std::list<Animable*> animables;
   std::list<int> tiemposDeAnimacion;
   bool animando;
+  VertexShader vshaderNormal, vshaderNormalIluminacion;
+  FragmentShader fshaderNormal;
   
   void timer_callback();
   static void static_timer_callback(int ignorar);
