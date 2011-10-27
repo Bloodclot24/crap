@@ -86,13 +86,6 @@ void Cubo::cuadradoMedio(){
   	}
   	glEnd();
 }
-//glNormal3f(normalx,normaly,normalz);
-// float incremento = 0.05;
-// for (float incz = 0; incz < 1 && normalz == 0; incz += incremento*normalz)
-//	for (float incy = 0; incy < 1; incy += incremento)
-//		for (float incx = 0; incx < 1; incx += incremento) {
-//			glTexCoord2f(1 - incy, 1 - incx);
-//			glVertex3f((-0.5 + incx)*(1 - abs(normalx)) + 0.5*normalx, (-0.5 + incy)*(1 - abs(normaly)) + 0.5*normaly, (-0.5 + incz)*(1 - abs(normalz)) + 0.5*normalz);
 
 void Cubo::do_dibujar() {
 	cuadradoMedio();
