@@ -13,6 +13,9 @@ void Cuerpo::dibujar(){
    p->usar();
    p->cambiarUniforme("usar_textura",texture);
    p->cambiarUniforme("t", pasoAnimacion);
+   std::vector<bool> luces = MundoTP2::get_instance()->obtenerEstadoLuces();
+   p->cambiarUniforme("light0", luces[0]);
+   p->cambiarUniforme("light1", luces[1]);
  }
   glRotatef(ax, 1,0,0);
   glRotatef(ay, 0,1,0);
