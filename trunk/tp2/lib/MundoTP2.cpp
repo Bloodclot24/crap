@@ -23,13 +23,13 @@ MundoTP2::MundoTP2(){
 	mouse_capturado = false;
 }
 
-
 void MundoTP2::crearMenues(){
-  Cuerpo* c;  
+  Cuerpo* c;
   menuFormas.cambiarOrientacion(MENU_VERTICAL);
   c=new Esfera();
   menuFormas.agregarElemento(c,new ComandoCambiarFormaEsfera());
   c=new Cubo();
+  c->setRotacion(20,10,0);
   menuFormas.agregarElemento(c,new ComandoCambiarFormaCubo());
   c=new Toroide();
   menuFormas.agregarElemento(c,new ComandoCambiarFormaToroide());
@@ -46,11 +46,14 @@ void MundoTP2::crearMenues(){
   VertexShader vshaderOndas = cargarVshader("shaders/ondas.vert");
   VertexShader vshaderTorcido = cargarVshader("shaders/torcido.vert");
   VertexShader vshaderRotado = cargarVshader("shaders/rotar.vert");
-  
+  vshaderNormal = vshaderSimple;
+  vshaderNormalIluminacion = vshaderIlumSimple;
+
+
   FragmentShader fshaderSimple = cargarFshader("shaders/simple.frag");
   FragmentShader fshaderTextura = cargarFshader("shaders/textura.frag");
+  fshaderNormal = fshaderSimple;
 
-  
   figura->setVshaderIluminacion(vshaderIlumSimple);
   figura->setVshaderForma(vshaderSimple);
   figura->setFshader(fshaderSimple);
@@ -107,12 +110,14 @@ void MundoTP2::crearMenues(){
   menuVertexShader.agregarElemento(c, new ComandoCambiarVShaderForma(vshaderOndas));
   
   c=new Cubo();
+  c->setRotacion(-90,0,0);
   c->setVshaderForma(vshaderTorcido);
   c->setVshaderIluminacion(vshaderIlumSimple);
   c->setFshader(fshaderSimple);
   menuVertexShader.agregarElemento(c, new ComandoCambiarVShaderForma(vshaderTorcido));
   
   c=new Cubo();
+  c->setRotacion(90,0,0);
   c->setVshaderForma(vshaderRotado);
   c->setVshaderIluminacion(vshaderIlumSimple);
   c->setFshader(fshaderSimple);
@@ -224,9 +229,6 @@ void MundoTP2::display(){
   vistaPerspectiva();
   glColor3f(1,0,0);
   glTranslatef(0,-0.25,0);
-  glRotatef(rotX, 1,0,0);
-  glRotatef(rotY, 0,1,0);
-  glRotatef(rotZ, 0,0,1);
   figura->dibujar();
   
   glutSwapBuffers();
@@ -243,15 +245,15 @@ void MundoTP2::mouse(int button, int state, int x, int y){
 void MundoTP2::motion(int x, int y) {
 	if (mouse_capturado) {
 		if (x_mouse < x)
-			rotX += 1;
+			figura->rotarX(1);
 		else if(x_mouse > x)
-				rotX -= 1;
+				figura->rotarX(-1);
 		x_mouse = x;
 		if (y_mouse < y)
-			rotY += 1;
+			figura->rotarY(1);
 		else
 			if(y_mouse > y)
-				rotY -= 1;
+				figura->rotarY(-1);
 		y_mouse = y;
 		glutPostRedisplay();
 		if (x_mouse < ancho_ventana / 3 || x_mouse > 2 * ancho_ventana / 3) {
@@ -309,11 +311,11 @@ MundoTP2* MundoTP2::get_instance(){
 
 void MundoTP2::rotarFigura(float angulo, bool x, bool y, bool z){
 	if(x)
-	  rotX+=angulo;
+	    figura->rotarX(angulo);
 	if(y)
-	  rotY+=angulo;
+	    figura->rotarY(angulo);
 	if(z)
-	  rotZ+=angulo;
+	    figura->rotarZ(angulo);
 }
 
 void MundoTP2::cambiarFigura(Cuerpo* cuerpo){
@@ -322,10 +324,13 @@ void MundoTP2::cambiarFigura(Cuerpo* cuerpo){
 	  delete figura;
   }
   figura=cuerpo;
+  figura->setVshaderForma(vshaderNormal);
+  figura->setVshaderIluminacion(vshaderNormalIluminacion);
+  figura->setFshader(fshaderNormal);
 }
 
 void MundoTP2::resetearRotacion(){
- rotX=rotY=rotZ=0; 
+ figura->setRotacion(0,0,0);
 }
 
 Cuerpo* MundoTP2::obtenerCuerpo(){
