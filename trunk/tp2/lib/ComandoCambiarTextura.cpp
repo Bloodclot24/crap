@@ -12,7 +12,6 @@ ComandoCambiarTextura::ComandoCambiarTextura(const char * filename){
 }
 
 void ComandoCambiarTextura::ejecutar(){
-  MundoTP2::get_instance()->obtenerCuerpo()->setColor(1,1,1);
   MundoTP2::get_instance()->obtenerCuerpo()->setTextura(texture);
 }
 

@@ -2,6 +2,9 @@ uniform float t;
 
 void calcular_iluminacion(vec3 orig_normal);
 
+void calcular_iluminacion_especular(vec3 orig_normal, vec4 posicion);
+
+
 void main()
 {
 	
@@ -29,6 +32,8 @@ void main()
 
 
 	calcular_iluminacion(normal);
+	calcular_iluminacion_especular(normal,posicion);
+
 
 	gl_Position = gl_ModelViewProjectionMatrix * posicion;
 }

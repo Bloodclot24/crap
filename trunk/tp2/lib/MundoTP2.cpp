@@ -53,10 +53,6 @@ void MundoTP2::crearMenues(){
   FragmentShader fshaderSimple = cargarFshader("shaders/simple.frag");
   FragmentShader fshaderTextura = cargarFshader("shaders/textura.frag");
   fshaderNormal = fshaderSimple;
-
-  figura->setVshaderIluminacion(vshaderIlumSimple);
-  figura->setVshaderForma(vshaderSimple);
-  figura->setFshader(fshaderSimple);
   
   c=new Esfera();
   c->setColor(1,0,0);
@@ -77,7 +73,6 @@ void MundoTP2::crearMenues(){
   
   c=new Esfera();
   ComandoCompuesto *cc2 = new ComandoCompuesto;
-  cc2->agregarComando(new ComandoCambiarColor(1,1,1));
   cc2->agregarComando(new ComandoCambiarVShaderIluminacion(vshaderIlumTextura));
   cc2->agregarComando(new ComandoCambiarFShader(fshaderTextura));
   ComandoCambiarTextura* ladrillo = new ComandoCambiarTextura("lad.raw");
@@ -144,7 +139,6 @@ VertexShader MundoTP2::cargarVshader(const char* archivo){
 }
 
 
-
 void MundoTP2::inicializar() {
     glClearColor (0.02f, 0.02f, 0.04f, 0.0f);
     glShadeModel (GL_SMOOTH);
@@ -179,10 +173,8 @@ void MundoTP2::inicializar() {
 
     luz_1_encendida = true;
     luz_2_encendida = true;
-    figura=new Cubo();
     crearMenues();
-    resetearRotacion();
-
+    cambiarFigura(new Cubo);
 }
 
 
@@ -327,6 +319,7 @@ void MundoTP2::cambiarFigura(Cuerpo* cuerpo){
   figura->setVshaderForma(vshaderNormal);
   figura->setVshaderIluminacion(vshaderNormalIluminacion);
   figura->setFshader(fshaderNormal);
+  rotarFigura(45,1,1,1);
 }
 
 void MundoTP2::resetearRotacion(){
