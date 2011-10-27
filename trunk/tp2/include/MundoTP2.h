@@ -52,6 +52,7 @@ public:
   void capturar_mouse();
   void cambiar_estado_luz_1();
   void cambiar_estado_luz_2();
+  std::vector<bool> obtenerEstadoLuces();
   static void destruir();
   ~MundoTP2();
    

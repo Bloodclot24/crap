@@ -443,3 +443,10 @@ MundoTP2::~MundoTP2() {
 	destruirMenu(menuFragmentShader);
 
 }
+
+std::vector< bool > MundoTP2::obtenerEstadoLuces(){
+  std::vector<bool> luces;
+  luces.push_back(luz_1_encendida);
+  luces.push_back(luz_2_encendida);
+  return luces;
+}
