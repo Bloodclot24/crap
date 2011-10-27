@@ -34,7 +34,6 @@ void Esfera::mostrarEsfera (double R)
     glEnable( GL_TEXTURE_2D );
     int b;
     //glScalef (0.0125 * R, 0.0125 * R, 0.0125 * R);
-    glRotatef (90, 1, 0, 0);
     glBegin (GL_TRIANGLE_STRIP);
     for ( b = 0; b < VertexCount; b++)
     {

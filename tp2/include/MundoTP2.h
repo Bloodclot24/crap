@@ -19,6 +19,7 @@ private:
   bool animando;
   VertexShader vshaderNormal, vshaderNormalIluminacion;
   FragmentShader fshaderNormal;
+  float matriz_camara[16];
   
   void timer_callback();
   static void static_timer_callback(int ignorar);
@@ -58,7 +59,7 @@ public:
   std::vector<bool> obtenerEstadoLuces();
   static void destruir();
   ~MundoTP2();
-   
+  float* getMatrizCamara();
 };
 
 

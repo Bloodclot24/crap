@@ -38,7 +38,6 @@ void Cilindro::dibujarCirculo(int segmentos, float radio, float z) {
 void Cilindro::do_dibujar() {
     int segmentos = 42;
     glPushMatrix();
-    glRotatef(60,0,1,1);
     glBegin(GL_TRIANGLE_STRIP);
     float radio = 0.5;
     float inc = 0.1;
