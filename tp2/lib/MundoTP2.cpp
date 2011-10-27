@@ -60,6 +60,10 @@ void MundoTP2::crearMenues(){
   FragmentShader fshaderTextura = cargarFshader("shaders/textura.frag");
   fshaderNormal = fshaderSimple;
   
+  VertexShader vshaderReflejo = cargarVshader("shaders/reflejar.vert");
+  FragmentShader fshaderReflejo = cargarFshader("shaders/reflejar.frag");
+
+
   c=new Esfera();
   c->setColor(1,0,0);
   c->setVshaderForma(vshaderSimple); 
@@ -81,11 +85,17 @@ void MundoTP2::crearMenues(){
   menuFragmentShader.agregarElemento(c, cc2);
   
   
-  c=new Esfera();
-  c->setColor(1,1,1);
+  c = new Esfera();
+  c->setColor(1, 1, 1);
   ComandoCambiarTexturaCubica* cubo = new ComandoCambiarTexturaCubica("cubemaps/cubemap_landscape/landscape");
   c->setTexturaCubica(cubo->getTextura());
-  menuFragmentShader.agregarElemento(c, cubo);
+  c->setVshaderIluminacion(vshaderReflejo);
+  c->setFshader(fshaderReflejo);
+  ComandoCompuesto * cubo_shaders = new ComandoCompuesto;
+  cubo_shaders->agregarComando(cubo);
+  cubo_shaders->agregarComando(new ComandoCambiarVShaderIluminacion(vshaderReflejo));
+  cubo_shaders->agregarComando(new ComandoCambiarFShader(fshaderReflejo));
+  menuFragmentShader.agregarElemento(c, cubo_shaders);
 
   c=new Cubo();
   c->setVshaderForma(vshaderSimple);
