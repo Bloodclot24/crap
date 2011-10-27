@@ -1,10 +1,11 @@
 varying vec3 _lightDir1,_lightDir2,_normalFinal;
-
+varying vec4 pos;
 uniform bool light0, light1;
 
 vec4 procesar_luz(int numero, vec3 normal);
 
 void calcular_iluminacion(vec3 orig_normal){
+	pos = gl_ModelViewMatrix * gl_Vertex;
 	vec3 normal;
 	vec4 globalAmbient;
 	normal = normalize(gl_NormalMatrix * orig_normal);
