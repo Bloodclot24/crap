@@ -20,8 +20,16 @@ void Cuerpo::dibujar(){
   glRotatef(ax, 1,0,0);
   glRotatef(ay, 0,1,0);
   glRotatef(az, 0,0,1);
+  
+  p  = getProgram();
+  if(p){
+    //glLoadIdentity();
+    p->cambiarUniforme("matriz_mv",  MundoTP2::get_instance()->getMatrizCamara());
+  }
 
- do_dibujar();
+  do_dibujar();
+
+  
  post_dibujar();
 }
 

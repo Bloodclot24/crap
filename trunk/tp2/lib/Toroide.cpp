@@ -8,8 +8,6 @@ Toroide::Toroide(){
 void Toroide::do_dibujar(){
 	glEnable(GL_NORMALIZE);
 	glPushMatrix();
-	glRotatef(90, 1,0,0);
-//	glScalef(0.1,0.1,0.1);
 	float incremento=6;
 	for(float angulo = 0; angulo < 360; angulo +=incremento){
 		glPushMatrix();

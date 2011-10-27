@@ -140,7 +140,7 @@ void MundoTP2::inicializar() {
     glShadeModel (GL_SMOOTH);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_LIGHTING);
-    //glEnable(GL_COLOR_MATERIAL);
+    glEnable(GL_COLOR_MATERIAL);
     glEnable(GL_NORMALIZE);
 
     GLfloat light[] = { 1.0, 1.0, 1.0, 1.0 };
@@ -178,6 +178,9 @@ void MundoTP2::vistaOrtogonal(){
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
   gluLookAt (0,0,2,0,0,0,0,1,0);
+  glGetFloatv(GL_MODELVIEW_MATRIX, matriz_camara);
+  glLoadIdentity();
+
 }
 
 void MundoTP2::vistaPerspectiva(){
@@ -187,6 +190,9 @@ void MundoTP2::vistaPerspectiva(){
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
   gluLookAt (0,0,2,0,0,0,0,1,0);
+  glGetFloatv(GL_MODELVIEW_MATRIX, matriz_camara);
+  glLoadIdentity();
+
 }
 
 void MundoTP2::display(){
@@ -441,3 +447,8 @@ std::vector< bool > MundoTP2::obtenerEstadoLuces(){
   luces.push_back(luz_2_encendida);
   return luces;
 }
+
+float* MundoTP2::getMatrizCamara(){
+  return matriz_camara;
+}
+

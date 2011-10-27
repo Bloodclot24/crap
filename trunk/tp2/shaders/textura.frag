@@ -52,7 +52,7 @@ vec4 calcular_color_textura(int fuente){
 	intensity = max(dot(lightDir,normalize(_normal)),0.0);
 
 	af = gl_FrontMaterial.diffuse.a;
-	texel = texture2D(tex,gl_TexCoord[0].st);
+	texel = texture2D(tex, gl_TexCoord[0].st);
 
 	ct = texel.rgb*t;
 	at = texel.a;

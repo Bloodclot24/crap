@@ -77,8 +77,8 @@ void Menu::dibujar(){
   for(int i=0;i<cantidad_elementos;i++){
     glPushMatrix();
     if(orientacion == MENU_HORIZONTAL)
-      glTranslatef(posiciones[i]-centro, 0, 10);
-    else glTranslatef(0, posiciones[i]-centro, 10);
+      glTranslatef(posiciones[i]-centro, 0, 2);
+    else glTranslatef(0, posiciones[i]-centro, 2);
     
     glScalef(MENU_ESCALA_ELEMENTOS, MENU_ESCALA_ELEMENTOS, MENU_ESCALA_ELEMENTOS);
     iconos[i]->dibujar();
