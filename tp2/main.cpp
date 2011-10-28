@@ -108,9 +108,9 @@ int main(int argc, char** argv)
   m->agregarTecla('x', &rotarx);
   m->agregarTecla('s', &rotarMenosx);
   m->agregarTecla('y', &rotary);
-  m->agregarTecla('h', &rotarMenosy);
+  m->agregarTecla('Y', &rotarMenosy);
   m->agregarTecla('z', &rotarz);
-  m->agregarTecla('a', &rotarMenosz);
+  m->agregarTecla('Z', &rotarMenosz);
   m->agregarTecla('r', &resetr);
   m->agregarTecla('q', &salir);
   m->agregarTecla('c', &capturar);
