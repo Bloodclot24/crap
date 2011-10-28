@@ -1,20 +1,16 @@
 varying vec3 vTexCoord;
+uniform mat4 matriz_mv;
 
-void main(void)
-{
-	// Normal in Eye Space
-    vec3 vEyeNormal = gl_NormalMatrix * gl_Normal;
+uniform bool light0, light1;
+varying vec3 _normal;
+varying vec4 _posicion;
 
-    // Vertex position in Eye Space
-   	vec4 vVert4 = gl_ModelViewMatrix * gl_Vertex;
-    vec3 vEyeVertex = normalize(vVert4.xyz / vVert4.w);
+void calcular_iluminacion(vec3 orig_normal, vec4 position){
+      _normal = vec3(gl_ModelViewMatrix * vec4(orig_normal,1.0));
+      
+      _posicion = gl_ModelViewMatrix * position;
+      gl_FrontColor =  gl_Color;
+      gl_TexCoord[0] = gl_MultiTexCoord0;
 
-   	vec4 vCoords = vec4(reflect(vEyeVertex, vEyeNormal), 0.0);
-
-   	// Rotate by flipped camera
-   	vCoords = gl_ModelViewMatrixInverse * vCoords;
-   	vTexCoord.xyz = normalize(vCoords.xyz);
-
-   	// Don't forget to transform the geometry!
-   	gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;
+      vTexCoord.xyz = reflect(vec3(matriz_mv * _posicion), _normal);
 }

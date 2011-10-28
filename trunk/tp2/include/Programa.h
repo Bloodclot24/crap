@@ -16,6 +16,7 @@ public:
   void cambiarUniforme(const char* nombre, GLfloat valor);
   void cambiarUniforme(const char* nombre, GLfloat valor[16]);
   void cambiarUniformeVec3(const char* nombre, GLfloat valor[3]);
+  void cambiarUniforme1i(const char* nombre, GLint valor);
 
 
 };

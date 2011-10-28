@@ -15,7 +15,7 @@
 #define SKYBOX_FS SHADER_PATH"SkyBox.fsh"
 #define REFLECTION_VS SHADER_PATH"Reflection.vsh"
 #define REFLECTION_FS SHADER_PATH"Reflection.fsh"
-#define TEXTURE_PATH "./textures/cubemaps/bright_day/"
+#define TEXTURE_PATH "./textures/cubemaps/landscape/"
 
 using std::cout;
 using std::endl;
@@ -183,8 +183,17 @@ void initTextures()
         ilGenImages(1, &ilTex);
         ilBindImage(ilTex);
         ilLoadImage(cubemapPaths[i].c_str());
-        glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, ilGetInteger(IL_IMAGE_BPP), ilGetInteger(IL_IMAGE_WIDTH),
-          ilGetInteger(IL_IMAGE_HEIGHT), 0, ilGetInteger(IL_IMAGE_FORMAT), GL_UNSIGNED_BYTE, ilGetData());
+        //glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, ilGetInteger(IL_IMAGE_BPP), ilGetInteger(IL_IMAGE_WIDTH),
+        //  ilGetInteger(IL_IMAGE_HEIGHT), 0, ilGetInteger(IL_IMAGE_FORMAT), GL_UNSIGNED_BYTE, ilGetData());
+	
+	std::cout << "BPP: " << ilGetInteger(IL_IMAGE_BPP)  << " FORMAT: " << ilGetInteger(IL_IMAGE_FORMAT) << "\n";
+	
+	std::string archivo = cubemapPaths[i];
+	archivo += ".raw";
+        char* data = loadFileToString(archivo.c_str());
+
+        glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB, 256,
+         256, 0, 6407, GL_UNSIGNED_BYTE, data);
     }
 }
 

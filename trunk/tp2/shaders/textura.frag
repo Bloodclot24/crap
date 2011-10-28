@@ -9,19 +9,21 @@ vec4 calcular_iluminacion(int);
 
 void main(){
 
-      vec4 globalAmbient = gl_LightModel.ambient * gl_FrontMaterial.ambient;      
+      float maximo = max(gl_FrontMaterial.ambient.r,gl_FrontMaterial.ambient.g);
+      maximo = max(maximo,gl_FrontMaterial.ambient.b);
+
+      vec4 globalAmbient = gl_LightModel.ambient * vec4(maximo, maximo, maximo, 0);      
       vec4 color_textura0 = vec4(0.0,0.0,0.0,0.0);
       vec4 color_textura1 = vec4(0.0,0.0,0.0,0.0);
 
       vec4 iluminacion0 = vec4(0.0,0.0,0.0,0.0);
       //if(light0)
-            iluminacion0 = calcular_iluminacion(0);
+	iluminacion0 = calcular_iluminacion(0);
 
 
       vec4 iluminacion1 = vec4(0.0,0.0,0.0,0.0);
       //if(light1)
-            iluminacion1 = calcular_iluminacion(1);
-
+	iluminacion1 = calcular_iluminacion(1);
 
       gl_FragColor = (iluminacion0 + iluminacion1 + globalAmbient)*t;
 }
@@ -34,8 +36,8 @@ vec4 calcular_iluminacion(int fuente){
 
       vec3 lightDir = normalize(vec3(gl_LightSource[fuente].position - _posicion));
       float NdotL = max(dot(normal, lightDir), 0.0);
-      vec4 diffuse = gl_FrontMaterial.diffuse * gl_LightSource[fuente].diffuse;
-      vec4 ambient = gl_FrontMaterial.ambient * gl_LightSource[fuente].ambient;
+      vec4 diffuse = gl_LightSource[fuente].diffuse;
+      vec4 ambient = gl_LightSource[fuente].ambient;
 
       vec4 eyeCoords = matriz_mv * _posicion;
       vec3 s = normalize(vec3(gl_LightSource[fuente].position - _posicion));
@@ -43,12 +45,7 @@ vec4 calcular_iluminacion(int fuente){
       vec3 r = reflect( -s, normal );
       float RdotV =  pow( max( dot(r,v), 0.0 ), 50.0);
 
-/*      return RdotV * gl_LightSource[fuente].specular + 
-	      diffuse  * NdotL + 
-	      texture2D(tex, gl_TexCoord[0].st) * NdotL + ambient;*/
-
-        return (RdotV * gl_LightSource[fuente].specular + 
+      return (RdotV * gl_LightSource[fuente].specular + 
 	      diffuse  * NdotL + 
 	      NdotL + ambient) *texture2D(tex, gl_TexCoord[0].st);
-
 }
