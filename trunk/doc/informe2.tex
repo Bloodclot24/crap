@@ -79,6 +79,15 @@ material reflectivo.
 \end{itemize}
 
 
+\subsection{Estructura de la aplicaci\'on}
+Para desarrollar la aplicaci\'on se utiliz\'o el lenguaje C++, que permite la programaci\'on orientada a objetos con el encapsulamiento de clases. 
+Dentro de las principales, se encuentra la clase Mundo; que representa el mundo del trabajo pr\'actico en el cual se suscriben los eventos de OpenGL. 
+Contiene los men\'ues de los distintos paneles y la primitiva seleccionada, y responde a las peticiones del usuario. \\\\
+ Se utiliz\'o el patr\'on Command para el manejo de teclas, movimiento del mouse y el click del mouse en los elementos de los men\'ues. 
+Entre estos \'ultimos, se encuentran los comandos cambiar textura, cambiar color, cambiar forma, etc.\\\\
+ Existen shaders de vertices, que realizan principalmente las transformaciones de las deformaciones, shaders de iluminaci\'on (basando los c\'alculos en el modelo de Phong) y
+shaders de fragmentos que combinan la iluminaci\'on con la textura y el material de la primitiva seleccionada. 
+
 \newpage
 
 \section{Compilaci\'on}
