@@ -58,6 +58,7 @@ void Menu::dibujar(){
   }
   
   glColor4f(72.0/255, 167.0/255, 255.0/255,0.5);
+  glColor4f(0,0,0.5,0);
   glBegin(GL_QUADS);
   glVertex3f(-xCord, -yCord,0);
   glVertex3f(-xCord,  yCord,0);

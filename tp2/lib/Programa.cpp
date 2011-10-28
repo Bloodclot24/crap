@@ -105,7 +105,6 @@ void Programa::cambiarUniforme(const char* nombre, GLfloat valor[16]){
 
   GLint id = glGetUniformLocation(idPrograma, nombre);
   if(id == -1){
-   std::cout << "NO Existe la variable uniforme " << nombre << " en este programa ("<< idPrograma <<")\n";
    return; 
   }
   

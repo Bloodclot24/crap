@@ -81,8 +81,10 @@ void MundoTP2::crearMenues(){
   cc2->agregarComando(new ComandoCambiarFShader(fshaderTextura));
   ComandoCambiarTextura* ladrillo = new ComandoCambiarTextura("lad.raw");
   cc2->agregarComando(ladrillo);
-  c->setColor(1,1,1);
   c->setTextura(ladrillo->getTextura());
+  c->setVshaderForma(vshaderSimple);
+  c->setVshaderIluminacion(vshaderIlumSimple);
+  c->setFshader(fshaderSimple);
   menuFragmentShader.agregarElemento(c, cc2);
   
   
@@ -90,6 +92,7 @@ void MundoTP2::crearMenues(){
   c->setColor(1, 1, 1);
   ComandoCambiarTexturaCubica* cubo = new ComandoCambiarTexturaCubica("cubemaps/cubemap_landscape/landscape");
   c->setTexturaCubica(cubo->getTextura());
+  c->setVshaderForma(vshaderSimple);
   c->setVshaderIluminacion(vshaderReflejo);
   c->setFshader(fshaderReflejo);
   ComandoCompuesto * cubo_shaders = new ComandoCompuesto;
