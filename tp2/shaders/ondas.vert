@@ -15,7 +15,21 @@ void main(){
   float yt = 1.0 + 0.02*escala*cos(v.y*escala);
   float zt = 1.0 + 0.035*escala*cos(v.z*escala);
 
-  vec3 normal = gl_Normal* (1.0-t) + vec3(xt, yt, zt) * t;
+  vec3 nuevaNormal = normalize(vec3(xt,yt,zt));
+
+  float inc=0.05;
+  vec3 v1 = vec3(v.x+inc,v.y,v.z);
+  v1 = ondular(v1);
+  vec3 v2 = vec3(v.x-inc,v.y,v.z);
+  v2=ondular(v2);
+
+  //nuevaNormal = normalize(cross(v.xyz-v1, v.xyz-v2));
+
+  if(dot(nuevaNormal, gl_Normal) < 0.0)
+    nuevaNormal = -reflect(gl_Normal,nuevaNormal);
+  
+
+  vec3 normal = gl_Normal* (1.0-t) + nuevaNormal * t;
   
   calcular_iluminacion(normal, v);
 

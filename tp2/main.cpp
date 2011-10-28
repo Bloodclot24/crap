@@ -106,7 +106,7 @@ int main(int argc, char** argv)
   TeclaMenu menu;
   m->crearVentana();
   m->agregarTecla('x', &rotarx);
-  m->agregarTecla('s', &rotarMenosx);
+  m->agregarTecla('X', &rotarMenosx);
   m->agregarTecla('y', &rotary);
   m->agregarTecla('Y', &rotarMenosy);
   m->agregarTecla('z', &rotarz);
