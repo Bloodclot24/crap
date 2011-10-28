@@ -84,7 +84,7 @@ void MundoTP2::crearMenues(){
   c->setTextura(ladrillo->getTextura());
   c->setVshaderForma(vshaderSimple);
   c->setVshaderIluminacion(vshaderIlumSimple);
-  c->setFshader(fshaderSimple);
+  c->setFshader(fshaderTextura);
   menuFragmentShader.agregarElemento(c, cc2);
   
   
