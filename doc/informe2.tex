@@ -36,9 +36,9 @@
 \lhead{}
 \chead{}
 \rhead{\rightmark}
-\lfoot{}
+\lfoot{ $2^{o}$ Cuatrimestre 2011, Trabajo práctico $N^{o}2$, Grupo 1: 88.581,}
 \cfoot{}
-\rfoot{\thepage}
+\rfoot{ 88062, 88.246 - p\'agina \thepage}
 
 
 % Hago que las páginas se comiencen a contar a partir de aquí.
@@ -68,14 +68,13 @@ de la tarjeta de video para realizar c\'alculos complejos con una mejor performa
 \begin{itemize} 
  \item Se debi\'o utilizar la versi\'on 1.2 de GLSL dado que es la soportada por las tarjetas gr\'aficas de las notebooks de la mayor\'ia de 
 los integrantes del grupo.
- \item Se decidi\'o agregar la funcionalidad de girar la figura con respecto a los tres ejes(x,y,z) en ambos sentidos utilizando teclas espec\'ificas del 
+ \item Se decidi\'o agregar la funcionalidad de girar la primitiva seleccionada con respecto a los tres ejes (x,y,z) en ambos sentidos, utilizando teclas espec\'ificas del 
 teclado (Ver {\bf Controles del teclado} para mayor informaci\'on).
- \item Se agreg\'o el cono como uno de los tipo de figura disponibles pa
-ra seleccionar.
+ \item Se agreg\'o el cono como uno de los tipos de primitivas disponibles para seleccionar.
  \item Para el mapeo de texturas en la superficie reflexiva se utiliza un mapa c\'ubico.
  \item Se supone que la reflecci\'on obtenida de la superficie brillante es la m\'axima.
  \item La componente ambiental de las luces puntuales es una luz de color negro.
- \item Se utiliz\'o la librer\'ia Il (devil) para cargar las texturas en formato .png que luego son mapeadas en el mapa c\'ubico utilizado para el 
+ \item Se utiliz\'o la librer\'ia Il (devil) para cargar las texturas en formato .png, que luego son mapeadas en el mapa c\'ubico utilizado para el 
 material reflectivo.
 \end{itemize}
 
@@ -83,7 +82,7 @@ material reflectivo.
 \newpage
 
 \section{Compilaci\'on}
-  Para compilar la aplicaci\'on bajo entorno Linux se provee un archivo de makefile.
+  Para compilar la aplicaci\'on bajo entorno Linux se provee un archivo makefile.
   Para utilizar el mismo, debe tenerse instalada la herramienta cmake. Para instalarla, por ejemplo, en una distribuci\'on Ubuntu se deben 
 realizar los siguientes pasos: \\
 1) sudo apt-get install cmake \\
@@ -117,15 +116,15 @@ La aplicaci\'on permite realizar las siguientes acciones utilizando las teclas d
       \begin{large}Tecla\end{large} & 
 	\begin{large}Acci\'{o}n \end{large} \\
           \hline
-x & Rotar la figura seleccionada con respecto al eje X en el sentido positivo. \\
-X & Rotar la figura seleccionada con respecto al eje X en el sentido negativo. \\
-y & Rotar la figura seleccionada con respecto al eje Y en el sentido positivo. \\
-Y & Rotar la figura seleccionada con respecto al eje Y en el sentido negativo. \\
-z & Rotar la figura seleccionada con respecto al eje Z en el sentido positivo. \\
-Z & Rotar la figura seleccionada con respecto al eje Z en el sentido negativo.  \\
-q & Salir de la aplicaci\'on  \\
-r & Resetear las transformaciones y/o deformaciones aplicadas a la figura seleccionada.  \\
-c & Captura/libera el movimiento del mouse para rotar la c\'amara  \\
+x & Rotar la primitiva seleccionada con respecto al eje x en el sentido positivo. \\
+X & Rotar la primitiva seleccionada con respecto al eje x en el sentido negativo. \\
+y & Rotar la primitiva seleccionada con respecto al eje y en el sentido positivo. \\
+Y & Rotar la primitiva seleccionada con respecto al eje y en el sentido negativo. \\
+z & Rotar la primitiva seleccionada con respecto al eje z en el sentido positivo. \\
+Z & Rotar la primitiva seleccionada con respecto al eje z en el sentido negativo.  \\
+q & Salir de la aplicaci\'on.  \\
+r & Resetear las transformaciones y/o deformaciones aplicadas a la primitiva seleccionada.  \\
+c & Captura/libera el movimiento del mouse para rotar la primitiva seleccionada.  \\
 m & Muestra/esconde los menues.  \\
 1 & Encender/apagar la fuente de luz 1.  \\
 2 & Encender/apagar la fuente de luz 2.  \\
