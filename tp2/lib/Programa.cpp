@@ -111,3 +111,15 @@ void Programa::cambiarUniforme(const char* nombre, GLfloat valor[16]){
   
   glUniformMatrix4fv(id, 1, false, valor);
 }
+
+void Programa::cambiarUniforme1i(const char* nombre, GLint valor){
+  if(idPrograma == 0)
+    return;
+
+  GLint id = glGetUniformLocation(idPrograma, nombre);
+  if(id == -1){
+   return; 
+  }
+  
+  glUniform1i(id, valor);
+}

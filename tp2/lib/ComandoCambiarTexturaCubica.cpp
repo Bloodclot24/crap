@@ -24,8 +24,8 @@ void ComandoCambiarTexturaCubica::cargarTextura( const char * filename ) {
 
     ILuint ilTex;
     ilInit();
-    std::string cubemapPaths[6] = {filename"_positive_x.png", filename"_negative_x.png", filename"_positive_y.png",
-    		filename"_negative_y.png", filename"_positive_z.png", filename"_negative_z.png"};
+    std::string cubemapPaths[6] = {"_positive_x.png", "_negative_x.png", "_positive_y.png",
+    		"_negative_y.png", "_positive_z.png", "_negative_z.png"};
 
     glGenTextures(1, &texture);
     glBindTexture(GL_TEXTURE_CUBE_MAP, texture);
@@ -38,7 +38,9 @@ void ComandoCambiarTexturaCubica::cargarTextura( const char * filename ) {
     {
         ilGenImages(1, &ilTex);
         ilBindImage(ilTex);
-        ilLoadImage(cubemapPaths[i].c_str());
+	std::string nombre = filename;
+	nombre += cubemapPaths[i];
+        ilLoadImage(nombre.c_str());
         glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, ilGetInteger(IL_IMAGE_BPP), ilGetInteger(IL_IMAGE_WIDTH),
           ilGetInteger(IL_IMAGE_HEIGHT), 0, ilGetInteger(IL_IMAGE_FORMAT), GL_UNSIGNED_BYTE, ilGetData());
     }
