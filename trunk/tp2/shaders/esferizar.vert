@@ -7,7 +7,7 @@ void calcular_iluminacion(vec3 orig_normal, vec4 posicion);
 
 void main(){
 
-	normal = gl_Normal;
+	normal = normalize(gl_Normal);
 	vec4 posicion = gl_Vertex;
 
 	float x0 = posicion.x;

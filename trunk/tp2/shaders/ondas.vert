@@ -1,6 +1,12 @@
 uniform float t;
 uniform mat4 matriz_mv;
 
+float escala = 3.0*3.141592654*t;
+float px = 0.05;
+float py = 0.05;
+float pz = 0.05;
+
+
 void calcular_iluminacion(vec3 orig_normal, vec4 posicion);
 
 vec3 ondular(vec3 entrada);
@@ -9,25 +15,20 @@ void main(){
 
   vec4 v = vec4(ondular(vec3(gl_Vertex)),1);
 
-  float escala = 6.0*3.141592654*t;
+  float x = gl_Vertex.x;
+  float y = gl_Vertex.y;
+  float z = gl_Vertex.z;
 
-  float xt = 1.0 + 0.03*escala*cos(v.x*escala);
-  float yt = 1.0 + 0.02*escala*cos(v.y*escala);
-  float zt = 1.0 + 0.035*escala*cos(v.z*escala);
-
-  vec3 nuevaNormal = normalize(vec3(xt,yt,zt));
-
-  float inc=0.05;
-  vec3 v1 = vec3(v.x+inc,v.y,v.z);
-  v1 = ondular(v1);
-  vec3 v2 = vec3(v.x-inc,v.y,v.z);
-  v2=ondular(v2);
-
-  //nuevaNormal = normalize(cross(v.xyz-v1, v.xyz-v2));
-
-  if(dot(nuevaNormal, gl_Normal) < 0.0)
-    nuevaNormal = -reflect(gl_Normal,nuevaNormal);
+  vec3 nuevaNormal;
   
+  vec3 nuevaNormalx = vec3(-px*sin(z*escala)*escala,0,1);
+  vec3 nuevaNormaly = vec3(1, -py*sin(x*escala)*escala,0);
+  vec3 nuevaNormalz = vec3(0, 1 ,-pz*sin(y*escala)*escala);
+
+  nuevaNormal = normalize(nuevaNormalx+nuevaNormaly+nuevaNormalz);
+
+  if(dot(nuevaNormal,gl_Normal) < 0.0) //si apunta hacia el otro lado que la original la invierto
+    nuevaNormal = -nuevaNormal;
 
   vec3 normal = gl_Normal* (1.0-t) + nuevaNormal * t;
   
@@ -38,15 +39,13 @@ void main(){
 }
 
 vec3 ondular(vec3 entrada){
-  float escala = 6.0*3.141592654*t;
   float x = entrada.x;
   float y = entrada.y;
   float z = entrada.z;
-  float px = 0.03;
-  float py = 0.02;
-  float pz = 0.035;
-  entrada.x = x + px*sin(x*escala) + py*cos(y*escala) + pz*sin(z*escala);
-  entrada.y = y + px*cos(x*escala) + py*sin(y*escala) + pz*cos(z*escala);
-  entrada.z = z + px*sin(x*escala) + py*cos(y*escala) + pz*sin(z*escala);
+
+  entrada.x = x + px*cos(z*escala);
+  entrada.y = y + py*cos(x*escala);
+  entrada.z = z + pz*cos(y*escala);
+
   return entrada;
 }
