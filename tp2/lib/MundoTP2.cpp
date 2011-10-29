@@ -125,6 +125,8 @@ void MundoTP2::crearMenues(){
   menuVertexShader.agregarElemento(c, new ComandoCambiarVShaderForma(vshaderEsferizar));
   
   c=new Cubo();
+  c->rotarX(25);
+  c->rotarY(199);
   c->setVshaderIluminacion(vshaderIlumSimple);
   c->setVshaderForma(vshaderOndas);
   c->setFshader(fshaderSimple);

@@ -6,15 +6,11 @@ uniform sampler2D tex;
 uniform mat4 matriz_mv;
 
 vec4 calcular_iluminacion(int);
+vec4 emparejar(vec4 original);
 
 void main(){
 
-      float maximo = max(gl_FrontMaterial.ambient.r,gl_FrontMaterial.ambient.g);
-      maximo = max(maximo,gl_FrontMaterial.ambient.b);
-
-      vec4 globalAmbient = gl_LightModel.ambient * vec4(maximo, maximo, maximo, 0);      
-      vec4 color_textura0 = vec4(0.0,0.0,0.0,0.0);
-      vec4 color_textura1 = vec4(0.0,0.0,0.0,0.0);
+      vec4 globalAmbient = gl_LightModel.ambient * texture2D(tex, gl_TexCoord[0].st);      
 
       vec4 iluminacion0 = vec4(0.0,0.0,0.0,0.0);
       //if(light0)
@@ -39,7 +35,7 @@ vec4 calcular_iluminacion(int fuente){
       vec4 diffuse = gl_LightSource[fuente].diffuse;
       vec4 ambient = gl_LightSource[fuente].ambient;
 
-      vec4 eyeCoords = matriz_mv * _posicion;
+      vec4 eyeCoords = matriz_mv * vec4(0.0,0.0,0.0,1.0);
       vec3 s = normalize(vec3(gl_LightSource[fuente].position - _posicion));
       vec3 v = normalize(-eyeCoords.xyz);
       vec3 r = reflect( -s, normal );
@@ -47,5 +43,5 @@ vec4 calcular_iluminacion(int fuente){
 
       return (RdotV * gl_LightSource[fuente].specular + 
 	      diffuse  * NdotL + 
-	      NdotL + ambient) *texture2D(tex, gl_TexCoord[0].st);
+	      ambient) *texture2D(tex, gl_TexCoord[0].st);
 }
