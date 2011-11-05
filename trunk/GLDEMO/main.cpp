@@ -22,7 +22,6 @@
 int main(void)
 {
 	myApplication*  pApp = new myApplication;
-	myWindow* myWin = new myWindow();
 
     GLenum err = glewInit();
     if (GLEW_OK != err)

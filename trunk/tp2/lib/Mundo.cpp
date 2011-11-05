@@ -56,7 +56,7 @@ Mundo* Mundo::get_instance(){
 Mundo::Mundo() {
     nombreMundo = "GLUT";
     int argc=1;
-    char* argv[] = {"GLUT", NULL};
+    char* argv[] = {(char*)"GLUT", (char*)NULL};
     glutInit(&argc, argv);
 }
 

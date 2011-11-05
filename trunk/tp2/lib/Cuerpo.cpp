@@ -46,7 +46,7 @@ Cuerpo::Cuerpo(){
     alto=1;
     ancho=1;
     r=g=b=0.5;
-    texture = NULL;
+    texture = 0;
     pasoAnimacion=0;
     cambiarShaders=0;
     MundoTP2::get_instance()->animame(this,10);
