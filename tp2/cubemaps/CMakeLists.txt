@@ -1,0 +1,4 @@
+add_subdirectory(cubemap_landscape)
+add_subdirectory(cubemap_brightday1)
+add_subdirectory(cubemap_grandcanyon)
+add_subdirectory(cubemap_libro)

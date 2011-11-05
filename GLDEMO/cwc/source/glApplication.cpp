@@ -19,7 +19,7 @@ glApplication::glApplication(void)
    _gAppInstances.push_back(this);
    
    int argc = 1;
-   char* argv = "CWCApp";
+   char* argv = (char*)"CWCApp";
    
    glutInit(&argc, &argv);
 }
