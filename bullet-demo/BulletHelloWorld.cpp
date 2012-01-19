@@ -47,7 +47,7 @@ btRigidBody* cajasRB[totalCajas];
 
 float radioEsfera=2;
 float posicionEsferaRB[3]={0.0,50.0,3.0}; // Y=2 es el centro de la esfera
-float velocidadEsferaRB[3]={0.0,-0.05,0.0};
+float velocidadEsferaRB[3]={0.0,-0.5,0.0};
 
 GLfloat colorEsfera[3]={0.0,0.5,1.0};
 btRigidBody* esferaRB;
@@ -59,11 +59,6 @@ float posicionCuboRB[3]={5.0,0.0,10.0};
 GLfloat colorCubo[3]={1.0,1.0,1.0};
 
 btDiscreteDynamicsWorld* dynamicsWorld;
-
-
-
-
-
 
 void DrawAxis()
 {
@@ -181,10 +176,9 @@ void init(void)
 
 
 
-void actualizarEstadoEscena(void){
-
+void actualizarEstadoEscena(void)
+{
     // Actualizo posicion de esferaRB
-	
 
     if (!detenerEsfera){
 	posicionEsferaRB[0]+=velocidadEsferaRB[0];
@@ -207,7 +201,7 @@ void OnIdle (void)
     // ejecutamos un paso de la simulacion
     actualizarEstadoEscena();
 
-    dynamicsWorld->stepSimulation(1/300.f,10);
+    dynamicsWorld->stepSimulation(1/30.f,10);
     glutPostRedisplay();
 }
 
@@ -306,8 +300,8 @@ void keyboard (unsigned char key, int x, int y)
 
 
 
-    case '-':  fuerzaCubo+=25.0;  printf("fuerza= %f\n",float(fuerzaCubo));break;
-    case '+':  fuerzaCubo-=25.0;  printf("fuerza= %f\n",float(fuerzaCubo));break;
+    case '-':  fuerzaCubo+=5.0;  printf("fuerza= %f\n",float(fuerzaCubo));break;
+    case '+':  fuerzaCubo-=5.0;  printf("fuerza= %f\n",float(fuerzaCubo));break;
 
     case 'x':
 	break;
@@ -362,8 +356,7 @@ void initPhysics()
     for (int k=0;k<totalCajas;k++){
 
 
-		
-	// defino la posicion inicial de la caja
+      	// defino la posicion inicial de la caja
 	float posX=((col-cantCols/2)*(tamanioCaja+separacion));
 	float posY=(row-cantRows/2)*(tamanioCaja+separacion);
 	float posZ=altura*(tamanioCaja+separacion);
@@ -376,7 +369,7 @@ void initPhysics()
 
 	cajasRB[k] = new btRigidBody(fallRigidBodyCI);// creo el cuerpo rigido
 		
-	cajasRB[k]->setFriction(btScalar(0.1)); // defino factor de friccion
+	cajasRB[k]->setFriction(btScalar(0.7)); // defino factor de friccion
 	dynamicsWorld->addRigidBody(cajasRB[k]); // agrego la caja a la simulacion
 
 	col++;
@@ -416,10 +409,8 @@ void initPhysics()
 
     btRigidBody::btRigidBodyConstructionInfo fallRigidBodyCI3(mass,cuboMotionState,cuboShape,fallInertia);
     cuboRB = new btRigidBody(fallRigidBodyCI3);
-    cuboRB->setFriction(0.00);
+    cuboRB->setFriction(0.3);
     dynamicsWorld->addRigidBody(cuboRB);
-	
-	
 }
 
 int main(int argc, char** argv)
@@ -462,6 +453,5 @@ int main(int argc, char** argv)
       delete broadphase;
     */	
     return 0;
-
 }
 
