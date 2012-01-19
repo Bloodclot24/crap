@@ -17,7 +17,7 @@ void main(){
       vec4 iluminacion1 = vec4(0.0,0.0,0.0,0.0);
 //    if(light1)
 	iluminacion1 = calcular_iluminacion(1);
-
+	
       gl_FragColor = (iluminacion0 + iluminacion1 + globalAmbient)*t;
 }
 
