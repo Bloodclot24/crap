@@ -2,6 +2,9 @@ add_library(framework_final_lib
   GLWindow.cpp
   GLWorld.cpp
   Body.cpp
+  Vertex.cpp
+  Curve.cpp
+  Curves/StraightLine.cpp
   Primitive.cpp
   Primitives/Cube.cpp
   Primitives/Cylinder.cpp

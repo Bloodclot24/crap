@@ -5,7 +5,7 @@
 
 int main(int argc, char *argv[])
 {
-
+        
     GLWorld* world = new TP3();
 
     GLWindow* window = GLWindow::create(world, 1280, 800);
