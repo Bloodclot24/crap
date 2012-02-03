@@ -31,14 +31,13 @@ Bottle::Bottle():cylinder_(0.25, 1)
 
 void Bottle::draw()
 {
-
     glPushMatrix();{
 
         glColor3f(1, 1, 1);
 
         btVector3 position = getPosition();
 
-	btTransform trans;
+        btTransform trans;
         rigidBody_->getMotionState()->getWorldTransform(trans);
 
         btVector3 axis = trans.getRotation().getAxis();
