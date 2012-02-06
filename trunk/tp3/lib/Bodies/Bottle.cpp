@@ -1,10 +1,11 @@
 #include "Bodies/Bottle.h"
 
 #include "btBulletDynamicsCommon.h"
+#define ESCALA 1
 
 Bottle::Bottle():cylinder_(0.25, 1)
 {
-    btCollisionShape* bottleShape = new btCylinderShapeZ(btVector3(0.25, 0.25, 0.5));
+    btCollisionShape* bottleShape = new btCylinderShapeZ(btVector3(0.1*ESCALA, 0.1*ESCALA, 0.265*ESCALA));
 
     btScalar mass = 1;
 
@@ -27,6 +28,26 @@ Bottle::Bottle():cylinder_(0.25, 1)
     fallRigidBodyCI3.m_restitution = 0.5;
     rigidBody_ = new btRigidBody(fallRigidBodyCI3);
     rigidBody_->setFriction(1);
+    crearSuperficie();
+}
+
+void Bottle::crearSuperficie() {
+	//La botella mide 5 de radio mayor y 26.5 de alto, sin tapa
+	std::vector<btVector3> ptos;
+	ptos.push_back(btVector3(0, 0, 0.8));
+	ptos.push_back(btVector3(1.3, 0, 0.8));
+	ptos.push_back(btVector3(2.5, 0, -0.5));
+	ptos.push_back(btVector3(3, 0, 0.3));
+	ptos.push_back(btVector3(6, 0, 3));
+	ptos.push_back(btVector3(1.5, 0, 2));
+	ptos.push_back(btVector3(4, 0, 11));
+	ptos.push_back(btVector3(4.8, 0, 20));
+	ptos.push_back(btVector3(1.5, 0, 18));
+	ptos.push_back(btVector3(1, 0, 24));
+	ptos.push_back(btVector3(1.5, 0, 24.5));
+	ptos.push_back(btVector3(1.3, 0, 25));
+	ptos.push_back(btVector3(1.3, 0, 26.5));
+	superficie = new SuperficieRevolucion(ptos);
 }
 
 void Bottle::draw()
@@ -51,15 +72,16 @@ void Bottle::draw()
                   axis.getX(),
                   axis.getY(),
                   axis.getZ());
-      
-        glTranslatef(0, 0, -0.5);
-        cylinder_.draw();
+
+        glTranslatef(0,0,-0.265*ESCALA); //?
+        glScalef(0.02*ESCALA,0.02*ESCALA,0.02*ESCALA);
+        superficie->draw();
 
     }glPopMatrix();
 }
 
 Bottle::~Bottle()
 {
-    
+    delete superficie;
 }
 
