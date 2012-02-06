@@ -1,9 +1,27 @@
 #include "Vertex.h"
 #include <math.h>
 
+#include <sstream>
+
 Vertex::Vertex()
 {
     x_ = y_ = z_ = 0;
+}
+
+Vertex::Vertex(float x, float y, float z)
+{
+    x_ = x;
+    y_ = y;
+    z_ = z;
+}
+
+std::string Vertex::toString()
+{
+    std::ostringstream string;
+
+    string << "(" << getX() << "," << getY() << "," << getZ() << ")";
+
+    return string.str();
 }
 
 void Vertex::setCoords(float x, float y,float z)
@@ -55,6 +73,16 @@ Vertex Vertex::operator-(Vertex v)
     return newVertex;
 }
 
+Vertex Vertex::operator-()
+{
+    Vertex newVertex;
+    
+    newVertex.setCoords(-getX(),
+                        -getY(),
+                        -getZ());
+
+    return newVertex;
+}
 
 Vertex Vertex::operator+(Vertex v)
 {
@@ -92,4 +120,16 @@ Vertex Vertex::normalize()
                        getY()/module,
                        getZ()/module);
     return newPoint;
+}
+
+
+Vertex Vertex::crossProduct(Vertex v)
+{
+    Vertex newVertex;
+
+    newVertex.setX(getY()*v.getZ()-getZ()*v.getY());
+    newVertex.setY(-(getX()*v.getZ()-getZ()*v.getX()));
+    newVertex.setZ(getX()*v.getY()-getY()*v.getX());
+
+    return newVertex;
 }

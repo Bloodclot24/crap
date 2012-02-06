@@ -6,6 +6,8 @@
 #include "GLWorld.h"
 #include "Body.h"
 #include "Bodies/Bottle.h"
+#include "Bodies/ConveyorBelt.h"
+
 
 class TP3 : public GLWorld
 {
@@ -15,6 +17,11 @@ class TP3 : public GLWorld
         windowHeight_;
 
     Bottle bottles[5];
+
+    ConveyorBelt* belt_;
+
+    float xrot_, yrot_, zrot_;
+    float xtrans_, ytrans_, ztrans_;
 
     btDiscreteDynamicsWorld* dynamicsWorld_;
 

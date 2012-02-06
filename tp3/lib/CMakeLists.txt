@@ -3,9 +3,13 @@ add_library(framework_final_lib
   GLWorld.cpp
   Body.cpp
   Vertex.cpp
+  GlVertex.cpp
   Curve.cpp
   Curves/StraightLine.cpp
   Primitive.cpp
   Primitives/Cube.cpp
   Primitives/Cylinder.cpp
-  Bodies/Bottle.cpp)
+  Bodies/Prism.cpp
+  Bodies/Bottle.cpp
+  Bodies/ConveyorBelt.cpp
+  )

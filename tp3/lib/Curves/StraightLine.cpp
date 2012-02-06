@@ -4,6 +4,7 @@ StraightLine::StraightLine(Vertex v0, Vertex v1)
 {
     v0_ = v0;
     v1_ = v1;
+    orientation_.setCoords(0, 0, 1);
 }
 
 Vertex StraightLine::getPoint(float t)
@@ -17,9 +18,7 @@ Vertex StraightLine::getPoint(float t)
 
 Vertex StraightLine::getNormalAtPoint(float t)
 {
-    Vertex point;
-    
-    return point;
+    return orientation_.crossProduct(getTangentAtPoint(t)).normalize();
 }
 
 Vertex StraightLine::getTangentAtPoint(float t)

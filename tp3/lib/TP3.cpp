@@ -9,12 +9,23 @@
 
 #include "Primitives/Cube.h"
 #include "Primitives/Cylinder.h"
+#include "Curves/StraightLine.h"
 
 TP3::TP3()
 {
     windowWidth_ = 1;
     windowHeight_ = 1;
     dynamicsWorld_ = NULL;
+
+    StraightLine line(Vertex(-3, -3, 1), Vertex(3, 5, 0));
+
+    belt_ = new ConveyorBelt(&line);
+
+    xrot_ = yrot_ = zrot_ = 0;
+
+    xtrans_ = 0;
+    ytrans_ = -6;
+    ztrans_ = 2;
 }
 
 void TP3::initialize()
@@ -47,9 +58,13 @@ void TP3::setUpGlContext()
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    gluLookAt(0, -6, 2,
+    gluLookAt(xtrans_, ytrans_, ztrans_,
               0,  0, 0,
               0,  1, 0);
+
+    glRotatef(xrot_, 1, 0, 0);
+    glRotatef(yrot_, 0, 1, 0);
+    glRotatef(zrot_, 0, 0, 1);
 }
 
 void TP3::updateScene()
@@ -75,6 +90,7 @@ void TP3::renderScene()
     for(int i=0; i<5; ++i)
         bottles[i].draw();
 
+    belt_->draw();
 }
 
 void TP3::handleDisplay()
@@ -98,7 +114,27 @@ void TP3::handleReshape(int width, int height)
 
 void TP3::handleKeyboard(unsigned char key, int x, int y)
 {
+    switch(key){
 
+    case 'x': xrot_ += 3; break;
+    case 'X': xrot_ -= 3; break;
+
+    case 'y': yrot_ += 3; break;
+    case 'Y': yrot_ -= 3; break;
+
+    case 'z': zrot_ += 3; break;
+    case 'Z': zrot_ -= 3; break;
+
+    case '-': ytrans_ -= 0.1; break;
+    case '+': ytrans_ += 0.1; break;
+
+    case 'r': xrot_ = yrot_ = zrot_ = 0; 
+        ytrans_ = 0; break;
+        
+    default: break;
+
+    }
+        
 }
 
 void TP3::initializePhysics()
