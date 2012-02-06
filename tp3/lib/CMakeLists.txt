@@ -12,7 +12,7 @@ add_library(framework_final_lib
   Bodies/Prism.cpp
   Bodies/Bottle.cpp
   Bodies/ConveyorBelt.cpp
-  Bodies/ConveyorBelt2.cpp
+  Bodies/CoveyorBelt2.cpp
   Primitives/SuperficieRevolucion.cpp
   Primitives/SuperficieBarrido.cpp
 )

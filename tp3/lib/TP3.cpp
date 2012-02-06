@@ -19,7 +19,7 @@ TP3::TP3()
 
     StraightLine line(Vertex(-3, -3, 1), Vertex(3, 5, 0));
 
-    belt_ = new ConveyorBelt(&line);
+    belt_ = new CoveyorBelt();//new ConveyorBelt(&line);
 
     xrot_ = yrot_ = zrot_ = 0;
 
@@ -89,7 +89,7 @@ void TP3::renderScene()
 
     for(int i=0; i<5; ++i)
         bottles[i].draw();
-    belt.draw();
+ //   belt.draw();
 
     belt_->draw();
 }
