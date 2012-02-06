@@ -8,6 +8,7 @@ class StraightLine:public Curve
 
     private:
     Vertex v0_, v1_;
+    Vertex orientation_;
 
     public:
     StraightLine(Vertex v0, Vertex v1);

@@ -26,6 +26,11 @@ Vertex Curve::Iterator::next()
     return vertex;
 }
 
+Vertex Curve::Iterator::normal()
+{
+    return curve_->getNormalAtPoint(float(currentStep_)/float(totalSteps_));
+}
+
 bool Curve::Iterator::hasNext()
 {
     return currentStep_ <= totalSteps_;

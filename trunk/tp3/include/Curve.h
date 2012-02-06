@@ -15,6 +15,7 @@ class Curve
 
         public:
         Vertex next();
+        Vertex normal();
         bool hasNext();
 
         protected:
