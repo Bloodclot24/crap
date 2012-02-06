@@ -89,6 +89,7 @@ void TP3::renderScene()
 
     for(int i=0; i<5; ++i)
         bottles[i].draw();
+    belt.draw();
 
     belt_->draw();
 }

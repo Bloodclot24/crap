@@ -3,12 +3,16 @@
 
 #include "Body.h"
 #include "Primitives/Cylinder.h"
+#include "Primitives/SuperficieRevolucion.h"
 
 class Bottle : public Body
 {
     Cylinder cylinder_;
+    SuperficieRevolucion* superficie;
 
-    public:
+    void crearSuperficie();
+
+public:
     Bottle();
     void draw();
     virtual ~Bottle();
