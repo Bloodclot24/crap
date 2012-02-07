@@ -25,6 +25,12 @@ public:
 			unsigned pasosPerfil = 10, unsigned grados = 360, btVector3 axis = btVector3(0,0,1));
 	~SuperficieRevolucion();
 	void draw();
+	matrizPuntos& getVertices(){
+		return vertices;
+	}
+	matrizPuntos& getNormales(){
+		return normales;
+	}
 
 };
 #endif

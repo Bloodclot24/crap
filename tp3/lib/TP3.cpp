@@ -1,11 +1,11 @@
+#include "TP3.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <GL/glut.h>
-
-#include "TP3.h"
 
 #include "Primitives/Cube.h"
 #include "Primitives/Cylinder.h"

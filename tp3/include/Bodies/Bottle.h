@@ -9,6 +9,8 @@ class Bottle : public Body
 {
     Cylinder cylinder_;
     SuperficieRevolucion* superficie;
+    float upTextureBound;
+    float downTextureBound;
 
     void crearSuperficie();
 

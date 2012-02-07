@@ -50,7 +50,9 @@ void CoveyorBelt::crearSuperficie() {
 	ptosControl.push_back(btVector3(-3.75, -2.25, 0));
 	ptosControl.push_back(btVector3(-4.25, 2.25, 0));
 	ptosControl.push_back(btVector3(-2.25, 4.25, 0));
-	ptosControl.push_back(btVector3(18.25, 3.75, 0));
+//	ptosControl.push_back(btVector3(18.25, 3.75, 0));
+	ptosControl.push_back(btVector3(2.25, 3.75, 0));
+	ptosControl.push_back(btVector3(4.75, 4.25, 0));
 
 	superficie = new SuperficieBarrido(perfil, normales, ptosControl);
 }
