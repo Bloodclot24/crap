@@ -4,6 +4,7 @@ add_library(framework_final_lib
   Body.cpp
   Vertex.cpp
   GlVertex.cpp
+  ComandoCambiarTextura.cpp
   Curve.cpp
   Curves/StraightLine.cpp
   Primitive.cpp

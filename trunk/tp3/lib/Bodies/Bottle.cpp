@@ -1,7 +1,8 @@
 #include "Bodies/Bottle.h"
-
 #include "btBulletDynamicsCommon.h"
-#define ESCALA 1
+#include "ComandoCambiarTextura.h"
+
+#define ESCALA 2
 
 Bottle::Bottle():cylinder_(0.25, 1)
 {
@@ -48,6 +49,10 @@ void Bottle::crearSuperficie() {
 	ptos.push_back(btVector3(1.3, 0, 25));
 	ptos.push_back(btVector3(1.3, 0, 26.5));
 	superficie = new SuperficieRevolucion(ptos);
+	upTextureBound = 17;
+	downTextureBound = 11;
+	ComandoCambiarTextura comando("lad.raw");
+	setTexture(comando.getTextura());
 }
 
 void Bottle::draw()
@@ -75,7 +80,25 @@ void Bottle::draw()
 
         glTranslatef(0,0,-0.265*ESCALA); //?
         glScalef(0.02*ESCALA,0.02*ESCALA,0.02*ESCALA);
-        superficie->draw();
+        //superficie->draw();
+        glBindTexture (GL_TEXTURE_2D, texture);
+    	glBegin( GL_TRIANGLE_STRIP);
+    	for (int i = 0; i < superficie->getVertices().size() ; i++) {
+    		for (int j = 0; j < superficie->getVertices()[i].size(); j++) {
+    			float height = superficie->getVertices()[i][j][2];
+
+    			glNormal3fv(superficie->getNormales()[i][j]);
+    			if(downTextureBound <= height && height <= upTextureBound)
+       					glTexCoord2f(i/(float)superficie->getVertices().size(),(height - downTextureBound)/(upTextureBound - downTextureBound));
+    			glVertex3fv(superficie->getVertices()[i][j]);
+
+    			glNormal3fv(superficie->getNormales()[fmod(i + 1, superficie->getVertices().size())][j]);
+    			if(downTextureBound <= height && height <= upTextureBound)
+    					glTexCoord2f((i+1)/(float)superficie->getVertices().size(), (height - downTextureBound)/(upTextureBound - downTextureBound));
+    			glVertex3fv(superficie->getVertices()[fmod(i + 1, superficie->getVertices().size())][j]);
+    		}
+    	}
+    	glEnd();
 
     }glPopMatrix();
 }

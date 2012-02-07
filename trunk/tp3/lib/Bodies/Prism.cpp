@@ -1,8 +1,6 @@
-#include <string.h>
-
-#include <GL/gl.h>
-
 #include "Bodies/Prism.h"
+#include <string.h>
+#include <GL/gl.h>
 #include "GlVertex.h"
 
 Prism::Prism()
