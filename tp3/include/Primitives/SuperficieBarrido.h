@@ -27,6 +27,12 @@ public:
 	SuperficieBarrido(vectorPuntos perfil, vectorPuntos normales, vectorPuntos ptosCtrl, unsigned pasosU = 10);
 	~SuperficieBarrido();
 	void draw();
+	matrizPuntos& getVertices(){
+		return vertices;
+	}
+	matrizPuntos& getNormales(){
+		return normales;
+	}
 
 };
 #endif
