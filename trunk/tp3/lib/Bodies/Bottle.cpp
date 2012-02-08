@@ -1,6 +1,7 @@
 #include "Bodies/Bottle.h"
 #include "btBulletDynamicsCommon.h"
-#include "ComandoCambiarTextura.h"
+
+#include "GLTexture.h"
 
 #define ESCALA 2
 
@@ -33,33 +34,31 @@ Bottle::Bottle():cylinder_(0.25, 1)
 }
 
 void Bottle::crearSuperficie() {
-	//La botella mide 5 de radio mayor y 26.5 de alto, sin tapa
-	std::vector<btVector3> ptos;
-	ptos.push_back(btVector3(0, 0, 0.8));
-	ptos.push_back(btVector3(1.3, 0, 0.8));
-	ptos.push_back(btVector3(2.5, 0, -0.5));
-	ptos.push_back(btVector3(3, 0, 0.3));
-	ptos.push_back(btVector3(6, 0, 3));
-	ptos.push_back(btVector3(1.5, 0, 2));
-	ptos.push_back(btVector3(4, 0, 11));
-	ptos.push_back(btVector3(4.8, 0, 20));
-	ptos.push_back(btVector3(1.5, 0, 18));
-	ptos.push_back(btVector3(1, 0, 24));
-	ptos.push_back(btVector3(1.5, 0, 24.5));
-	ptos.push_back(btVector3(1.3, 0, 25));
-	ptos.push_back(btVector3(1.3, 0, 26.5));
-	superficie = new SuperficieRevolucion(ptos);
-	upTextureBound = 17;
-	downTextureBound = 11;
-	texture = 0;
+    //La botella mide 5 de radio mayor y 26.5 de alto, sin tapa
+    std::vector<btVector3> ptos;
+    ptos.push_back(btVector3(0, 0, 0.8));
+    ptos.push_back(btVector3(1.3, 0, 0.8));
+    ptos.push_back(btVector3(2.5, 0, -0.5));
+    ptos.push_back(btVector3(3, 0, 0.3));
+    ptos.push_back(btVector3(6, 0, 3));
+    ptos.push_back(btVector3(1.5, 0, 2));
+    ptos.push_back(btVector3(4, 0, 11));
+    ptos.push_back(btVector3(4.8, 0, 20));
+    ptos.push_back(btVector3(1.5, 0, 18));
+    ptos.push_back(btVector3(1, 0, 24));
+    ptos.push_back(btVector3(1.5, 0, 24.5));
+    ptos.push_back(btVector3(1.3, 0, 25));
+    ptos.push_back(btVector3(1.3, 0, 26.5));
+    superficie = new SuperficieRevolucion(ptos);
+    upTextureBound = 17;
+    downTextureBound = 11;
+    texture = 0;
 }
 
 void Bottle::draw()
 {
-	if(texture == 0) {
-		ComandoCambiarTextura comando("lad.raw");
-		setTexture(comando.getTextura());
-	}
+
+    GLTexture::bind("ladrillos");
 
     glPushMatrix();{
 
@@ -88,19 +87,19 @@ void Bottle::draw()
     	float pasosi = superficie->getVertices().size() - 1;
     	float pasosj = superficie->getVertices()[0].size() - 1;
     	for (int i = 0; i < pasosi ; i++) {
-    		for (int j = 0; j <= pasosj; j++) {
-    			float height = superficie->getVertices()[i][j][2];
+            for (int j = 0; j <= pasosj; j++) {
+                float height = superficie->getVertices()[i][j][2];
 
-    			glNormal3fv(superficie->getNormales()[i][j]);
-    			if(downTextureBound <= height && height <= upTextureBound)
-    				glTexCoord2f(i/pasosi,(height - downTextureBound)/(upTextureBound - downTextureBound));
-    			glVertex3fv(superficie->getVertices()[i][j]);
+                glNormal3fv(superficie->getNormales()[i][j]);
+                if(downTextureBound <= height && height <= upTextureBound)
+                    glTexCoord2f(i/pasosi,(height - downTextureBound)/(upTextureBound - downTextureBound));
+                glVertex3fv(superficie->getVertices()[i][j]);
 
-    			glNormal3fv(superficie->getNormales()[fmod(i + 1, pasosi)][j]);
-    			if(downTextureBound <= height && height <= upTextureBound)
-    				glTexCoord2f((i+1)/pasosi,(height - downTextureBound)/(upTextureBound - downTextureBound));
-    			glVertex3fv(superficie->getVertices()[fmod(i + 1, pasosi)][j]);
-    		}
+                glNormal3fv(superficie->getNormales()[fmod(i + 1, pasosi)][j]);
+                if(downTextureBound <= height && height <= upTextureBound)
+                    glTexCoord2f((i+1)/pasosi,(height - downTextureBound)/(upTextureBound - downTextureBound));
+                glVertex3fv(superficie->getVertices()[fmod(i + 1, pasosi)][j]);
+            }
     	}
     	glEnd();
 

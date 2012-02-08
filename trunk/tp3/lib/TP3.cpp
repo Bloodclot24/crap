@@ -10,6 +10,8 @@
 #include "Primitives/Cube.h"
 #include "Primitives/Cylinder.h"
 #include "Curves/StraightLine.h"
+#include "GLTexture.h"
+
 
 TP3::TP3()
 {
@@ -33,11 +35,17 @@ void TP3::initialize()
     initializePhysics();
 
     for(int i=0; i<5; ++i){
-        bottles[i].setPosition(0,0,5*(i+1));
+        bottles[i].setPosition(0,2,5*(i+1));
         addBody(&bottles[i]);
     }
 
+    //Cargo texturas
+    GLTexture::load("lad.raw", "ladrillos");
+
+    //Activo iluminacion
     glEnable(GL_LIGHT0);
+    glEnable(GL_TEXTURE);
+    glEnable(GL_TEXTURE_2D);
 
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_LIGHTING);
