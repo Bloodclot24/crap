@@ -5,6 +5,7 @@ add_library(framework_final_lib
   Vertex.cpp
   GlVertex.cpp
   GLTexture.cpp
+  GLShader.cpp
   Curve.cpp
   Curves/StraightLine.cpp
   Primitive.cpp

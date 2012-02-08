@@ -52,6 +52,11 @@ void GLTexture::bind(std::string textureAlias)
     std::string upperAlias = textureAlias;
     std::transform(upperAlias.begin(), upperAlias.end(), upperAlias.begin(), ::toupper);
 
+    if(!textures.count(upperAlias)){
+        printf("Textura inexistente (%s)\n", upperAlias.c_str());
+        exit(-1);
+    }
+
     glBindTexture(GL_TEXTURE_2D, textures[upperAlias]);    
 }
 

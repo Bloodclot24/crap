@@ -11,7 +11,7 @@
 #include "Primitives/Cylinder.h"
 #include "Curves/StraightLine.h"
 #include "GLTexture.h"
-
+#include "GLShader.h"
 
 TP3::TP3()
 {
@@ -41,6 +41,19 @@ void TP3::initialize()
 
     //Cargo texturas
     GLTexture::load("lad.raw", "ladrillos");
+
+    //Cargo VShaders
+    GLShader::loadVShader("shaders/normal.vert", "normal");
+    
+    //Cargo FShaders
+    GLShader::loadFShader("shaders/normal.frag", "normal");
+    //GLShader::loadFShader("shaders/glass.fshader", "glass");
+
+    //Creo los programas
+    GLShader::createProgram("normal", "normal", "normal");
+    //GLShader::createProgram("bottle", "normal", "glass");
+
+    GLShader::useProgram("normal");
 
     //Activo iluminacion
     glEnable(GL_LIGHT0);
