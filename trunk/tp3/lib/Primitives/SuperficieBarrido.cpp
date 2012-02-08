@@ -15,8 +15,8 @@ void SuperficieBarrido::cargarCoordenadas(unsigned pasosU) {
 	btVector3 axisZ(0,0,1);
 	btVector3 axisX(1,0,0);
 	std::vector<btVector3> ptos(ptosPerfil.size()), normal(ptosPerfil.size());
-	for (int i = 0; i < ptosCurva.size(); i++) {
-		for (int j = 0; j < ptosPerfil.size(); j++) {
+	for (unsigned i = 0; i < ptosCurva.size(); i++) {
+		for (unsigned j = 0; j < ptosPerfil.size(); j++) {
 			ptos[j] = ptosPerfil[j].rotate(axisZ, tgsCurva[i].angle(axisX)) + ptosCurva[i];
 			normal[j] = normalesPerfil[j].rotate(axisZ, tgsCurva[i].angle(axisX));
 		}
@@ -27,7 +27,7 @@ void SuperficieBarrido::cargarCoordenadas(unsigned pasosU) {
 
 void SuperficieBarrido::cargarCoordenadasBSpline(unsigned pasosU) {
 	std::vector<btVector3> ptosCtrlCurva;
-	for (int offset = 0; offset < ptosControl.size() - GRADO_BSPLINE; offset++) {
+	for (unsigned offset = 0; offset < ptosControl.size() - GRADO_BSPLINE; offset++) {
 		ptosCtrlCurva.clear();
 		for (int i = 0; i < GRADO_BSPLINE + 1; i++)
 			ptosCtrlCurva.push_back(ptosControl[offset + i]);
@@ -56,8 +56,8 @@ btVector3 SuperficieBarrido::calcularTangenteBSpline(float u, vectorPuntos ctrlP
 
 void SuperficieBarrido::draw() {
 	glBegin(GL_TRIANGLE_STRIP);
-	for (int i = 0; i < vertices.size() - 1 ; i++) {
-		for (int j = 0; j < vertices[i].size(); j++) {
+	for (unsigned i = 0; i < vertices.size() - 1 ; i++) {
+		for (unsigned j = 0; j < vertices[i].size(); j++) {
 			glNormal3fv(normales[i][j]);
 			glVertex3fv(vertices[i][j]);
 			glNormal3fv(normales[i + 1][j]);
