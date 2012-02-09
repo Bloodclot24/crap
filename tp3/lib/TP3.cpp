@@ -102,7 +102,7 @@ void TP3::setUpGlContext()
 
 void TP3::updateScene()
 {
-    dynamicsWorld_->stepSimulation(1.0/30, 10);
+    dynamicsWorld_->stepSimulation(1.0/30.0, 10);
 }
 
 void TP3::renderScene()

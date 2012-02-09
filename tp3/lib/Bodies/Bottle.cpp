@@ -27,9 +27,9 @@ Bottle::Bottle():cylinder_(0.25, 1)
     btDefaultMotionState* bottleMotionState = new btDefaultMotionState(startTransform);
 
     btRigidBody::btRigidBodyConstructionInfo fallRigidBodyCI3(mass,bottleMotionState,bottleShape,fallInertia);
-    fallRigidBodyCI3.m_restitution = 0.5;
     rigidBody_ = new btRigidBody(fallRigidBodyCI3);
-    rigidBody_->setFriction(1);
+    rigidBody_->setFriction(0.5);
+    rigidBody_->setDamping(0.7, 0.7);
     crearSuperficie();
 }
 
@@ -60,7 +60,6 @@ void Bottle::draw()
 
     GLTexture::bind("etiqueta");
 //    GLTexture::unbind();
-
     glPushMatrix();{
 
         glColor3f(1, 1, 1);
