@@ -7,10 +7,11 @@
 
 class Cylinder : public Primitive
 {
-
     float radius_, height_;
 
     GLUquadric* quadric_;
+    GLUquadric* topDiskQuadric_;
+    GLUquadric* downDiskQuadric_;
 
     public:
     Cylinder(float radius, float height);

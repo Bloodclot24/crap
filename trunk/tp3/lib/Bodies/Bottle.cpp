@@ -3,7 +3,7 @@
 
 #include "GLTexture.h"
 
-#define ESCALA 2
+#define ESCALA 1
 
 Bottle::Bottle():cylinder_(0.25, 1)
 {
@@ -58,7 +58,8 @@ void Bottle::crearSuperficie() {
 void Bottle::draw()
 {
 
-    GLTexture::bind("ladrillos");
+    GLTexture::bind("etiqueta");
+//    GLTexture::unbind();
 
     glPushMatrix();{
 
@@ -90,14 +91,16 @@ void Bottle::draw()
             for (int j = 0; j <= pasosj; j++) {
                 float height = superficie->getVertices()[i][j][2];
 
-                glNormal3fv(superficie->getNormales()[i][j]);
                 if(downTextureBound <= height && height <= upTextureBound)
-                    glTexCoord2f(i/pasosi,(height - downTextureBound)/(upTextureBound - downTextureBound));
+                	 GLTexture::bind("etiqueta");
+                else
+                	 GLTexture::unbind();
+                glNormal3fv(superficie->getNormales()[i][j]);
+                glTexCoord2f(i/pasosi,(height - downTextureBound)/(upTextureBound - downTextureBound));
                 glVertex3fv(superficie->getVertices()[i][j]);
 
                 glNormal3fv(superficie->getNormales()[fmod(i + 1, pasosi)][j]);
-                if(downTextureBound <= height && height <= upTextureBound)
-                    glTexCoord2f((i+1)/pasosi,(height - downTextureBound)/(upTextureBound - downTextureBound));
+                glTexCoord2f((i+1)/pasosi,(height - downTextureBound)/(upTextureBound - downTextureBound));
                 glVertex3fv(superficie->getVertices()[fmod(i + 1, pasosi)][j]);
             }
     	}

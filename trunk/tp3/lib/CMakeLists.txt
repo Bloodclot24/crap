@@ -11,10 +11,16 @@ add_library(framework_final_lib
   Primitive.cpp
   Primitives/Cube.cpp
   Primitives/Cylinder.cpp
+  Primitives/Sphere.cpp
   Bodies/Prism.cpp
   Bodies/Bottle.cpp
   Bodies/ConveyorBelt.cpp
   Bodies/CoveyorBelt2.cpp
+  Bodies/Machine.cpp
+  Bodies/FirstMachine.cpp
+  Bodies/LastMachine.cpp
+  Bodies/LabelMachine.cpp
+  Bodies/FillMachine.cpp
   Primitives/SuperficieRevolucion.cpp
   Primitives/SuperficieBarrido.cpp
 )

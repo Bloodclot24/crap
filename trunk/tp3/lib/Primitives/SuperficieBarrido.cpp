@@ -17,8 +17,13 @@ void SuperficieBarrido::cargarCoordenadas(unsigned pasosU) {
 	std::vector<btVector3> ptos(ptosPerfil.size()), normal(ptosPerfil.size());
 	for (unsigned i = 0; i < ptosCurva.size(); i++) {
 		for (unsigned j = 0; j < ptosPerfil.size(); j++) {
-			ptos[j] = ptosPerfil[j].rotate(axisZ, tgsCurva[i].angle(axisX)) + ptosCurva[i];
-			normal[j] = normalesPerfil[j].rotate(axisZ, tgsCurva[i].angle(axisX));
+			if(tgsCurva[i][1] < 0) {
+				ptos[j] = ptosPerfil[j].rotate(axisZ, - tgsCurva[i].angle(axisX)) + ptosCurva[i];
+				normal[j] = normalesPerfil[j].rotate(axisZ, - tgsCurva[i].angle(axisX));
+			} else {
+				ptos[j] = ptosPerfil[j].rotate(axisZ, tgsCurva[i].angle(axisX)) + ptosCurva[i];
+				normal[j] = normalesPerfil[j].rotate(axisZ, tgsCurva[i].angle(axisX));
+			}
 		}
 		vertices.push_back(ptos);
 		normales.push_back(normal);

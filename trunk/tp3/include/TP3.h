@@ -7,7 +7,7 @@
 #include "Body.h"
 #include "Bodies/Bottle.h"
 #include "Bodies/CoveyorBelt2.h"
-
+#include "Bodies/Machine.h"
 
 class TP3 : public GLWorld
 {
@@ -18,6 +18,7 @@ class TP3 : public GLWorld
 
     Bottle bottles[5];
 
+    Machine* machines[4];
     CoveyorBelt* belt_;
 
     float xrot_, yrot_, zrot_;
@@ -44,6 +45,7 @@ class TP3 : public GLWorld
     virtual void timerCallback(int value);
 
     TP3();
+    virtual ~TP3();
 };
 
 #endif /* _TP3_H_ */
