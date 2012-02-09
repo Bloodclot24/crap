@@ -12,6 +12,10 @@
 #include "Curves/StraightLine.h"
 #include "GLTexture.h"
 #include "GLShader.h"
+#include "Bodies/FirstMachine.h"
+#include "Bodies/LastMachine.h"
+#include "Bodies/LabelMachine.h"
+#include "Bodies/FillMachine.h"
 
 TP3::TP3()
 {
@@ -22,6 +26,11 @@ TP3::TP3()
     StraightLine line(Vertex(-3, -3, 1), Vertex(3, 5, 0));
 
     belt_ = new CoveyorBelt();//new ConveyorBelt(&line);
+
+    machines[0] = new FirstMachine();
+    machines[1] = new LastMachine();
+    machines[2] = new LabelMachine();
+    machines[3] = new FillMachine();
 
     xrot_ = yrot_ = zrot_ = 0;
 
@@ -41,6 +50,9 @@ void TP3::initialize()
 
     //Cargo texturas
     GLTexture::load("lad.raw", "ladrillos");
+    GLTexture::load("chapaDoble.raw", "chapa");
+    GLTexture::load("cinta.raw", "cinta");
+    GLTexture::load("etiquetaCoca.raw", "etiqueta");
 
     //Cargo VShaders
     GLShader::loadVShader("shaders/normal.vert", "normal");
@@ -110,7 +122,9 @@ void TP3::renderScene()
 
     for(int i=0; i<5; ++i)
         bottles[i].draw();
- //   belt.draw();
+
+    for(int i=0; i<4; ++i)
+        machines[i]->draw();
 
     belt_->draw();
 }
@@ -213,3 +227,12 @@ void TP3::addBody(Body* body)
 {
     dynamicsWorld_->addRigidBody(body->getRigidBody());
 }
+
+TP3::~TP3()
+{
+	delete belt_;
+
+    for(int i=0; i<4; ++i)
+       	delete machines[i];
+}
+
