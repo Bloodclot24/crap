@@ -116,7 +116,7 @@ void GLShader::createProgram(std::string name, std::string vshader, std::string 
         glDeleteProgram(program);
     }
     else{
-        printf("Programa %d linkeado correctamente\n", program);
+        printf("Programa %s (%d) linkeado correctamente\n", name.c_str(), program);
         programs[toUpper(name)] = program;
     }
 

@@ -41,7 +41,8 @@ void Prism::draw()
     glBegin(GL_QUADS);{
         for(int i=0;i<n-1;i++)
         {
-            glNormal(vertexes_[i] - vertexes_[i+1]);
+            glNormal( (vertexes_[i+1]-vertexes_[i]).crossProduct(displacement));
+
             glTexCoord2fv(textureVertex[0]);
             glVertex(vertexes_[i]+displacement);
             glTexCoord2fv(textureVertex[1]);
@@ -52,7 +53,7 @@ void Prism::draw()
             glVertex(vertexes_[i]-displacement);
         }
 
-        glNormal(vertexes_[n-1]-vertexes_[0]);
+        glNormal((vertexes_[0]-vertexes_[n-1]).crossProduct(displacement));
         glTexCoord2fv(textureVertex[0]);
         glVertex(vertexes_[n-1]+displacement);
         glTexCoord2fv(textureVertex[1]);
