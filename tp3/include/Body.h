@@ -15,6 +15,7 @@ class Body
     Body();
     virtual void draw()=0;
     void setPosition(float x, float y, float z);
+    void setRotation(float xrot, float yrot, float zrot);
     btRigidBody* getRigidBody();
     btVector3 getPosition();
     void setTexture(GLuint t);
