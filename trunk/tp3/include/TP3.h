@@ -2,6 +2,7 @@
 #define _TP3_H_
 
 #include "btBulletDynamicsCommon.h"
+#include <vector>
 
 #include "GLWorld.h"
 #include "Body.h"
@@ -16,7 +17,12 @@ class TP3 : public GLWorld
     int windowWidth_,
         windowHeight_;
 
-    Bottle bottles[5];
+    std::vector<Bottle*> bottles_;
+    std::vector<float> bottlesPositions_;
+
+    float bottleInterval_;
+    float nextBottle_;
+    int firstBottle_;
 
     Machine* machines[4];
     CoveyorBelt* belt_;

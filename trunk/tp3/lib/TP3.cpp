@@ -25,7 +25,11 @@ TP3::TP3()
 
     StraightLine line(btVector3(-3, -3, 1), btVector3(3, 5, 0));
 
-    belt_ = new CoveyorBelt();//new ConveyorBelt(&line);
+    belt_ = new CoveyorBelt();
+
+    bottleInterval_ = 27*5;;
+    nextBottle_ = 0;
+    firstBottle_ = 0;
 
     machines[0] = new FirstMachine();
     machines[1] = new LastMachine();
@@ -42,11 +46,6 @@ TP3::TP3()
 void TP3::initialize()
 {
     initializePhysics();
-
-    for(int i=0; i<5; ++i){
-        bottles[i].setPosition(0,2,5*(i+1));
-        addBody(&bottles[i]);
-    }
 
     //Cargo texturas
     GLTexture::load("lad.raw", "ladrillos");
@@ -104,12 +103,29 @@ void TP3::setUpGlContext()
 
 void TP3::updateScene()
 {
-    static float t=0;
     dynamicsWorld_->stepSimulation(1.0/30.0, 10);
     belt_->advance(0.01*2);
-    btVector3 pos = belt_->getPosition(t);
-    t+=0.0005*2;
-    bottles[0].setPosition(pos.x(), pos.y(), pos.z());
+    
+    nextBottle_-=1.0;
+
+    if(nextBottle_ <= 0){
+        nextBottle_ = bottleInterval_;
+        bottles_.push_back(new Bottle());
+        bottlesPositions_.push_back(0);
+
+    }
+
+    for(unsigned i=firstBottle_;i<bottles_.size();i++){
+        btVector3 pos = belt_->getPosition(bottlesPositions_[i]);
+        bottlesPositions_[i] += 0.0005*2;
+        if(bottlesPositions_[i] >= 1){
+            firstBottle_ = i+1;
+            bottles_[i]->setPosition(5,2,2);
+            addBody(bottles_[i]);
+        }
+
+        else bottles_[i]->setPosition(pos.x(), pos.y(), pos.z()+0.265);
+    }
 }
 
 void TP3::renderScene()
@@ -136,8 +152,8 @@ void TP3::renderScene()
 
     }glEnd();
 
-    for(int i=0; i<5; ++i)
-        bottles[i].draw();
+    for(unsigned i=0; i<bottles_.size(); ++i)
+        bottles_[i]->draw();
 
     for(int i=0; i<4; ++i)
         machines[i]->draw();
@@ -246,7 +262,7 @@ void TP3::addBody(Body* body)
 
 TP3::~TP3()
 {
-	delete belt_;
+    delete belt_;
 
     for(int i=0; i<4; ++i)
        	delete machines[i];
