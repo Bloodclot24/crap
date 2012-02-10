@@ -2,8 +2,9 @@
 
 #include "btBulletDynamicsCommon.h"
 #include <GL/glut.h>
-#include "GLShader.h"
+#include <math.h>
 
+#include "GLShader.h"
 #include "GLTexture.h"
 
 CoveyorBelt::CoveyorBelt()
@@ -17,8 +18,6 @@ void CoveyorBelt::draw()
 
     glColor3f(1, 1, 1);
     GLTexture::bind("cinta");
-
-    displacement -= 0.01;
 
     GLShader::pushProgram("belt");
 
@@ -46,6 +45,21 @@ void CoveyorBelt::draw()
     glPopMatrix();
 
     GLShader::popProgram();
+}
+
+void CoveyorBelt::advance(float amount)
+{
+    displacement += amount;
+}
+
+btVector3 CoveyorBelt::getPosition(float t)
+{
+    if(t>1)
+        t = t - floor(t);
+    float pasosi = superficie->getVertices().size() - 1;
+    float pasosj = superficie->getVertices()[0].size() - 1;
+    printf("Pasosj = %f\n", pasosj);
+    return (superficie->getVertices()[floor(t*pasosi)][4]+btVector3(0,0,1))*0.5;
 }
 
 CoveyorBelt::~CoveyorBelt()

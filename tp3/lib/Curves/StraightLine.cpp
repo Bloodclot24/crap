@@ -1,27 +1,27 @@
 #include "Curves/StraightLine.h"
 
-StraightLine::StraightLine(Vertex v0, Vertex v1)
+StraightLine::StraightLine(btVector3 v0, btVector3 v1)
 {
     v0_ = v0;
     v1_ = v1;
-    orientation_.setCoords(0, 0, 1);
+    orientation_.setValue(0, 0, 1);
 }
 
-Vertex StraightLine::getPoint(float t)
+btVector3 StraightLine::getPoint(float t)
 {
-    Vertex point;
+    btVector3 point;
 
     point = v0_ + (v1_ - v0_)*t;
 
     return point;
 }
 
-Vertex StraightLine::getNormalAtPoint(float t)
+btVector3 StraightLine::getNormal(float t)
 {
-    return orientation_.crossProduct(getTangentAtPoint(t)).normalize();
+    return orientation_.cross(getTangent(t)).normalize();
 }
 
-Vertex StraightLine::getTangentAtPoint(float t)
+btVector3 StraightLine::getTangent(float t)
 {
     return (v1_-v0_).normalize();
 }

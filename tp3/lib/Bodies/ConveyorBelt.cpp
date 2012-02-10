@@ -4,14 +4,13 @@
 
 #include "GL/gl.h"
 #include <stdio.h>
-#include "GlVertex.h"
 
 ConveyorBelt::ConveyorBelt(Curve *path)
 {
     prisms_ = 10;
 
-    Vertex point[prisms_];
-    Vertex normal[prisms_];
+    btVector3 point[prisms_];
+    btVector3 normal[prisms_];
 
     int i=0;
 
@@ -28,14 +27,14 @@ ConveyorBelt::ConveyorBelt(Curve *path)
 
     for(int i=0; i<prisms_; i++)
     {
-        Vertex patch[4];
+        vectorPuntos patches;
 
-        patch[0] = point[i]   + normal[i]   * displacement;
-        patch[1] = point[i+1] + normal[i+1] * displacement;
-        patch[2] = point[i+1] - normal[i+1] * displacement;
-        patch[3] = point[i]   - normal[i]   * displacement;
+        patches[0] = point[i]   + normal[i]   * displacement;
+        patches[1] = point[i+1] + normal[i+1] * displacement;
+        patches[2] = point[i+1] - normal[i+1] * displacement;
+        patches[3] = point[i]   - normal[i]   * displacement;
 
-        Prism newPrism(patch, 4, height);
+        Prism newPrism(patches, height);
         prism_.push_back(newPrism);
     }
 }

@@ -1,7 +1,9 @@
 #ifndef _CURVE_H_
 #define _CURVE_H_
 
-#include "Vertex.h"
+#include "btBulletDynamicsCommon.h"
+
+
 
 class Curve
 {
@@ -14,8 +16,8 @@ class Curve
         Curve* curve_;
 
         public:
-        Vertex next();
-        Vertex normal();
+        btVector3 next();
+        btVector3 normal();
         bool hasNext();
 
         protected:
@@ -25,9 +27,9 @@ class Curve
     };
 
     Curve();
-    virtual Vertex getPoint(float t)=0;
-    virtual Vertex getNormalAtPoint(float t)=0;
-    virtual Vertex getTangentAtPoint(float t)=0;
+    virtual btVector3 getPoint(float t)=0;
+    virtual btVector3 getNormal(float t)=0;
+    virtual btVector3 getTangent(float t)=0;
     virtual Curve::Iterator iterator(int steps);
     virtual ~Curve();
 };

@@ -2,28 +2,28 @@
 
 LastMachine::LastMachine()
 {
-	Vertex patch0[4] = {Vertex(3,1.25,0),Vertex(-3,1.25,0),Vertex(-3,-1.25,0),Vertex(3,-1.25,0)};
+	btVector3 patch0[4] = {btVector3(3,1.25,0),btVector3(-3,1.25,0),btVector3(-3,-1.25,0),btVector3(3,-1.25,0)};
 	prism_.push_back(Prism(patch0, 4, 1));
-	Vertex patch1[4] = {Vertex(2.95,0.5,0),Vertex(-2.95,0.5,0),Vertex(-2.95,-0.5,0),Vertex(2.95,-0.5,0)};
+	btVector3 patch1[4] = {btVector3(2.95,0.5,0),btVector3(-2.95,0.5,0),btVector3(-2.95,-0.5,0),btVector3(2.95,-0.5,0)};
 	prism_.push_back(Prism(patch1, 4, 1));
-	Vertex patch2[4] = {Vertex(2.95,0.2,0),Vertex(-2.95,0.2,0),Vertex(-2.95,-0.2,0),Vertex(2.95,-0.2,0)};
+	btVector3 patch2[4] = {btVector3(2.95,0.2,0),btVector3(-2.95,0.2,0),btVector3(-2.95,-0.2,0),btVector3(2.95,-0.2,0)};
 	prism_.push_back(Prism(patch2, 4, 1));
-	Vertex patch3[4] = {Vertex(2.95,0.2,0),Vertex(-1.5,0.2,0),Vertex(-1.5,-0.8,0),Vertex(2.95,-0.8,0)};
+	btVector3 patch3[4] = {btVector3(2.95,0.2,0),btVector3(-1.5,0.2,0),btVector3(-1.5,-0.8,0),btVector3(2.95,-0.8,0)};
 	prism_.push_back(Prism(patch3, 4, 1));
-	Vertex patch4[4] = {Vertex(2.95,1.2,0),Vertex(2.5,1.2,0),Vertex(2.5,-1.2,0),Vertex(2.95,-1.2,0)};
+	btVector3 patch4[4] = {btVector3(2.95,1.2,0),btVector3(2.5,1.2,0),btVector3(2.5,-1.2,0),btVector3(2.95,-1.2,0)};
 	prism_.push_back(Prism(patch4, 4, 1));
-	Vertex patch5[4] = {Vertex(1,1.2,0),Vertex(-2.95,1.2,0),Vertex(-2.95,-1.2,0),Vertex(1,-1.2,0)};
+	btVector3 patch5[4] = {btVector3(1,1.2,0),btVector3(-2.95,1.2,0),btVector3(-2.95,-1.2,0),btVector3(1,-1.2,0)};
 	prism_.push_back(Prism(patch5, 4, 1));
-	Vertex patch6[4] = {Vertex(2.5,1.2,0),Vertex(1,1.2,0),Vertex(1,0,0),Vertex(2.5,0,0)};
+	btVector3 patch6[4] = {btVector3(2.5,1.2,0),btVector3(1,1.2,0),btVector3(1,0,0),btVector3(2.5,0,0)};
 	prism_.push_back(Prism(patch6, 4, 1));
 /*
-	Vertex patch1[4] = {Vertex(2,1.25,0),Vertex(-3,1.25,0),Vertex(-3,-1.25,0),Vertex(2,-1.25,0)};
+	btVector3 patch1[4] = {btVector3(2,1.25,0),btVector3(-3,1.25,0),btVector3(-3,-1.25,0),btVector3(2,-1.25,0)};
 	prism_.push_back(Prism(patch1, 4, 1));
-	Vertex patch2[4] = {Vertex(1.95,0.5,0),Vertex(-2.95,0.5,0),Vertex(-2.95,-0.5,0),Vertex(1.95,-0.5,0)};
+	btVector3 patch2[4] = {btVector3(1.95,0.5,0),btVector3(-2.95,0.5,0),btVector3(-2.95,-0.5,0),btVector3(1.95,-0.5,0)};
 	prism_.push_back(Prism(patch2, 4, 1));
-	Vertex patch3[4] = {Vertex(1.95,0.2,0),Vertex(-2.95,0.2,0),Vertex(-2.95,-0.2,0),Vertex(1.95,-0.2,0)};
+	btVector3 patch3[4] = {btVector3(1.95,0.2,0),btVector3(-2.95,0.2,0),btVector3(-2.95,-0.2,0),btVector3(1.95,-0.2,0)};
 	prism_.push_back(Prism(patch3, 4, 1));
-	Vertex patch4[4] = {Vertex(1.95,0.2,0),Vertex(-1.5,0.2,0),Vertex(-1.5,-0.8,0),Vertex(1.95,-0.8,0)};
+	btVector3 patch4[4] = {btVector3(1.95,0.2,0),btVector3(-1.5,0.2,0),btVector3(-1.5,-0.8,0),btVector3(1.95,-0.8,0)};
 	prism_.push_back(Prism(patch4, 4, 1));
 	*/
 	crearRampa();

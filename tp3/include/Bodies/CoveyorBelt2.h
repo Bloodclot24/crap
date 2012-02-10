@@ -16,6 +16,11 @@ class CoveyorBelt : public Body
     
     CoveyorBelt();
     void draw();
+
+    btVector3 getPosition(float t);
+
+    void advance(float amount);
+
     virtual ~CoveyorBelt();
 };
 

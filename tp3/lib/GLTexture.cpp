@@ -47,6 +47,7 @@ void GLTexture::load(std::string fileName, std::string alias)
 
 void GLTexture::bind(std::string textureAlias)
 {
+    glEnable(GL_TEXTURE_2D);
     std::string upperAlias = textureAlias;
     std::transform(upperAlias.begin(), upperAlias.end(), upperAlias.begin(), ::toupper);
 
@@ -60,5 +61,5 @@ void GLTexture::bind(std::string textureAlias)
 
 void GLTexture::unbind()
 {
-    glBindTexture(GL_TEXTURE_2D, 0);
+    glDisable(GL_TEXTURE_2D);
 }
