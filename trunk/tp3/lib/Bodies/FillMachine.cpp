@@ -2,11 +2,11 @@
 
 FillMachine::FillMachine(): cylinder_(1,0.5), sphere_(1)
 {
-	Vertex patch1[4] = {Vertex(0.5,0.5,0),Vertex(-0.5,0.5,0),Vertex(-0.5,-0.5,0),Vertex(0.5,-0.5,0)};
+	btVector3 patch1[4] = {btVector3(0.5,0.5,0),btVector3(-0.5,0.5,0),btVector3(-0.5,-0.5,0),btVector3(0.5,-0.5,0)};
 	prism_.push_back(Prism(patch1, 4, 1));
-	Vertex patch2[4] = {Vertex(0.7,0.7,0),Vertex(-0.7,0.7,0),Vertex(-0.7,-0.7,0),Vertex(0.7,-0.7,0)};
+	btVector3 patch2[4] = {btVector3(0.7,0.7,0),btVector3(-0.7,0.7,0),btVector3(-0.7,-0.7,0),btVector3(0.7,-0.7,0)};
 	prism_.push_back(Prism(patch2, 4, 2));
-	Vertex patch3[4] = {Vertex(0.05,0.6,0),Vertex(-0.06,0.5,0),Vertex(-0.06,-0.5,0),Vertex(0.05,-0.6,0)};
+	btVector3 patch3[4] = {btVector3(0.05,0.6,0),btVector3(-0.06,0.5,0),btVector3(-0.06,-0.5,0),btVector3(0.05,-0.6,0)};
 	prism_.push_back(Prism(patch3, 4, 0.1));
 	crearManguera();
 }

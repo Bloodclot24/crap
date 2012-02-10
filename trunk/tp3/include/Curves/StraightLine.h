@@ -7,15 +7,15 @@ class StraightLine:public Curve
 {
 
     private:
-    Vertex v0_, v1_;
-    Vertex orientation_;
+    btVector3 v0_, v1_;
+    btVector3 orientation_;
 
     public:
-    StraightLine(Vertex v0, Vertex v1);
+    StraightLine(btVector3 v0, btVector3 v1);
 
-    virtual Vertex getPoint(float t);
-    virtual Vertex getNormalAtPoint(float t);
-    virtual Vertex getTangentAtPoint(float t);
+    virtual btVector3 getPoint(float t);
+    virtual btVector3 getNormal(float t);
+    virtual btVector3 getTangent(float t);
     virtual ~StraightLine();
 };
 

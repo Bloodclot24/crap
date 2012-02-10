@@ -19,16 +19,16 @@ Curve::Iterator::Iterator(Curve* curve, int totalSteps)
     totalSteps_ = totalSteps;
 }
 
-Vertex Curve::Iterator::next()
+btVector3 Curve::Iterator::next()
 {
-    Vertex vertex = curve_->getPoint(float(currentStep_)/float(totalSteps_));
+    btVector3 vertex = curve_->getPoint(float(currentStep_)/float(totalSteps_));
     ++currentStep_;
     return vertex;
 }
 
-Vertex Curve::Iterator::normal()
+btVector3 Curve::Iterator::normal()
 {
-    return curve_->getNormalAtPoint(float(currentStep_)/float(totalSteps_));
+    return curve_->getNormal(float(currentStep_)/float(totalSteps_));
 }
 
 bool Curve::Iterator::hasNext()

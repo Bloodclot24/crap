@@ -23,7 +23,7 @@ TP3::TP3()
     windowHeight_ = 1;
     dynamicsWorld_ = NULL;
 
-    StraightLine line(Vertex(-3, -3, 1), Vertex(3, 5, 0));
+    StraightLine line(btVector3(-3, -3, 1), btVector3(3, 5, 0));
 
     belt_ = new CoveyorBelt();//new ConveyorBelt(&line);
 
@@ -104,13 +104,20 @@ void TP3::setUpGlContext()
 
 void TP3::updateScene()
 {
+    static float t=0;
     dynamicsWorld_->stepSimulation(1.0/30.0, 10);
+    belt_->advance(0.01);
+    btVector3 pos = belt_->getPosition(t);
+    printf("punto %f: (%f,%f,%f)\n", t, pos.x(), pos.y(), pos.z());
+    t+=0.001;
+    bottles[0].setPosition(pos.x(), pos.y(), pos.z());
 }
 
 void TP3::renderScene()
 {
 
     GLTexture::bind("chapa");
+    GLTexture::unbind();
     glBegin(GL_QUADS);{
         glColor3f(1, 0, 0);
 
