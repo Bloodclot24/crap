@@ -71,7 +71,6 @@ void Bottle::draw()
 
         btVector3 axis = trans.getRotation().getAxis();
 
-
         glTranslatef(position[0],
                      position[1],
                      position[2]);
@@ -81,7 +80,7 @@ void Bottle::draw()
                   axis.getY(),
                   axis.getZ());
 
-        glTranslatef(0,0,-0.265*ESCALA); //?
+        glTranslatef(0,0,-0.265*ESCALA);
         glScalef(0.02*ESCALA,0.02*ESCALA,0.02*ESCALA);
     	glBegin( GL_TRIANGLE_STRIP);
     	float pasosi = superficie->getVertices().size() - 1;
