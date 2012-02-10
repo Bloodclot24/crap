@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 #include <GL/gl.h>
 #include <GL/glu.h>
@@ -55,6 +56,7 @@ void TP3::initialize()
 
     //Cargo VShaders
     GLShader::loadVShader("shaders/normal.vert", "normal");
+    GLShader::loadVShader("shaders/room.vert", "room");
     
     //Cargo FShaders
     GLShader::loadFShader("shaders/normal.frag", "normal");
@@ -64,6 +66,7 @@ void TP3::initialize()
     //Creo los programas
     GLShader::createProgram("normal", "normal", "normal");
     GLShader::createProgram("belt", "normal", "belt");
+    GLShader::createProgram("room", "room", "normal");
     //GLShader::createProgram("bottle", "normal", "glass");
 
     GLShader::pushProgram("normal");
@@ -116,7 +119,8 @@ void TP3::updateScene()
     }
 
     for(unsigned i=firstBottle_;i<bottles_.size();i++){
-        btVector3 pos = belt_->getPosition(bottlesPositions_[i]);
+        btVector3 pos     = belt_->getPosition(bottlesPositions_[i]);
+        btVector3 tangent = belt_->getTangent(bottlesPositions_[i]);
         bottlesPositions_[i] += 0.0005*2;
         if(bottlesPositions_[i] >= 1){
             firstBottle_ = i+1;
@@ -124,7 +128,11 @@ void TP3::updateScene()
             addBody(bottles_[i]);
         }
 
-        else bottles_[i]->setPosition(pos.x(), pos.y(), pos.z()+0.265);
+        else{ 
+            bottles_[i]->setPosition(pos.x(), pos.y(), pos.z()+0.265);
+            bottles_[i]->setRotation(0,0,acos(tangent.normalize().dot(btVector3(1,0,0))));
+        }
+
     }
 }
 

@@ -21,6 +21,7 @@ class CoveyorBelt : public Body
     void draw();
 
     btVector3 getPosition(float t);
+    btVector3 getTangent(float t);
 
     void advance(float amount);
 

@@ -55,9 +55,15 @@ void CoveyorBelt::advance(float amount)
 btVector3 CoveyorBelt::getPosition(float t)
 {
     if(t>1)
-        t = t - floor(t);
-
+        t=1;
     return (bspline_.getPoint(t)+btVector3(0,0,1))*0.5;
+}
+
+btVector3 CoveyorBelt::getTangent(float t)
+{
+    if(t>1)
+        t=1;
+    return bspline_.getTangent(t)*0.5;
 }
 
 CoveyorBelt::~CoveyorBelt()
