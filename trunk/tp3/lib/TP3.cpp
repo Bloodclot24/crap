@@ -59,13 +59,15 @@ void TP3::initialize()
     
     //Cargo FShaders
     GLShader::loadFShader("shaders/normal.frag", "normal");
+    GLShader::loadFShader("shaders/belt.frag", "belt");
     //GLShader::loadFShader("shaders/glass.fshader", "glass");
 
     //Creo los programas
     GLShader::createProgram("normal", "normal", "normal");
+    GLShader::createProgram("belt", "normal", "belt");
     //GLShader::createProgram("bottle", "normal", "glass");
 
-    GLShader::useProgram("normal");
+    GLShader::pushProgram("normal");
 
     //Activo iluminacion
     glEnable(GL_LIGHT0);
@@ -108,14 +110,22 @@ void TP3::updateScene()
 void TP3::renderScene()
 {
 
+    GLTexture::bind("chapa");
     glBegin(GL_QUADS);{
         glColor3f(1, 0, 0);
 
         glNormal3f(0,0,1);
 
+        glTexCoord2f(0.0, 0.0);
         glVertex3f(-10, -10, 0);
+
+        glTexCoord2f(1.0, 0.0);
         glVertex3f(-10,  10, 0);
+
+        glTexCoord2f(1.0, 1.0);
         glVertex3f( 10,  10, 0);
+
+        glTexCoord2f(0.0, 1.0);
         glVertex3f( 10, -10, 0);
 
     }glEnd();
