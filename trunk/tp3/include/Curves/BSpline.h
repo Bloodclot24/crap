@@ -10,8 +10,10 @@ class BSpline: public Curve
     vectorPuntos controlPoints_;
     public:
     BSpline(vectorPuntos controlPoints);
+    BSpline();
     btVector3 getPoint(float t);
     btVector3 getTangent(float t);
+    btVector3 getNormal(float t);
 
 };
 

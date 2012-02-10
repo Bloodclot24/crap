@@ -106,10 +106,9 @@ void TP3::updateScene()
 {
     static float t=0;
     dynamicsWorld_->stepSimulation(1.0/30.0, 10);
-    belt_->advance(0.01);
+    belt_->advance(0.01*2);
     btVector3 pos = belt_->getPosition(t);
-    printf("punto %f: (%f,%f,%f)\n", t, pos.x(), pos.y(), pos.z());
-    t+=0.001;
+    t+=0.0005*2;
     bottles[0].setPosition(pos.x(), pos.y(), pos.z());
 }
 
