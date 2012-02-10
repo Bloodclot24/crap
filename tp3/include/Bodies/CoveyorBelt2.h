@@ -6,10 +6,14 @@
 
 class CoveyorBelt : public Body
 {
-	SuperficieBarrido* superficie;
+    SuperficieBarrido* superficie;
 
-	void crearSuperficie();
-	public:
+    float displacement;
+
+    void crearSuperficie();
+    
+    public:
+    
     CoveyorBelt();
     void draw();
     virtual ~CoveyorBelt();

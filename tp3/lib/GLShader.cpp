@@ -6,6 +6,14 @@
 #include <assert.h>
 #include <vector>
 
+static void showLog(GLuint program){
+  std::vector<char> log;
+  log.reserve(500);
+  int longitud;
+  glGetShaderInfoLog(program, 500, &longitud, &log[0]);
+  std::string texto(&log[0]);
+  printf("%s", texto.c_str());
+}
 
 static std::string toUpper(std::string string)
 {
@@ -42,6 +50,7 @@ static GLuint cargarDesdeArchivo(std::string name, GLenum type)
 
     if(!compiled){
         printf("El shader %s no compila.\n", name.c_str());
+        showLog(shader);
         exit(-1);
     }
 
@@ -51,6 +60,7 @@ static GLuint cargarDesdeArchivo(std::string name, GLenum type)
 std::map<std::string, GLuint> GLShader::vshaders;
 std::map<std::string, GLuint> GLShader::fshaders;
 std::map<std::string, GLuint> GLShader::programs;
+std::stack<std::string> GLShader::stack;
 
 GLShader::GLShader()
 { 
@@ -88,16 +98,6 @@ GLuint GLShader::getVShader(std::string alias)
     return vshaders[toUpper(alias)];
 }
 
-static void showLog(GLuint program){
-  std::vector<char> log;
-  log.reserve(500);
-  int longitud;
-  glGetShaderInfoLog(program, 500, &longitud, &log[0]);
-  std::string texto(&log[0]);
-  printf("%s", texto.c_str());
-}
-
-
 void GLShader::createProgram(std::string name, std::string vshader, std::string fshader)
 {
     GLuint program = glCreateProgram();
@@ -132,4 +132,23 @@ void GLShader::useProgram(std::string alias)
     glUseProgram(programs[toUpper(alias)]);
 }
 
+void GLShader::pushProgram(std::string alias)
+{
+    stack.push(alias);
+    useProgram(alias);
+}
 
+void GLShader::popProgram()
+{
+    stack.pop();
+    useProgram(stack.top());
+}
+
+
+void GLShader::setUniform(std::string name, float value)
+{
+
+    GLint location = glGetUniformLocation(programs[toUpper(stack.top())], name.c_str());
+
+    glUniform1f(location, value);
+}
