@@ -56,10 +56,8 @@ btVector3 CoveyorBelt::getPosition(float t)
 {
     if(t>1)
         t = t - floor(t);
-    float pasosi = superficie->getVertices().size() - 1;
-    float pasosj = superficie->getVertices()[0].size() - 1;
-    printf("Pasosj = %f\n", pasosj);
-    return (superficie->getVertices()[floor(t*pasosi)][4]+btVector3(0,0,1))*0.5;
+
+    return (bspline_.getPoint(t)+btVector3(0,0,1))*0.5;
 }
 
 CoveyorBelt::~CoveyorBelt()
@@ -68,36 +66,38 @@ CoveyorBelt::~CoveyorBelt()
 }
 
 void CoveyorBelt::crearSuperficie() {
-	std::vector<btVector3> perfil, normales, ptosControl;
-//	perfil.push_back(btVector3(0,-0.25,0)); //agregar esto para cerrar la base
-	perfil.push_back(btVector3(0,0.25,0));
-	perfil.push_back(btVector3(0,0.35,0.2));
-	perfil.push_back(btVector3(0,0.3,0.2));
-	perfil.push_back(btVector3(0,0.25,0.1));
-	perfil.push_back(btVector3(0,-0.25,0.1));
-	perfil.push_back(btVector3(0,-0.3,0.2));
-	perfil.push_back(btVector3(0,-0.35,0.2));
-	perfil.push_back(btVector3(0,-0.25,0));
+    std::vector<btVector3> perfil, normales, ptosControl;
+    //	perfil.push_back(btVector3(0,-0.25,0)); //agregar esto para cerrar la base
+    perfil.push_back(btVector3(0,0.25,0));
+    perfil.push_back(btVector3(0,0.35,0.2));
+    perfil.push_back(btVector3(0,0.3,0.2));
+    perfil.push_back(btVector3(0,0.25,0.1));
+    perfil.push_back(btVector3(0,-0.25,0.1));
+    perfil.push_back(btVector3(0,-0.3,0.2));
+    perfil.push_back(btVector3(0,-0.35,0.2));
+    perfil.push_back(btVector3(0,-0.25,0));
 
-//	normales.push_back(btVector3(0, -1, -2)); //agregar esto para cerrar la base
-	normales.push_back(btVector3(0, 1, -2));
-	normales.push_back(btVector3(0, 2, 1));
-	normales.push_back(btVector3(0, -1, 2));
-	normales.push_back(btVector3(0, -1, 2));
-	normales.push_back(btVector3(0, 1, 2));
-	normales.push_back(btVector3(0, 1, 2));
-	normales.push_back(btVector3(0, -2, 1));
-	normales.push_back(btVector3(0, -1, -2));
+    //	normales.push_back(btVector3(0, -1, -2)); //agregar esto para cerrar la base
+    normales.push_back(btVector3(0, 1, -2));
+    normales.push_back(btVector3(0, 2, 1));
+    normales.push_back(btVector3(0, -1, 2));
+    normales.push_back(btVector3(0, -1, 2));
+    normales.push_back(btVector3(0, 1, 2));
+    normales.push_back(btVector3(0, 1, 2));
+    normales.push_back(btVector3(0, -2, 1));
+    normales.push_back(btVector3(0, -1, -2));
 
-	ptosControl.push_back(btVector3(-11.75, -1.25, 0));
-	ptosControl.push_back(btVector3(-10.25, -3.75, 0));
-	ptosControl.push_back(btVector3(-5.75, -4.25, 0));
-	ptosControl.push_back(btVector3(-3.75, -2.25, 0));
-	ptosControl.push_back(btVector3(-4.25, 2.25, 0));
-	ptosControl.push_back(btVector3(-2.25, 4.25, 0));
-	ptosControl.push_back(btVector3(2.25, 3.75, 0));
-	ptosControl.push_back(btVector3(4.75, 4.25, 0));
-	ptosControl.push_back(btVector3(7.75, 7.75, 0));
+    ptosControl.push_back(btVector3(-11.75, -1.25, 0));
+    ptosControl.push_back(btVector3(-10.25, -3.75, 0));
+    ptosControl.push_back(btVector3(-5.75, -4.25, 0));
+    ptosControl.push_back(btVector3(-3.75, -2.25, 0));
+    ptosControl.push_back(btVector3(-4.25, 2.25, 0));
+    ptosControl.push_back(btVector3(-2.25, 4.25, 0));
+    ptosControl.push_back(btVector3(2.25, 3.75, 0));
+    ptosControl.push_back(btVector3(4.75, 4.25, 0));
+    ptosControl.push_back(btVector3(7.75, 7.75, 0));
 
-    superficie = new SuperficieBarrido(perfil, normales, ptosControl);
+    bspline_ = BSpline(ptosControl);
+
+    superficie = new SuperficieBarrido(perfil, normales, bspline_,100);
 }

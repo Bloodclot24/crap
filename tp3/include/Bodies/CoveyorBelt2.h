@@ -3,6 +3,7 @@
 
 #include "Primitives/SuperficieBarrido.h"
 #include "Body.h"
+#include "Curves/BSpline.h"
 
 class CoveyorBelt : public Body
 {
@@ -11,6 +12,8 @@ class CoveyorBelt : public Body
     float displacement;
 
     void crearSuperficie();
+
+    BSpline bspline_;
     
     public:
     
