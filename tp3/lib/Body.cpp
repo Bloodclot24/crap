@@ -40,7 +40,3 @@ btVector3 Body::getPosition()
 
     return transformation.getOrigin();
 }
-
-void Body::setTexture(GLuint t){
-  texture = t;
-}

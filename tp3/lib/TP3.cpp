@@ -1,22 +1,21 @@
-#include "TP3.h"
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include <GL/glut.h>
-
+#include "GLShader.h"
+#include "GLTexture.h"
 #include "Primitives/Cube.h"
 #include "Primitives/Cylinder.h"
 #include "Curves/StraightLine.h"
-#include "GLTexture.h"
-#include "GLShader.h"
 #include "Bodies/FirstMachine.h"
 #include "Bodies/LastMachine.h"
 #include "Bodies/LabelMachine.h"
 #include "Bodies/FillMachine.h"
+#include "TP3.h"
+
+#include <GL/gl.h>
+#include <GL/glu.h>
+#include <GL/glut.h>
 
 TP3::TP3()
 {
@@ -52,7 +51,7 @@ void TP3::initialize()
     GLTexture::load("lad.raw", "ladrillos");
     GLTexture::load("chapaDoble.raw", "chapa");
     GLTexture::load("cinta.raw", "cinta");
-    GLTexture::load("etiquetaCoca.raw", "etiqueta");
+    GLTexture::load("eti.raw", "etiqueta");
 
     //Cargo VShaders
     GLShader::loadVShader("shaders/normal.vert", "normal");

@@ -2,15 +2,14 @@
 #define _BOTTLE_H_
 
 #include "Body.h"
-#include "Primitives/Cylinder.h"
 #include "Primitives/SuperficieRevolucion.h"
+
+#define BOTTLE_SCALE 1
 
 class Bottle : public Body
 {
-    Cylinder cylinder_;
     SuperficieRevolucion* superficie;
-    float upTextureBound;
-    float downTextureBound;
+    float height_;
 
     void crearSuperficie();
 

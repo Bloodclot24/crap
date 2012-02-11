@@ -2,14 +2,11 @@
 #define _BODY_H_
 
 #include "btBulletDynamicsCommon.h"
-#include <GL/glew.h>
-#include <GL/gl.h>
 
 class Body
 {
     protected:
     btRigidBody* rigidBody_;
-    GLuint texture;
 
     public:
     Body();
@@ -18,8 +15,6 @@ class Body
     void setRotation(float xrot, float yrot, float zrot);
     btRigidBody* getRigidBody();
     btVector3 getPosition();
-    void setTexture(GLuint t);
-
 };
 
 #endif /* _BODY_H_ */

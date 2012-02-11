@@ -3,7 +3,7 @@
 
 SuperficieRevolucion::SuperficieRevolucion(vectorPuntos perfil,
 		unsigned rotaciones, unsigned pasosU, unsigned grados, btVector3 axis) : ptosControl(perfil) {
-	for (unsigned i = 0; i < rotaciones; i++) {
+	for (unsigned i = 0; i <= rotaciones; i++) {
 		cargarCoordenadasBezier(pasosU);
 		for (unsigned j = 0; j < ptosControl.size(); j++)
 			ptosControl[j] = ptosControl[j].rotate(axis, 2*M_PI / rotaciones);
