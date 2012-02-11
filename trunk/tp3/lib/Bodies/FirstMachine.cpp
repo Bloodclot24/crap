@@ -1,15 +1,17 @@
 #include "Bodies/FirstMachine.h"
+#include "Bodies/Bottle.h"
+#include <GL/gl.h>
 
 FirstMachine::FirstMachine()
 {
-	btVector3 patch1[4] = {btVector3(2,1.25,0),btVector3(-2,1.25,0),btVector3(-2,-1.25,0),btVector3(2,-1.25,0)};
+	btVector3 patch0[4] = {btVector3(2,1.25,0),btVector3(-2,1.25,0),btVector3(-2,-1.25,0),btVector3(2,-1.25,0)};
+	prism_.push_back(Prism(patch0, 4, 1));
+	btVector3 patch1[4] = {btVector3(1.95,0.4,0),btVector3(-2,0.4,0),btVector3(-2,-0.4,0),btVector3(1.95,-0.4,0)};
 	prism_.push_back(Prism(patch1, 4, 1));
-	btVector3 patch2[4] = {btVector3(1.95,0.4,0),btVector3(-2,0.4,0),btVector3(-2,-0.4,0),btVector3(1.95,-0.4,0)};
+	btVector3 patch2[4] = {btVector3(1.95,0.2,0),btVector3(-2,0.2,0),btVector3(-2,-0.2,0),btVector3(1.95,-0.2,0)};
 	prism_.push_back(Prism(patch2, 4, 1));
-	btVector3 patch3[4] = {btVector3(1.95,0.2,0),btVector3(-2,0.2,0),btVector3(-2,-0.2,0),btVector3(1.95,-0.2,0)};
+	btVector3 patch3[4] = {btVector3(-1.2,0.9,0),btVector3(-2,0.9,0),btVector3(-2,-0.9,0),btVector3(-1.6,-0.2,0)};
 	prism_.push_back(Prism(patch3, 4, 1));
-	btVector3 patch4[4] = {btVector3(-1.2,0.9,0),btVector3(-2,0.9,0),btVector3(-2,-0.9,0),btVector3(-1.6,-0.2,0)};
-	prism_.push_back(Prism(patch4, 4, 1));
 }
 
 void FirstMachine::draw()

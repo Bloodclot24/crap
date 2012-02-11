@@ -1,11 +1,10 @@
 #include "Bodies/CoveyorBelt2.h"
+#include "GLShader.h"
+#include "GLTexture.h"
 
 #include "btBulletDynamicsCommon.h"
 #include <GL/glut.h>
 #include <math.h>
-
-#include "GLShader.h"
-#include "GLTexture.h"
 
 CoveyorBelt::CoveyorBelt()
 {
@@ -56,7 +55,7 @@ btVector3 CoveyorBelt::getPosition(float t)
 {
     if(t>1)
         t=1;
-    return (bspline_.getPoint(t)+btVector3(0,0,1))*0.5;
+    return (bspline_.getPoint(t)+btVector3(0,0,1.1))*0.5;
 }
 
 btVector3 CoveyorBelt::getTangent(float t)

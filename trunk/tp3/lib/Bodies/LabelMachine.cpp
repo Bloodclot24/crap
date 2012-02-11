@@ -2,12 +2,12 @@
 
 LabelMachine::LabelMachine(): cylinder_(0.25,1)
 {
-	btVector3 patch1[4] = {btVector3(0.5,0.5,0),btVector3(-0.5,0.5,0),btVector3(-0.5,-0.5,0),btVector3(0.5,-0.5,0)};
-	prism_.push_back(Prism(patch1, 4, 1));
-	btVector3 patch2[4] = {btVector3(0.7,0.7,0),btVector3(-0.7,0.7,0),btVector3(-0.7,-0.7,0),btVector3(0.7,-0.7,0)};
-	prism_.push_back(Prism(patch2, 4, 2));
-	btVector3 patch3[4] = {btVector3(0.05,0.6,0),btVector3(-0.06,0.5,0),btVector3(-0.06,-0.5,0),btVector3(0.05,-0.6,0)};
-	prism_.push_back(Prism(patch3, 4, 0.1));
+	btVector3 patch0[4] = {btVector3(0.5,0.5,0),btVector3(-0.5,0.5,0),btVector3(-0.5,-0.5,0),btVector3(0.5,-0.5,0)};
+	prism_.push_back(Prism(patch0, 4, 1));
+	btVector3 patch1[4] = {btVector3(0.7,0.7,0),btVector3(-0.7,0.7,0),btVector3(-0.7,-0.7,0),btVector3(0.7,-0.7,0)};
+	prism_.push_back(Prism(patch1, 4, 2));
+	btVector3 patch2[4] = {btVector3(0.05,0.6,0),btVector3(-0.06,0.5,0),btVector3(-0.06,-0.5,0),btVector3(0.05,-0.6,0)};
+	prism_.push_back(Prism(patch2, 4, 0.1));
 }
 
 void LabelMachine::draw()
@@ -32,6 +32,7 @@ void LabelMachine::draw()
         }glPopMatrix();
         glPushMatrix();{
         	glTranslatef(0,-1.5,-0.3);
+        	glColor3f(1,1,0);
         	cylinder_.draw();
         }glPopMatrix();
     }glPopMatrix();

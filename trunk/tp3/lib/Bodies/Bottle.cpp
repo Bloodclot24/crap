@@ -3,11 +3,9 @@
 
 #include "GLTexture.h"
 
-#define ESCALA 1
-
-Bottle::Bottle():cylinder_(0.25, 1)
+Bottle::Bottle()
 {
-    btCollisionShape* bottleShape = new btCylinderShapeZ(btVector3(0.1*ESCALA, 0.1*ESCALA, 0.265*ESCALA));
+    btCollisionShape* bottleShape = new btCylinderShapeZ(btVector3(0.1*BOTTLE_SCALE, 0.1*BOTTLE_SCALE, 0.265*BOTTLE_SCALE));
 
     btScalar mass = 1;
 
@@ -50,16 +48,14 @@ void Bottle::crearSuperficie() {
     ptos.push_back(btVector3(1.3, 0, 25));
     ptos.push_back(btVector3(1.3, 0, 26.5));
     superficie = new SuperficieRevolucion(ptos);
-    upTextureBound = 17;
-    downTextureBound = 11;
-    texture = 0;
+    height_ = 26.5;
 }
 
 void Bottle::draw()
 {
 
     GLTexture::bind("etiqueta");
-//    GLTexture::unbind();
+
     glPushMatrix();{
 
         glColor3f(1, 1, 1);
@@ -80,25 +76,19 @@ void Bottle::draw()
                   axis.getY(),
                   axis.getZ());
 
-        glTranslatef(0,0,-0.265*ESCALA);
-        glScalef(0.02*ESCALA,0.02*ESCALA,0.02*ESCALA);
+        glScalef(0.02*BOTTLE_SCALE,0.02*BOTTLE_SCALE,0.02*BOTTLE_SCALE);
+        glTranslatef(0,0,-height_/2);
     	glBegin( GL_TRIANGLE_STRIP);
     	float pasosi = superficie->getVertices().size() - 1;
     	float pasosj = superficie->getVertices()[0].size() - 1;
     	for (int i = 0; i < pasosi ; i++) {
             for (int j = 0; j <= pasosj; j++) {
                 float height = superficie->getVertices()[i][j][2];
-
-                if(downTextureBound <= height && height <= upTextureBound)
-                	 GLTexture::bind("etiqueta");
-                else
-                	 GLTexture::unbind();
                 glNormal3fv(superficie->getNormales()[i][j]);
-                glTexCoord2f(i/pasosi,(height - downTextureBound)/(upTextureBound - downTextureBound));
+                glTexCoord2f(i/pasosi,superficie->getVertices()[i][j][2]/height_);
                 glVertex3fv(superficie->getVertices()[i][j]);
-
                 glNormal3fv(superficie->getNormales()[fmod(i + 1, pasosi)][j]);
-                glTexCoord2f((i+1)/pasosi,(height - downTextureBound)/(upTextureBound - downTextureBound));
+                glTexCoord2f((i+1)/pasosi,superficie->getVertices()[i][j][2]/height_);
                 glVertex3fv(superficie->getVertices()[fmod(i + 1, pasosi)][j]);
             }
     	}

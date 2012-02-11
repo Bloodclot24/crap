@@ -2,12 +2,13 @@
 #define _LASTMACHINE_H_
 
 #include "Machine.h"
-#include "Primitives/SuperficieBarrido.h"
 
 class LastMachine : public Machine
 {
-	SuperficieBarrido* rampa;
-	void crearRampa();
+    std::vector<Prism> ramp_;
+
+	void drawRamp();
+	void createRamp();
 
 public:
     LastMachine();

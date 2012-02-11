@@ -1,4 +1,5 @@
 #include "Bodies/LastMachine.h"
+#include <GL/gl.h>
 
 LastMachine::LastMachine()
 {
@@ -16,17 +17,8 @@ LastMachine::LastMachine()
 	prism_.push_back(Prism(patch5, 4, 1));
 	btVector3 patch6[4] = {btVector3(2.5,1.2,0),btVector3(1,1.2,0),btVector3(1,0,0),btVector3(2.5,0,0)};
 	prism_.push_back(Prism(patch6, 4, 1));
-/*
-	btVector3 patch1[4] = {btVector3(2,1.25,0),btVector3(-3,1.25,0),btVector3(-3,-1.25,0),btVector3(2,-1.25,0)};
-	prism_.push_back(Prism(patch1, 4, 1));
-	btVector3 patch2[4] = {btVector3(1.95,0.5,0),btVector3(-2.95,0.5,0),btVector3(-2.95,-0.5,0),btVector3(1.95,-0.5,0)};
-	prism_.push_back(Prism(patch2, 4, 1));
-	btVector3 patch3[4] = {btVector3(1.95,0.2,0),btVector3(-2.95,0.2,0),btVector3(-2.95,-0.2,0),btVector3(1.95,-0.2,0)};
-	prism_.push_back(Prism(patch3, 4, 1));
-	btVector3 patch4[4] = {btVector3(1.95,0.2,0),btVector3(-1.5,0.2,0),btVector3(-1.5,-0.8,0),btVector3(1.95,-0.8,0)};
-	prism_.push_back(Prism(patch4, 4, 1));
-	*/
-	crearRampa();
+
+	createRamp();
 }
 
 void LastMachine::draw()
@@ -66,20 +58,64 @@ void LastMachine::draw()
         	prism_[5].draw();
         	prism_[6].draw();
         }glPopMatrix();
-//        glRotatef(-90,0,0,1);
-//        glRotatef(90,1,0,0);
-//        rampa->draw();
+
+        drawRamp();
     }glPopMatrix();
 
 }
 
-void LastMachine::crearRampa() {
-	std::vector<btVector3> perfil, normales, ptosControl;
-    //rampa = new SuperficieBarrido(perfil, normales, ptosControl);
+void LastMachine::drawRamp() {
+	glScalef(0.6, 0.6, 0.6);
+	glPushMatrix();{
+		glTranslatef(3, -5, 2.2);
+		glRotatef(35, 1, 0, 0);
+		glRotatef(-90, 0, 0, 1);
+		ramp_[0].draw();
+	} glPopMatrix();
+	glPushMatrix();{
+		glTranslatef(4, -5, 2.3);
+		glRotatef(35, 1, 0, 0);
+		glRotatef(-90, 0, 0, 1);
+		ramp_[1].draw();
+	} glPopMatrix();
+	glPushMatrix();{
+		glTranslatef(2, -5, 2.3);
+		glRotatef(35, 1, 0, 0);
+		glRotatef(-90, 0, 0, 1);
+		ramp_[1].draw();
+	} glPopMatrix();
+	glPushMatrix();{
+		glTranslatef(3, -8.8, 0);
+		glRotatef(12, 1, 0, 0);
+		glRotatef(-90, 0, 0, 1);
+		ramp_[2].draw();
+	} glPopMatrix();
+	glPushMatrix();{
+		glTranslatef(4, -8.8, 0.1);
+		glRotatef(12, 1, 0, 0);
+		glRotatef(-90, 0, 0, 1);
+		ramp_[3].draw();
+	} glPopMatrix();
+	glPushMatrix();{
+		glTranslatef(2, -8.8, 0.1);
+		glRotatef(12, 1, 0, 0);
+		glRotatef(-90, 0, 0, 1);
+		ramp_[3].draw();
+	} glPopMatrix();
+}
+
+void LastMachine::createRamp() {
+	btVector3 patch0[4] = {btVector3(3.5,1,0),btVector3(-3.5,1,0),btVector3(-3.5,-1,0),btVector3(3.5,-1,0)};
+	ramp_.push_back(Prism(patch0, 4, 0.01));
+	btVector3 patch1[4] = {btVector3(3.5,0,0.1),btVector3(-3.5,0,0.1),btVector3(-3.5,0,-0.1),btVector3(3.5,0,-0.1)};
+	ramp_.push_back(Prism(patch1, 4, 0.01));
+	btVector3 patch2[4] = {btVector3(1,1,0),btVector3(-1,1,0),btVector3(-1,-1,0),btVector3(1,-1,0)};
+	ramp_.push_back(Prism(patch2, 4, 0.01));
+	btVector3 patch3[4] = {btVector3(1,0,0.1),btVector3(-1,0,0.1),btVector3(-1,0,-0.1),btVector3(1,0,-0.1)};
+	ramp_.push_back(Prism(patch3, 4, 0.01));
 }
 
 LastMachine::~LastMachine()
 {
-	//delete rampa;
 }
 
