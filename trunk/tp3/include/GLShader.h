@@ -28,6 +28,7 @@ class GLShader
     static void loadVShader(std::string fileName, std::string alias);
     static void loadFShader(std::string fileName, std::string alias);
     static void createProgram(std::string name, std::string vshader, std::string fshader);
+    static void createProgram(std::string name, const char** vshaders, const char** fshaders);
 
     static void pushProgram(std::string alias);
     static void popProgram();
