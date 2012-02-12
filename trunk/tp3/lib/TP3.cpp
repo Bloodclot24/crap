@@ -90,6 +90,10 @@ void TP3::initialize()
     glEnable(GL_COLOR_MATERIAL);
     glShadeModel (GL_SMOOTH);
     glEnable(GL_NORMALIZE);
+
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glEnable(GL_CULL_FACE);
 }
 
 void TP3::setUpGlContext()
@@ -152,20 +156,19 @@ void TP3::renderScene()
     GLTexture::unbind();
     glBegin(GL_QUADS);{
         glColor3f(1, 0, 0);
-
         glNormal3f(0,0,1);
 
         glTexCoord2f(0.0, 0.0);
         glVertex3f(-10, -10, 0);
 
         glTexCoord2f(1.0, 0.0);
-        glVertex3f(-10,  10, 0);
+        glVertex3f(10,  -10, 0);
 
         glTexCoord2f(1.0, 1.0);
         glVertex3f( 10,  10, 0);
 
         glTexCoord2f(0.0, 1.0);
-        glVertex3f( 10, -10, 0);
+        glVertex3f( -10, 10, 0);
 
     }glEnd();
 
@@ -174,8 +177,11 @@ void TP3::renderScene()
 
     belt_->draw();
 
+    glDepthMask(GL_FALSE);
     for(unsigned i=0; i<bottles_.size(); ++i)
         bottles_[i]->draw();
+    glDepthMask(GL_TRUE);
+
 }
 
 void TP3::handleDisplay()

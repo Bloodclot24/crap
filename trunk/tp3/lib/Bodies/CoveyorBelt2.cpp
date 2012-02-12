@@ -73,14 +73,14 @@ CoveyorBelt::~CoveyorBelt()
 void CoveyorBelt::crearSuperficie() {
     std::vector<btVector3> perfil, normales, ptosControl;
     //	perfil.push_back(btVector3(0,-0.25,0)); //agregar esto para cerrar la base
-    perfil.push_back(btVector3(0,0.25,0));
-    perfil.push_back(btVector3(0,0.35,0.2));
-    perfil.push_back(btVector3(0,0.3,0.2));
-    perfil.push_back(btVector3(0,0.25,0.1));
-    perfil.push_back(btVector3(0,-0.25,0.1));
-    perfil.push_back(btVector3(0,-0.3,0.2));
-    perfil.push_back(btVector3(0,-0.35,0.2));
     perfil.push_back(btVector3(0,-0.25,0));
+    perfil.push_back(btVector3(0,-0.35,0.2));
+    perfil.push_back(btVector3(0,-0.3,0.2));
+    perfil.push_back(btVector3(0,-0.25,0.1));
+    perfil.push_back(btVector3(0,0.25,0.1));
+    perfil.push_back(btVector3(0,0.3,0.2));
+    perfil.push_back(btVector3(0,0.35,0.2));
+    perfil.push_back(btVector3(0,0.25,0));
 
     //	normales.push_back(btVector3(0, -1, -2)); //agregar esto para cerrar la base
     normales.push_back(btVector3(0, 1, -2));

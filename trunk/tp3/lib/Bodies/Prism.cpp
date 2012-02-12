@@ -42,30 +42,23 @@ void Prism::draw()
         }
     }glEnd();
 
+    vectorPuntos vertexesPlus = vertexes_;
+    vertexesPlus.push_back(vertexes_[0]);
+
     glBegin(GL_QUADS);{
-        for(int i=0;i<n-1;i++)
+        for(int i=0;i<n;i++)
         {
-            glNormal3fv( (vertexes_[i+1]-vertexes_[i]).cross(displacement));
+            glNormal3fv( (vertexesPlus[i+1]-vertexesPlus[i]).cross(displacement));
 
             glTexCoord2fv(textureVertex[0]);
-            glVertex3fv(vertexes_[i]+displacement);
-            glTexCoord2fv(textureVertex[1]);
-            glVertex3fv(vertexes_[i+1]+displacement);
-            glTexCoord2fv(textureVertex[2]);
-            glVertex3fv(vertexes_[i+1]-displacement);
+            glVertex3fv(vertexesPlus[i]+displacement);
             glTexCoord2fv(textureVertex[3]);
-            glVertex3fv(vertexes_[i]-displacement);
+            glVertex3fv(vertexesPlus[i]-displacement);
+            glTexCoord2fv(textureVertex[2]);
+            glVertex3fv(vertexesPlus[i+1]-displacement);
+            glTexCoord2fv(textureVertex[1]);
+            glVertex3fv(vertexesPlus[i+1]+displacement);
         }
-
-        glNormal3fv((vertexes_[0]-vertexes_[n-1]).cross(displacement));
-        glTexCoord2fv(textureVertex[0]);
-        glVertex3fv(vertexes_[n-1]+displacement);
-        glTexCoord2fv(textureVertex[1]);
-        glVertex3fv(vertexes_[0]+displacement);
-        glTexCoord2fv(textureVertex[2]);
-        glVertex3fv(vertexes_[0]-displacement);
-        glTexCoord2fv(textureVertex[3]);
-        glVertex3fv(vertexes_[n-1]-displacement);
     }glEnd();
 
     glBegin(GL_POLYGON);{
