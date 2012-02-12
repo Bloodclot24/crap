@@ -10,12 +10,14 @@ class Bottle : public Body
 {
     SuperficieRevolucion* superficie;
     float height_;
+    float fillLevel;
 
     void crearSuperficie();
 
 public:
     Bottle();
     void draw();
+    void fill(float quantity);
     virtual ~Bottle();
 };
 

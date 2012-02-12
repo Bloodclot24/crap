@@ -8,10 +8,3 @@ vec4 mapTexture()
     color.a = 1.0;
     return color;
 }
-
-vec4 computeLight()
-{
-    vec4 color = gl_Color;
-    color.a = 1.0;
-    return color;
-}
