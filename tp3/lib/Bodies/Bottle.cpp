@@ -9,6 +9,7 @@ Bottle::Bottle()
     btCollisionShape* bottleShape = new btCylinderShapeZ(btVector3(0.1*BOTTLE_SCALE, 0.1*BOTTLE_SCALE, 0.265*BOTTLE_SCALE));
 
     btScalar mass = 1;
+    fillLevel = 0;
 
     btVector3 fallInertia(0,0,0);
 
@@ -52,11 +53,20 @@ void Bottle::crearSuperficie() {
     height_ = 26.5;
 }
 
+void Bottle::fill(float quantity)
+{
+    fillLevel += quantity;
+    if(fillLevel>1)
+        fillLevel = 1;
+}
+
 void Bottle::draw()
 {
 
     GLTexture::bind("etiqueta");
     GLShader::pushProgram("bottle");
+
+    GLShader::setUniform("fillLevel", fillLevel);
 
     glPushMatrix();{
 

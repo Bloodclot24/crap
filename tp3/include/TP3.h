@@ -30,6 +30,8 @@ class TP3 : public GLWorld
     float xrot_, yrot_, zrot_;
     float xtrans_, ytrans_, ztrans_;
 
+    bool stopAnimation;
+
     btDiscreteDynamicsWorld* dynamicsWorld_;
 
     void initializePhysics();

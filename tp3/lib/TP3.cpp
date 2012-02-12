@@ -43,6 +43,8 @@ TP3::TP3()
     xtrans_ = 0;
     ytrans_ = -6;
     ztrans_ = 2;
+
+    stopAnimation = false;
 }
 
 void TP3::initialize()
@@ -67,23 +69,28 @@ void TP3::initialize()
     GLShader::loadFShader("shaders/bottle.frag", "bottle");
 
     //Creo los programas
-    const char* normalVShader[] = {"normal", NULL};
+    //const char* normalVShader[] = {"normal", NULL};
     const char* lightVShader[]  = {"light", NULL};
 
     const char* normalFShader[] = {"base", "texture", "light", NULL};
-    const char* beltFShader[]   = {"base", "belt",    NULL};
+    const char* beltFShader[]   = {"base", "belt",    "light", NULL};
     const char* bottleFShader[] = {"base", "bottle",  "light", NULL};
 
     GLShader::createProgram("normal", lightVShader, normalFShader);
-    GLShader::createProgram("belt",   normalVShader, beltFShader);
+    GLShader::createProgram("belt",   lightVShader, beltFShader);
     GLShader::createProgram("bottle", lightVShader, bottleFShader);
 
     GLShader::pushProgram("normal");
 
     //Activo iluminacion
     glEnable(GL_LIGHT0);
-    glEnable(GL_TEXTURE);
-    glEnable(GL_TEXTURE_2D);
+
+    GLfloat specular[] = {1.0, 1.0, 1.0, 1.0};
+    glLightfv(GL_LIGHT0, GL_SPECULAR, specular);
+    GLfloat ambient[] = { 0.4f, 0.4f, 0.4f };
+    glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
+    GLfloat position[] = { 5.0f, 5.0f, 5.0f, 1.0f };
+    glLightfv(GL_LIGHT0, GL_POSITION, position);
 
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_LIGHTING);
@@ -119,33 +126,37 @@ void TP3::setUpGlContext()
 
 void TP3::updateScene()
 {
-    dynamicsWorld_->stepSimulation(1.0/30.0, 10);
-    belt_->advance(0.01*2*SPEED);
+
+    if(!stopAnimation){
+        dynamicsWorld_->stepSimulation(1.0/30.0, 10);
+        belt_->advance(0.01*2*SPEED);
     
-    nextBottle_-=1.0;
+        nextBottle_-=1.0;
 
-    if(nextBottle_ <= 0){
-        nextBottle_ = bottleInterval_;
-        bottles_.push_back(new Bottle());
-        bottlesPositions_.push_back(0);
+        if(nextBottle_ <= 0){
+            nextBottle_ = bottleInterval_;
+            bottles_.push_back(new Bottle());
+            bottlesPositions_.push_back(0);
 
-    }
-
-    for(unsigned i=firstBottle_;i<bottles_.size();i++){
-        btVector3 pos     = belt_->getPosition(bottlesPositions_[i]);
-        btVector3 tangent = belt_->getTangent(bottlesPositions_[i]);
-        bottlesPositions_[i] += 0.0005*2*SPEED;
-        if(bottlesPositions_[i] >= 1){
-            firstBottle_ = i+1;
-            bottles_[i]->setPosition(5,2,2);
-            addBody(bottles_[i]);
         }
 
-        else{ 
-            bottles_[i]->setPosition(pos.x(), pos.y(), pos.z()+0.265);
-            bottles_[i]->setRotation(0,0,acos(tangent.normalize().dot(btVector3(1,0,0))));
-        }
+        for(unsigned i=firstBottle_;i<bottles_.size();i++){
+            btVector3 pos     = belt_->getPosition(bottlesPositions_[i]);
+            btVector3 tangent = belt_->getTangent(bottlesPositions_[i]);
+            bottlesPositions_[i] += 0.0005*2*SPEED;
+            if(bottlesPositions_[i] >= 1){
+                firstBottle_ = i+1;
+                bottles_[i]->setPosition(5,2,2);
+                addBody(bottles_[i]);
+            }
 
+            else{ 
+                bottles_[i]->setPosition(pos.x(), pos.y(), pos.z()+0.265);
+                bottles_[i]->setRotation(0,0,acos(tangent.normalize().dot(btVector3(1,0,0))));
+                bottles_[i]->fill(0.003);
+            }
+
+        }
     }
 }
 
@@ -177,11 +188,8 @@ void TP3::renderScene()
 
     belt_->draw();
 
-    glDepthMask(GL_FALSE);
     for(unsigned i=0; i<bottles_.size(); ++i)
         bottles_[i]->draw();
-    glDepthMask(GL_TRUE);
-
 }
 
 void TP3::handleDisplay()
@@ -221,6 +229,8 @@ void TP3::handleKeyboard(unsigned char key, int x, int y)
 
     case 'r': xrot_ = yrot_ = zrot_ = 0; 
         ytrans_ = 0; break;
+
+    case 's': stopAnimation = !stopAnimation; break;
         
     default: break;
 
