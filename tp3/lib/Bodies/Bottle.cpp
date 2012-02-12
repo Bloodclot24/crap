@@ -1,6 +1,7 @@
 #include "Bodies/Bottle.h"
 #include "btBulletDynamicsCommon.h"
 
+#include "GLShader.h"
 #include "GLTexture.h"
 
 Bottle::Bottle()
@@ -55,6 +56,7 @@ void Bottle::draw()
 {
 
     GLTexture::bind("etiqueta");
+    GLShader::pushProgram("bottle");
 
     glPushMatrix();{
 
@@ -95,6 +97,8 @@ void Bottle::draw()
     	glEnd();
 
     }glPopMatrix();
+
+    GLShader::popProgram();
 }
 
 Bottle::~Bottle()

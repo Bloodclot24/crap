@@ -48,9 +48,10 @@ static GLuint cargarDesdeArchivo(std::string name, GLenum type)
     int compiled=0;
     glGetShaderiv(shader, GL_COMPILE_STATUS, &compiled);
 
+    showLog(shader);
+
     if(!compiled){
         printf("El shader %s no compila.\n", name.c_str());
-        showLog(shader);
         exit(-1);
     }
 
@@ -110,6 +111,41 @@ void GLShader::createProgram(std::string name, std::string vshader, std::string 
     int linked=0;
     glGetProgramiv(program, GL_LINK_STATUS, &linked);
 
+    showLog(program);
+
+    if(!linked){
+        printf("Error al linkear el programa.\n");
+        glDeleteProgram(program);
+    }
+    else{
+        printf("Programa %s (%d) linkeado correctamente\n", name.c_str(), program);
+        programs[toUpper(name)] = program;
+    }
+}
+
+void GLShader::createProgram(std::string name, const char** vshaders, const char** fshaders)
+{
+    printf("Creando shader %s:\n", name.c_str());
+
+    GLuint program = glCreateProgram();
+
+    for(int i=0; vshaders[i] != NULL; i++){
+        printf("Vshader: %s\n", vshaders[i]);
+        glAttachShader(program, getVShader(vshaders[i]));
+    }
+
+    for(int i=0; fshaders[i] != NULL; i++){
+        printf("Fshader: %s\n", fshaders[i]);
+        glAttachShader(program, getFShader(fshaders[i]));
+    }
+
+    glLinkProgram(program);
+
+    glUseProgram(program);
+
+    int linked=0;
+    glGetProgramiv(program, GL_LINK_STATUS, &linked);
+
     if(!linked){
         printf("Error al linkear el programa.\n");
         showLog(program);
@@ -119,8 +155,8 @@ void GLShader::createProgram(std::string name, std::string vshader, std::string 
         printf("Programa %s (%d) linkeado correctamente\n", name.c_str(), program);
         programs[toUpper(name)] = program;
     }
-
 }
+
 
 void GLShader::useProgram(std::string alias)
 {
@@ -149,6 +185,6 @@ void GLShader::setUniform(std::string name, float value)
 {
 
     GLint location = glGetUniformLocation(programs[toUpper(stack.top())], name.c_str());
-
+    
     glUniform1f(location, value);
 }

@@ -17,6 +17,8 @@
 #include <GL/glu.h>
 #include <GL/glut.h>
 
+#define SPEED 2.0
+
 TP3::TP3()
 {
     windowWidth_ = 1;
@@ -27,7 +29,7 @@ TP3::TP3()
 
     belt_ = new CoveyorBelt();
 
-    bottleInterval_ = 27*5;;
+    bottleInterval_ = 27.0*5.0/SPEED;
     nextBottle_ = 0;
     firstBottle_ = 0;
 
@@ -55,18 +57,26 @@ void TP3::initialize()
 
     //Cargo VShaders
     GLShader::loadVShader("shaders/normal.vert", "normal");
-    GLShader::loadVShader("shaders/room.vert", "room");
+    GLShader::loadVShader("shaders/light.vert", "light");
     
     //Cargo FShaders
-    GLShader::loadFShader("shaders/normal.frag", "normal");
+    GLShader::loadFShader("shaders/base.frag", "base");
+    GLShader::loadFShader("shaders/texture.frag", "texture");
+    GLShader::loadFShader("shaders/light.frag", "light");
     GLShader::loadFShader("shaders/belt.frag", "belt");
-    //GLShader::loadFShader("shaders/glass.fshader", "glass");
+    GLShader::loadFShader("shaders/bottle.frag", "bottle");
 
     //Creo los programas
-    GLShader::createProgram("normal", "normal", "normal");
-    GLShader::createProgram("belt", "normal", "belt");
-    GLShader::createProgram("room", "room", "normal");
-    //GLShader::createProgram("bottle", "normal", "glass");
+    const char* normalVShader[] = {"normal", NULL};
+    const char* lightVShader[]  = {"light", NULL};
+
+    const char* normalFShader[] = {"base", "texture", "light", NULL};
+    const char* beltFShader[]   = {"base", "belt",    NULL};
+    const char* bottleFShader[] = {"base", "bottle",  "light", NULL};
+
+    GLShader::createProgram("normal", lightVShader, normalFShader);
+    GLShader::createProgram("belt",   normalVShader, beltFShader);
+    GLShader::createProgram("bottle", lightVShader, bottleFShader);
 
     GLShader::pushProgram("normal");
 
@@ -106,7 +116,7 @@ void TP3::setUpGlContext()
 void TP3::updateScene()
 {
     dynamicsWorld_->stepSimulation(1.0/30.0, 10);
-    belt_->advance(0.01*2);
+    belt_->advance(0.01*2*SPEED);
     
     nextBottle_-=1.0;
 
@@ -120,7 +130,7 @@ void TP3::updateScene()
     for(unsigned i=firstBottle_;i<bottles_.size();i++){
         btVector3 pos     = belt_->getPosition(bottlesPositions_[i]);
         btVector3 tangent = belt_->getTangent(bottlesPositions_[i]);
-        bottlesPositions_[i] += 0.0005*2;
+        bottlesPositions_[i] += 0.0005*2*SPEED;
         if(bottlesPositions_[i] >= 1){
             firstBottle_ = i+1;
             bottles_[i]->setPosition(5,2,2);
@@ -159,13 +169,13 @@ void TP3::renderScene()
 
     }glEnd();
 
-    for(unsigned i=0; i<bottles_.size(); ++i)
-        bottles_[i]->draw();
-
     for(int i=0; i<4; ++i)
         machines[i]->draw();
 
     belt_->draw();
+
+    for(unsigned i=0; i<bottles_.size(); ++i)
+        bottles_[i]->draw();
 }
 
 void TP3::handleDisplay()
@@ -271,7 +281,12 @@ TP3::~TP3()
 {
     delete belt_;
 
+    for(unsigned i=0;i<bottles_.size();++i)
+        delete bottles_[i];
+    
     for(int i=0; i<4; ++i)
        	delete machines[i];
+
+    delete dynamicsWorld_;
 }
 

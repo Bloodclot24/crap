@@ -1,4 +1,5 @@
-void main() {
+void main() 
+{
 
     vec3 normal, lightDir;
     vec4 diffuse;
