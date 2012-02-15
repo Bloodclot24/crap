@@ -4,20 +4,21 @@
 #include "Body.h"
 #include "Primitives/SuperficieRevolucion.h"
 
-#define BOTTLE_SCALE 1
-
 class Bottle : public Body
 {
     SuperficieRevolucion* superficie;
     float height_;
     float fillLevel;
+    bool label;
+    float labelTime;
 
     void crearSuperficie();
 
 public:
     Bottle();
     void draw();
-    void fill(float quantity);
+    bool fill(float quantity);
+    bool putLabel(float step);
     virtual ~Bottle();
 };
 

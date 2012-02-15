@@ -17,7 +17,7 @@ vec4 computeLight()
         halfV = normalize(halfVector);
         NdotHV = max(dot(n,halfV),0.0); 
         color += gl_FrontMaterial.specular * 
-            //gl_LightSource[0].specular *
+            gl_LightSource[0].specular *
             pow(NdotHV, gl_FrontMaterial.shininess);
     }
 

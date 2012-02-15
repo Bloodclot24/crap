@@ -9,6 +9,7 @@
 #include "Bodies/Bottle.h"
 #include "Bodies/CoveyorBelt2.h"
 #include "Bodies/Machine.h"
+#include "Bodies/Pack.h"
 
 class TP3 : public GLWorld
 {
@@ -19,10 +20,14 @@ class TP3 : public GLWorld
 
     std::vector<Bottle*> bottles_;
     std::vector<float> bottlesPositions_;
+    std::vector<Pack> packs_;
 
     float bottleInterval_;
     float nextBottle_;
-    int firstBottle_;
+    unsigned firstBottle_;
+    bool processing1_;
+    bool processing2_;
+    int processingBottle_;
 
     Machine* machines[4];
     CoveyorBelt* belt_;
@@ -43,6 +48,10 @@ class TP3 : public GLWorld
     void renderScene();
 
     void addBody(Body* body);
+
+    void updateBottlesPositions();
+
+    void processBottles();
 
     public:
 

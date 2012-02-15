@@ -8,10 +8,13 @@
 class LabelMachine : public Machine
 {
     Cylinder cylinder_;
+    float level;
+    bool subiendo;
 
 public:
     LabelMachine();
     void draw();
+    bool process(Bottle* bottle, float step);
     virtual ~LabelMachine();
 };
 

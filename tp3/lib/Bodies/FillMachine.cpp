@@ -9,6 +9,8 @@ FillMachine::FillMachine(): cylinder_(0.8,0.4), sphere_(0.8)
 	prism_.push_back(Prism(patch1, 4, 4));
 	prism_.push_back(Prism(patch1, 4, 0.1));
 	crearManguera();
+	level = 0.2;
+	subiendo = false;
 }
 
 void FillMachine::draw()
@@ -17,16 +19,17 @@ void FillMachine::draw()
 
     glPushMatrix();{
     	glScalef(0.5, 0.5, 0.5);
-    	glTranslatef(1,5.4,0.5);
+    	glTranslatef(1.1,5.4,0.5);
     	prism_[0].draw();
     	glTranslatef(0,0,0.5);
     	sphere_.draw();
     	cylinder_.draw();
     	glTranslatef(0,0,0.4);
     	sphere_.draw();
+    	glTranslatef(0,0,level);
     	glPushMatrix();{
-    		glTranslatef(0,0,1);
-    		glScalef(0.4, 0.4, 0.6);
+    		glTranslatef(0,0,0.8);
+    		glScalef(0.4, 0.4, 0.8);
     		prism_[0].draw();
     	}glPopMatrix();
     	glTranslatef(0,-1.1,1);
@@ -53,6 +56,16 @@ void FillMachine::draw()
     	manguera->draw();
     }glPopMatrix();
 
+}
+
+bool FillMachine::process(Bottle* bottle, float step) {
+	if(level > 0 && !subiendo)
+		level -= step;
+	else if (!bottle->fill(step)) {
+		level += step;
+		subiendo = level < 0.2;
+	}
+	return level <= 0.2;
 }
 
 FillMachine::~FillMachine()

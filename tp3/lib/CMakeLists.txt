@@ -20,6 +20,7 @@ add_library(framework_final_lib
   Bodies/LastMachine.cpp
   Bodies/LabelMachine.cpp
   Bodies/FillMachine.cpp
+  Bodies/Pack.cpp
   Primitives/SuperficieRevolucion.cpp
   Primitives/SuperficieBarrido.cpp
 )
