@@ -17,7 +17,7 @@
 #include <GL/glu.h>
 #include <GL/glut.h>
 
-#define SPEED 2.0
+#define SPEED 4.0
 
 TP3::TP3()
 {
@@ -32,11 +32,14 @@ TP3::TP3()
     bottleInterval_ = 27.0*5.0/SPEED;
     nextBottle_ = 0;
     firstBottle_ = 0;
+    processingBottle_ = -1;
+    processing1_ = false;
+    processing2_ = false;
 
     machines[0] = new FirstMachine();
-    machines[1] = new LastMachine();
-    machines[2] = new LabelMachine();
-    machines[3] = new FillMachine();
+    machines[1] = new LabelMachine();
+    machines[2] = new FillMachine();
+    machines[3] = new LastMachine();
 
     xrot_ = yrot_ = zrot_ = 0;
 
@@ -45,16 +48,21 @@ TP3::TP3()
     ztrans_ = 2;
 
     stopAnimation = false;
+    packs_.push_back(Pack());
 }
 
 void TP3::initialize()
 {
     initializePhysics();
 
+    machines[3]->setRotation(35,0,0);
+    machines[3]->setPosition(5.15, 1.35, 0.6);
+    addBody(machines[3]);
+
     //Cargo texturas
     GLTexture::load("lad.raw", "ladrillos");
     GLTexture::load("chapaDoble.raw", "chapa");
-    GLTexture::load("cinta.raw", "cinta");
+    GLTexture::load("cintita.raw", "cinta");
     GLTexture::load("eti.raw", "etiqueta");
 
     //Cargo VShaders
@@ -126,38 +134,62 @@ void TP3::setUpGlContext()
 
 void TP3::updateScene()
 {
+    if (!stopAnimation) {
+		dynamicsWorld_->stepSimulation(1.0 / 30.0, 10);
+		if (!processing1_ && !processing2_) {
 
-    if(!stopAnimation){
-        dynamicsWorld_->stepSimulation(1.0/30.0, 10);
-        belt_->advance(0.01*2*SPEED);
-    
-        nextBottle_-=1.0;
+			belt_->advance(0.01 * 2 * SPEED);
 
-        if(nextBottle_ <= 0){
-            nextBottle_ = bottleInterval_;
-            bottles_.push_back(new Bottle());
-            bottlesPositions_.push_back(0);
+			nextBottle_ -= 1.0;
+			if (nextBottle_ <= 0) {
+				nextBottle_ = bottleInterval_;
+				bottles_.push_back(new Bottle());
+				bottlesPositions_.push_back(0);
+			}
 
-        }
+			updateBottlesPositions();
 
-        for(unsigned i=firstBottle_;i<bottles_.size();i++){
-            btVector3 pos     = belt_->getPosition(bottlesPositions_[i]);
-            btVector3 tangent = belt_->getTangent(bottlesPositions_[i]);
-            bottlesPositions_[i] += 0.0005*2*SPEED;
-            if(bottlesPositions_[i] >= 1){
-                firstBottle_ = i+1;
-                bottles_[i]->setPosition(5,2,2);
-                addBody(bottles_[i]);
-            }
+		} else
+			processBottles();
+	}
+}
 
-            else{ 
-                bottles_[i]->setPosition(pos.x(), pos.y(), pos.z()+0.265);
-                bottles_[i]->setRotation(0,0,acos(tangent.normalize().dot(btVector3(1,0,0))));
-                bottles_[i]->fill(0.003);
-            }
+void TP3::updateBottlesPositions() {
+	for (unsigned i = firstBottle_; i < bottles_.size(); i++) {
+		btVector3 pos = belt_->getPosition(bottlesPositions_[i]);
+		btVector3 tangent = belt_->getTangent(bottlesPositions_[i]);
+		bottlesPositions_[i] += 0.001 * SPEED;
 
-        }
-    }
+		if (bottlesPositions_[i] >= 1) {
+			firstBottle_ = i + 1;
+			if(packs_[packs_.size() - 1].getBottlesCount() >= 4) {
+				packs_[packs_.size() - 1].setPosition(5, 2, 2);
+				addBody(&packs_[packs_.size() - 1]);
+				packs_.push_back(Pack());
+			}
+			packs_[packs_.size() - 1].addBottle(bottles_[i]);
+
+		} else if (bottlesPositions_[i] >= 0.617 && bottlesPositions_[i] <= 0.617 + 0.001 * SPEED) {
+			processing1_ = true;
+			if (i != firstBottle_)
+				processing2_ = true;
+			processingBottle_ = i;
+
+		} else {
+			bottles_[i]->setPosition(pos.x(), pos.y(), pos.z() + 0.265);
+			bottles_[i]->setRotation(0, 0, acos(
+					tangent.normalize().dot(btVector3(1, 0, 0))));
+		}
+	}
+}
+
+void TP3::processBottles() {
+	if (processing1_)
+		processing1_ = machines[1]->process(
+				bottles_[processingBottle_], 0.001 * SPEED);
+	if (processing2_)
+		processing2_ = machines[2]->process(bottles_[processingBottle_
+				- 1], 0.001 * SPEED);
 }
 
 void TP3::renderScene()
@@ -183,12 +215,79 @@ void TP3::renderScene()
 
     }glEnd();
 
+
+    GLTexture::bind("ladrillos");
+    glBegin(GL_QUADS);{
+        glColor3f(1, 1, 1);
+        for (int i = 0; i < 10; i++) {
+			glNormal3f(0, -1, 0);
+			for (int j = -10; j < 10; j++) {
+				glTexCoord2f(0.0, 0.0);
+				glVertex3f(j, 10, i);
+
+				glTexCoord2f(1.0, 0.0);
+				glVertex3f(j + 1, 10, i);
+
+				glTexCoord2f(1.0, 1.0);
+				glVertex3f(j + 1, 10, i + 1);
+
+				glTexCoord2f(0.0, 1.0);
+				glVertex3f(j, 10, i + 1);
+			}
+			glNormal3f(0, 1, 0);
+			for (int j = -10; j < 10; j++) {
+				glTexCoord2f(0.0, 0.0);
+				glVertex3f(j + 1, -10, i);
+
+				glTexCoord2f(1.0, 0.0);
+				glVertex3f(j, -10, i);
+
+				glTexCoord2f(1.0, 1.0);
+				glVertex3f(j, -10, i + 1);
+
+				glTexCoord2f(0.0, 1.0);
+				glVertex3f(j + 1, -10, i + 1);
+			}
+			glNormal3f(-1, 0, 0);
+			for (int j = -10; j < 10; j++) {
+				glTexCoord2f(0.0, 0.0);
+				glVertex3f(-10, j, i);
+
+				glTexCoord2f(1.0, 0.0);
+				glVertex3f(-10, j + 1, i);
+
+				glTexCoord2f(1.0, 1.0);
+				glVertex3f(-10, j + 1, i + 1);
+
+				glTexCoord2f(0.0, 1.0);
+				glVertex3f(-10, j, i + 1);
+			}
+			glNormal3f(1, 0, 0);
+			for (int j = -10; j < 10; j++) {
+				glTexCoord2f(0.0, 0.0);
+				glVertex3f(10, j + 1, i);
+
+				glTexCoord2f(1.0, 0.0);
+				glVertex3f(10, j, i);
+
+				glTexCoord2f(1.0, 1.0);
+				glVertex3f(10, j, i + 1);
+
+				glTexCoord2f(0.0, 1.0);
+				glVertex3f(10, j + 1, i + 1);
+			}
+		}
+    }glEnd();
+
     for(int i=0; i<4; ++i)
         machines[i]->draw();
 
     belt_->draw();
 
-    for(unsigned i=0; i<bottles_.size(); ++i)
+    for(unsigned i=0; i<packs_.size() - 1; ++i)
+        packs_[i].draw();
+
+    for(unsigned i=firstBottle_; i<bottles_.size(); ++i)
         bottles_[i]->draw();
 }
 

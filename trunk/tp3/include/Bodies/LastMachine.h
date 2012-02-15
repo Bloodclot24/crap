@@ -13,6 +13,9 @@ class LastMachine : public Machine
 public:
     LastMachine();
     void draw();
+    Prism& getRamp(){
+    	return ramp_[0];
+    }
     virtual ~LastMachine();
 };
 

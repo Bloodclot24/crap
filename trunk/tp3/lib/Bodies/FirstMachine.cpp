@@ -7,11 +7,11 @@ FirstMachine::FirstMachine()
 	btVector3 patch0[4] = {btVector3(2,1.25,0),btVector3(-2,1.25,0),btVector3(-2,-1.25,0),btVector3(2,-1.25,0)};
 	prism_.push_back(Prism(patch0, 4, 1));
 	btVector3 patch1[4] = {btVector3(1.95,0.4,0),btVector3(-2,0.4,0),btVector3(-2,-0.4,0),btVector3(1.95,-0.4,0)};
-	prism_.push_back(Prism(patch1, 4, 1));
+	prism_.push_back(Prism(patch1, 4, 1.3));
 	btVector3 patch2[4] = {btVector3(1.95,0.2,0),btVector3(-2,0.2,0),btVector3(-2,-0.2,0),btVector3(1.95,-0.2,0)};
-	prism_.push_back(Prism(patch2, 4, 1));
-	btVector3 patch3[4] = {btVector3(-1.2,0.9,0),btVector3(-2,0.9,0),btVector3(-2,-0.9,0),btVector3(-1.6,-0.2,0)};
-	prism_.push_back(Prism(patch3, 4, 1));
+	prism_.push_back(Prism(patch2, 4, 1.3));
+	btVector3 patch3[4] = {btVector3(-1.2,0.4,0),btVector3(-2,0.4,0),btVector3(-2,-0.8,0),btVector3(-1.2,-0.8,0)};
+	prism_.push_back(Prism(patch3, 4, 1.3));
 }
 
 void FirstMachine::draw()
@@ -19,27 +19,30 @@ void FirstMachine::draw()
     glColor3f(0.2, 0.2, 0.2);
 
     glPushMatrix();{
-    	glScalef(0.5, 0.5, 0.5);
-    	glTranslatef(-10.5,-3.5,0.5);
-    	prism_[0].draw();
+		glScalef(0.5, 0.5, 0.5);
+    	glTranslatef(-10.5,-3.5,0);
+    	glPushMatrix();{
+    		glTranslatef(0,0,0.5);
+        	prism_[0].draw();
+    	}glPopMatrix();
 
     	glPushMatrix();{
-        	glTranslatef(0,0,2);
+        	glTranslatef(0,0,1.3 + 1.5);
         	prism_[0].draw();
         }glPopMatrix();
 
         glPushMatrix();{
-        	glTranslatef(0,0.8,1);
+        	glTranslatef(0,0.8,1 + 1.3/2);
         	prism_[1].draw();
         }glPopMatrix();
 
         glPushMatrix();{
-        	glTranslatef(0,-1,1);
+        	glTranslatef(0,-1,1 + 1.3/2);
         	prism_[2].draw();
         }glPopMatrix();
 
         glPushMatrix();{
-        	glTranslatef(0,0,1);
+        	glTranslatef(0,0,1 + 1.3/2);
         	prism_[3].draw();
         }glPopMatrix();
 

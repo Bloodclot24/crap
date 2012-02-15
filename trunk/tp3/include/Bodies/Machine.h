@@ -3,6 +3,7 @@
 
 #include "Body.h"
 #include "Bodies/Prism.h"
+#include "Bodies/Bottle.h"
 
 #include <vector>
 
@@ -12,6 +13,7 @@ protected:
 
 public:
 	Machine();
+	virtual bool process(Bottle* bottle, float step);
 	virtual ~Machine();
 };
 

@@ -1,6 +1,6 @@
 #include "Bodies/LabelMachine.h"
 
-LabelMachine::LabelMachine(): cylinder_(0.25,1)
+LabelMachine::LabelMachine(): cylinder_(0.25,0.55)
 {
 	btVector3 patch0[4] = {btVector3(0.5,0.5,0),btVector3(-0.5,0.5,0),btVector3(-0.5,-0.5,0),btVector3(0.5,-0.5,0)};
 	prism_.push_back(Prism(patch0, 4, 1));
@@ -8,6 +8,8 @@ LabelMachine::LabelMachine(): cylinder_(0.25,1)
 	prism_.push_back(Prism(patch1, 4, 2));
 	btVector3 patch2[4] = {btVector3(0.05,0.6,0),btVector3(-0.06,0.5,0),btVector3(-0.06,-0.5,0),btVector3(0.05,-0.6,0)};
 	prism_.push_back(Prism(patch2, 4, 0.1));
+	subiendo = false;
+	level = 0.2;
 }
 
 void LabelMachine::draw()
@@ -31,15 +33,31 @@ void LabelMachine::draw()
         	prism_[2].draw();
         }glPopMatrix();
         glPushMatrix();{
-        	glTranslatef(0,-1.5,-0.3);
+        	glTranslatef(0,-1.5,0.2);
         	glColor3f(1,1,0);
+        	cylinder_.draw();
+
+        	glScalef(0.9, 0.9, 1.4);
+        	glTranslatef(0,0,-0.5 + level*2.4);
+        	glColor3f(0.6,0.6,0);
         	cylinder_.draw();
         }glPopMatrix();
     }glPopMatrix();
 
 }
 
+bool LabelMachine::process(Bottle* bottle, float step) {
+	if(level > 0 && !subiendo)
+		level -= step;
+	else if(bottle->putLabel(step)) {
+		level += step;
+		subiendo = level < 0.2;
+	}
+	return level <= 0.2;
+}
+
 LabelMachine::~LabelMachine()
 {
 }
+
 

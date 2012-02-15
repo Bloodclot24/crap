@@ -6,10 +6,12 @@
 
 Bottle::Bottle()
 {
-    btCollisionShape* bottleShape = new btCylinderShapeZ(btVector3(0.1*BOTTLE_SCALE, 0.1*BOTTLE_SCALE, 0.265*BOTTLE_SCALE));
+    btCollisionShape* bottleShape = new btCylinderShapeZ(btVector3(0.1, 0.1, 0.265));
 
     btScalar mass = 1;
     fillLevel = 0;
+    label = false;
+    labelTime = 0;
 
     btVector3 fallInertia(0,0,0);
 
@@ -30,6 +32,7 @@ Bottle::Bottle()
     rigidBody_ = new btRigidBody(fallRigidBodyCI3);
     rigidBody_->setFriction(0.5);
     rigidBody_->setDamping(0.7, 0.7);
+
     crearSuperficie();
 }
 
@@ -53,20 +56,31 @@ void Bottle::crearSuperficie() {
     height_ = 26.5;
 }
 
-void Bottle::fill(float quantity)
+bool Bottle::fill(float quantity)
 {
+	bool full = false;
     fillLevel += quantity;
-    if(fillLevel>1)
-        fillLevel = 1;
+    if(fillLevel>0.8) {
+        fillLevel = 0.8;
+        full = true;
+    }
+    return !full;
+}
+
+bool Bottle::putLabel(float step) {
+	labelTime += step;
+	if(labelTime > 0.2)
+		label = true;
+	return label;
 }
 
 void Bottle::draw()
 {
-
-    GLTexture::bind("etiqueta");
+	GLTexture::bind("etiqueta");
     GLShader::pushProgram("bottle");
 
     GLShader::setUniform("fillLevel", fillLevel);
+    GLShader::setUniform("label", label);
 
     glPushMatrix();{
 
@@ -88,14 +102,13 @@ void Bottle::draw()
                   axis.getY(),
                   axis.getZ());
 
-        glScalef(0.02*BOTTLE_SCALE,0.02*BOTTLE_SCALE,0.02*BOTTLE_SCALE);
+        glScalef(0.02,0.02,0.02);
         glTranslatef(0,0,-height_/2);
     	glBegin( GL_TRIANGLE_STRIP);
     	float pasosi = superficie->getVertices().size() - 1;
     	float pasosj = superficie->getVertices()[0].size() - 1;
     	for (int i = 0; i < pasosi ; i++) {
             for (int j = 0; j <= pasosj; j++) {
-                float height = superficie->getVertices()[i][j][2];
                 glNormal3fv(superficie->getNormales()[i][j]);
                 glTexCoord2f(i/pasosi,superficie->getVertices()[i][j][2]/height_);
                 glVertex3fv(superficie->getVertices()[i][j]);
