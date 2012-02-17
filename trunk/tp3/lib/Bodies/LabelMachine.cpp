@@ -18,7 +18,7 @@ void LabelMachine::draw()
 
     glPushMatrix();{
     	glScalef(0.5, 0.5, 0.5);
-    	glTranslatef(-2.5,5.2,0.5);
+    	glTranslatef(-2.6,5.2,0.5);
     	prism_[0].draw();
     	glTranslatef(0,0,1.5);
     	prism_[1].draw();
