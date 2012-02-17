@@ -2,9 +2,9 @@
 #include <GL/gl.h>
 
 Pack::Pack() {
-    btCollisionShape* bottleShape = new btBoxShape(btVector3(0.16, 0.16, 0.265));
+    btCollisionShape* bottleShape = new btBoxShape(btVector3(0.2, 0.2, 0.265));
 
-    btScalar mass = 1;
+    btScalar mass = 4;
 
     btVector3 fallInertia(0,0,0);
 
@@ -24,7 +24,6 @@ Pack::Pack() {
     btRigidBody::btRigidBodyConstructionInfo fallRigidBodyCI3(mass,bottleMotionState,bottleShape,fallInertia);
     rigidBody_ = new btRigidBody(fallRigidBodyCI3);
     rigidBody_->setFriction(0.5);
-    rigidBody_->setDamping(0.7, 0.7);
 }
 
 Pack::~Pack() {
@@ -40,15 +39,13 @@ void Pack::draw() {
 		btVector3 axis = trans.getRotation().getAxis();
 
 		glTranslatef(position[0],
-					 position[1],
-					 position[2]);
+                             position[1],
+                             position[2]);
 
 		glRotatef(trans.getRotation().getAngle()*360/6.2832f,
-				  axis.getX(),
-				  axis.getY(),
-				  axis.getZ());
-
-		glTranslatef(0,0,-0.265/2);
+                          axis.getX(),
+                          axis.getY(),
+                          axis.getZ());
 
 		glPushMatrix(); {
 			glTranslatef(0.08,0.08,0);

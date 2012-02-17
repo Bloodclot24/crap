@@ -17,7 +17,7 @@
 #include <GL/glu.h>
 #include <GL/glut.h>
 
-#define SPEED 4.0
+#define SPEED 4
 
 TP3::TP3()
 {
@@ -49,14 +49,15 @@ TP3::TP3()
 
     stopAnimation = false;
     packs_.push_back(Pack());
+
 }
 
 void TP3::initialize()
 {
     initializePhysics();
 
-    machines[3]->setRotation(35,0,0);
-    machines[3]->setPosition(5.15, 1.35, 0.6);
+    //machines[3]->setRotation(35,0,0);
+    //machines[3]->setPosition(5.15, 1.35, 0.6);
     addBody(machines[3]);
 
     //Cargo texturas
@@ -108,7 +109,7 @@ void TP3::initialize()
 
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glEnable(GL_CULL_FACE);
+    //glEnable(GL_CULL_FACE);
 }
 
 void TP3::setUpGlContext()
@@ -377,7 +378,7 @@ void TP3::initializePhysics()
 
     btRigidBody* groundRigidBody = new btRigidBody(groundRigidBodyCI);
 
-    groundRigidBody->setFriction(1.0);
+    groundRigidBody->setFriction(0.3);
 
     dynamicsWorld_->addRigidBody(groundRigidBody);
 }

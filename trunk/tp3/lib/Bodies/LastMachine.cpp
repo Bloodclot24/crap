@@ -79,16 +79,23 @@ void LastMachine::drawRamp() {
 		glRotatef(35, 1, 0, 0);
 		ramp_[1].draw();
 	} glPopMatrix();
+
+        btTransform trans;
+        rigidBody_->getMotionState()->getWorldTransform(trans);
+        btVector3 axis = trans.getRotation().getAxis();
+
+        printf("Rotation: %f, %f, %f : %f\n", axis.getX(), axis.getY(), axis.getZ(), trans.getRotation().getAngle());
+
 }
 
 void LastMachine::createRamp() {
 
-	btVector3 patch0[4] = {btVector3(0.3,-1.05,0),btVector3(0.3,1.05,0),btVector3(-0.3,1.05,0),btVector3(-0.3,-1.05,0)};
-	ramp_.push_back(Prism(patch0, 4, 0.01));
-	btVector3 patch1[4] = {btVector3(0,1.05,0.03),btVector3(0,1.05,-0.03),btVector3(0,-1.05,-0.03),btVector3(0,-1.05,0.03)};
-	ramp_.push_back(Prism(patch1, 4, 0.01));
+    btVector3 patch0[4] = {btVector3(0.3,-1.05,0),btVector3(0.3,1.05,0),btVector3(-0.3,1.05,0),btVector3(-0.3,-1.05,0)};
+    ramp_.push_back(Prism(patch0, 4, 0.01));
+    btVector3 patch1[4] = {btVector3(0,1.05,0.03),btVector3(0,1.05,-0.03),btVector3(0,-1.05,-0.03),btVector3(0,-1.05,0.03)};
+    ramp_.push_back(Prism(patch1, 4, 0.01));
 
-    btCollisionShape* prismShape = new btBoxShape(btVector3(0.3,1.05,0.01/2));
+    btCollisionShape* prismShape = new btBoxShape(btVector3(3.5,2,0.2));
 
     btScalar mass = 0;
 
@@ -101,16 +108,15 @@ void LastMachine::createRamp() {
 
     startTransform.setIdentity();
 
-    startTransform.setOrigin(btVector3(btScalar(0),
-                                       btScalar(0),
-                                       btScalar(0)));
+    startTransform.setOrigin(btVector3(5.15, 1.35, 0.4));
+    
+    startTransform.setRotation(btQuaternion(35/2.0*3.14/180.0,0,0,1));
 
     btDefaultMotionState* bottleMotionState = new btDefaultMotionState(startTransform);
 
     btRigidBody::btRigidBodyConstructionInfo fallRigidBodyCI3(mass,bottleMotionState,prismShape,fallInertia);
     rigidBody_ = new btRigidBody(fallRigidBodyCI3);
-    rigidBody_->setFriction(0.5);
-    rigidBody_->setDamping(0.7, 0.7);
+    rigidBody_->setFriction(0);
 }
 
 LastMachine::~LastMachine()

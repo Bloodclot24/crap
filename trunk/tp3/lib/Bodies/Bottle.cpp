@@ -31,7 +31,7 @@ Bottle::Bottle()
     btRigidBody::btRigidBodyConstructionInfo fallRigidBodyCI3(mass,bottleMotionState,bottleShape,fallInertia);
     rigidBody_ = new btRigidBody(fallRigidBodyCI3);
     rigidBody_->setFriction(0.5);
-    rigidBody_->setDamping(0.7, 0.7);
+    rigidBody_->setDamping(0.1, 0.1);
 
     crearSuperficie();
 }
