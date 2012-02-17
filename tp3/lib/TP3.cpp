@@ -186,10 +186,10 @@ void TP3::updateBottlesPositions() {
 void TP3::processBottles() {
 	if (processing1_)
 		processing1_ = machines[1]->process(
-				bottles_[processingBottle_], 0.001 * SPEED);
+				bottles_[processingBottle_], 0.002 * SPEED);
 	if (processing2_)
 		processing2_ = machines[2]->process(bottles_[processingBottle_
-				- 1], 0.001 * SPEED);
+				- 1], 0.004 * SPEED);
 }
 
 void TP3::renderScene()

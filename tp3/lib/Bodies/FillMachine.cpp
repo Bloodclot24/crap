@@ -19,7 +19,7 @@ void FillMachine::draw()
 
     glPushMatrix();{
     	glScalef(0.5, 0.5, 0.5);
-    	glTranslatef(1.1,5.4,0.5);
+    	glTranslatef(1.15,5.4,0.5);
     	prism_[0].draw();
     	glTranslatef(0,0,0.5);
     	sphere_.draw();
