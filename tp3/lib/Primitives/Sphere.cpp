@@ -8,7 +8,7 @@ Sphere::Sphere(float radius)
     quadric_ = gluNewQuadric();
 }
 
-void Sphere::draw()
+void Sphere::drawPrimitive()
 {
 	gluSphere(quadric_, radius_, 15, 10);
 	//glutSolidSphere(radius_,15,4);

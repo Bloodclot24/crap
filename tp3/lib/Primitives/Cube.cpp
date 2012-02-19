@@ -7,7 +7,7 @@ Cube::Cube(float size)
     size_ = size;
 }
 
-void Cube::draw()
+void Cube::drawPrimitive()
 {
     glutSolidCube(size_);
 }

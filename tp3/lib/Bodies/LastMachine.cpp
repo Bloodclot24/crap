@@ -84,8 +84,6 @@ void LastMachine::drawRamp() {
         rigidBody_->getMotionState()->getWorldTransform(trans);
         btVector3 axis = trans.getRotation().getAxis();
 
-        printf("Rotation: %f, %f, %f : %f\n", axis.getX(), axis.getY(), axis.getZ(), trans.getRotation().getAngle());
-
 }
 
 void LastMachine::createRamp() {

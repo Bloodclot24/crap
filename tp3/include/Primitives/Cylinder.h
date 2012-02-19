@@ -1,9 +1,10 @@
 #ifndef _CILYNDER_H_
 #define _CILYNDER_H_
 
+#include "Primitive.h"
+
 #include <GL/glu.h>
 
-#include "Primitive.h"
 
 class Cylinder : public Primitive
 {
@@ -12,10 +13,10 @@ class Cylinder : public Primitive
     GLUquadric* quadric_;
     GLUquadric* topDiskQuadric_;
     GLUquadric* downDiskQuadric_;
+    void drawPrimitive();
 
     public:
     Cylinder(float radius, float height);
-    void draw();
     ~Cylinder();
 };
 

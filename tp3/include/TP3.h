@@ -37,6 +37,8 @@ class TP3 : public GLWorld
 
     bool stopAnimation;
 
+    bool compiledLists;
+
     btDiscreteDynamicsWorld* dynamicsWorld_;
 
     void initializePhysics();

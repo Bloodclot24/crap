@@ -7,10 +7,10 @@ class Cube : public Primitive
 {
     private:
     float size_;
+    void drawPrimitive();
 
     public:
     Cube(float size);
-    void draw();
 };
 
 #endif /* _CUBE_H_ */

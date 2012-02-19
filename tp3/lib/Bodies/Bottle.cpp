@@ -104,21 +104,8 @@ void Bottle::draw()
 
         glScalef(0.02,0.02,0.02);
         glTranslatef(0,0,-height_/2);
-    	glBegin( GL_TRIANGLE_STRIP);
-    	float pasosi = superficie->getVertices().size() - 1;
-    	float pasosj = superficie->getVertices()[0].size() - 1;
-    	for (int i = 0; i < pasosi ; i++) {
-            for (int j = 0; j <= pasosj; j++) {
-                glNormal3fv(superficie->getNormales()[i][j]);
-                glTexCoord2f(i/pasosi,superficie->getVertices()[i][j][2]/height_);
-                glVertex3fv(superficie->getVertices()[i][j]);
-                glNormal3fv(superficie->getNormales()[fmod(i + 1, pasosi)][j]);
-                glTexCoord2f((i+1)/pasosi,superficie->getVertices()[i][j][2]/height_);
-                glVertex3fv(superficie->getVertices()[fmod(i + 1, pasosi)][j]);
-            }
-    	}
-    	glEnd();
 
+        superficie->draw();
     }glPopMatrix();
 
     GLShader::popProgram();
