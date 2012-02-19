@@ -50,14 +50,14 @@ TP3::TP3()
     stopAnimation = false;
     packs_.push_back(Pack());
 
+    compiledLists = false;
+
 }
 
 void TP3::initialize()
 {
     initializePhysics();
 
-    //machines[3]->setRotation(35,0,0);
-    //machines[3]->setPosition(5.15, 1.35, 0.6);
     addBody(machines[3]);
 
     //Cargo texturas
@@ -331,6 +331,9 @@ void TP3::handleKeyboard(unsigned char key, int x, int y)
         ytrans_ = 0; break;
 
     case 's': stopAnimation = !stopAnimation; break;
+
+    case 'c': compiledLists = !compiledLists; 
+        Primitive::useCompiledLists(compiledLists); break;
         
     default: break;
 

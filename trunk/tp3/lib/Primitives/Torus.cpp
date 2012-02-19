@@ -8,7 +8,7 @@ Torus::Torus(float innerRadius, float outerRadius)
 	outerRadius_ = outerRadius;
 }
 
-void Torus::draw()
+void Torus::drawPrimitive()
 {
     glutSolidTorus(innerRadius_, outerRadius_, 15, 4);
 }

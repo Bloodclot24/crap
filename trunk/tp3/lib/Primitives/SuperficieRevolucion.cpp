@@ -54,16 +54,24 @@ btVector3 SuperficieRevolucion::calcularPuntoBezier(float u, vectorPuntos ctrlPt
 	return punto;
 }
 
-void SuperficieRevolucion::draw() {
+void SuperficieRevolucion::drawPrimitive() {
 	glBegin( GL_TRIANGLE_STRIP);
-	for (unsigned i = 0; i < vertices.size() ; i++) {
-		for (unsigned j = 0; j < vertices[i].size(); j++) {
-			glNormal3fv(normales[i][j]);
-			glVertex3fv(vertices[i][j]);
-			glNormal3fv(normales[fmod(i + 1, vertices.size())][j]);
-			glVertex3fv(vertices[fmod(i + 1, vertices.size())][j]);
-		}
-	}
+        float height_ = 26.5;
+
+    	float pasosi = vertices.size() - 1;
+    	float pasosj = vertices[0].size() - 1;
+    	for (int i = 0; i < pasosi ; i++) {
+            for (int j = 0; j <= pasosj; j++) {
+                glNormal3fv(normales[i][j]);
+                glTexCoord2f(i/pasosi,vertices[i][j][2]/height_);
+                glVertex3fv(vertices[i][j]);
+
+                glNormal3fv(normales[fmod(i + 1, pasosi)][j]);
+                glTexCoord2f((i+1)/pasosi,vertices[i][j][2]/height_);
+                glVertex3fv(vertices[fmod(i + 1, pasosi)][j]);
+            }
+    	}
+
 	glEnd();
 }
 

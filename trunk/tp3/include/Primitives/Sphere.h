@@ -1,9 +1,10 @@
 #ifndef _SPHERE_H_
 #define _SPHERE_H_
 
+#include "Primitive.h"
+
 #include <GL/glu.h>
 
-#include "Primitive.h"
 
 class Sphere : public Primitive
 {
@@ -11,9 +12,10 @@ class Sphere : public Primitive
     float radius_;
     GLUquadric* quadric_;
 
+    void drawPrimitive();
+
     public:
     Sphere(float radius);
-    void draw();
     ~Sphere();
 };
 

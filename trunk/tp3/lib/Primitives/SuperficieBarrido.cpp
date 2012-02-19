@@ -38,16 +38,21 @@ void SuperficieBarrido::cargarCoordenadasBSpline(unsigned pasosU) {
     }
 }
 
-void SuperficieBarrido::draw() {
+void SuperficieBarrido::drawPrimitive() {
     glBegin(GL_TRIANGLE_STRIP);
-    for (unsigned i = 0; i < vertices.size() - 1 ; i++) {
-        for (unsigned j = 0; j < vertices[i].size(); j++) {
+    float pasosi = vertices.size() - 1;
+    float pasosj = vertices[0].size() - 1;
+    for (int i = 0; i < pasosi ; i++) {
+        for (int j = 0; j <= pasosj; j++) {
+
             glNormal3fv(normales[i][j]);
+            glTexCoord2f( j /pasosj, i/pasosi*20);
             glVertex3fv(vertices[i][j]);
+
             glNormal3fv(normales[i + 1][j]);
+            glTexCoord2f( j /pasosj, (i+1)/pasosi*20);
             glVertex3fv(vertices[i + 1][j]);
         }
     }
     glEnd();
-
 }

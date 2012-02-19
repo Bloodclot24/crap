@@ -20,11 +20,12 @@ class SuperficieBarrido : public Primitive {
 
     void cargarCoordenadas();
     void cargarCoordenadasBSpline(unsigned pasosU);
+    void drawPrimitive();
+
 
     public:
     SuperficieBarrido(vectorPuntos perfil, vectorPuntos normales, BSpline bspline, unsigned pasosU = 10);
     ~SuperficieBarrido();
-    void draw();
     matrizPuntos& getVertices(){
         return vertices;
     }

@@ -9,7 +9,7 @@ Cylinder::Cylinder(float radius, float height)
     downDiskQuadric_ = gluNewQuadric();
 }
 
-void Cylinder::draw()
+void Cylinder::drawPrimitive()
 {
     gluCylinder(quadric_, radius_, radius_, height_, 15, 4);
 

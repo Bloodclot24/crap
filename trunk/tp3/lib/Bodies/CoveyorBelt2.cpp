@@ -25,22 +25,9 @@ void CoveyorBelt::draw()
     glPushMatrix();
     glScalef(0.5, 0.5, 0.5);
     glTranslatef(0,0,1);
-    glBegin(GL_TRIANGLE_STRIP);
-    float pasosi = superficie->getVertices().size() - 1;
-    float pasosj = superficie->getVertices()[0].size() - 1;
-    for (int i = 0; i < pasosi ; i++) {
-        for (int j = 0; j <= pasosj; j++) {
 
-            glNormal3fv(superficie->getNormales()[i][j]);
-            glTexCoord2f( j /pasosj, i/pasosi*20);
-            glVertex3fv(superficie->getVertices()[i][j]);
+    superficie->draw();
 
-            glNormal3fv(superficie->getNormales()[i + 1][j]);
-            glTexCoord2f( j /pasosj, (i+1)/pasosi*20);
-            glVertex3fv(superficie->getVertices()[i + 1][j]);
-        }
-    }
-    glEnd();
     glPopMatrix();
 
     GLShader::popProgram();
