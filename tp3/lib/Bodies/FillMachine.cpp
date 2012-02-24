@@ -1,4 +1,5 @@
 #include "Bodies/FillMachine.h"
+
 #include <GL/gl.h>
 
 FillMachine::FillMachine(): cylinder_(0.8,0.4), sphere_(0.8)
@@ -15,6 +16,7 @@ FillMachine::FillMachine(): cylinder_(0.8,0.4), sphere_(0.8)
 
 void FillMachine::draw()
 {
+
     glColor3f(0.2, 0.2, 0.2);
 
     glPushMatrix();{

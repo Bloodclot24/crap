@@ -1,4 +1,5 @@
 #include "GLShader.h"
+#include "GLMaterial.h"
 
 #include <algorithm>
 #include <fstream>
@@ -166,6 +167,8 @@ void GLShader::useProgram(std::string alias)
     }
 
     glUseProgram(programs[toUpper(alias)]);
+
+    GLMaterial::use(GLMaterial::getCurrentMaterial());
 }
 
 void GLShader::pushProgram(std::string alias)
@@ -183,7 +186,6 @@ void GLShader::popProgram()
 
 void GLShader::setUniform(std::string name, float value)
 {
-
     GLint location = glGetUniformLocation(programs[toUpper(stack.top())], name.c_str());
     
     glUniform1f(location, value);

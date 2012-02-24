@@ -1,6 +1,7 @@
 #include "Bodies/CoveyorBelt2.h"
 #include "GLShader.h"
 #include "GLTexture.h"
+#include "GLMaterial.h"
 
 #include "btBulletDynamicsCommon.h"
 #include <GL/glut.h>
@@ -18,19 +19,19 @@ void CoveyorBelt::draw()
     glColor3f(1, 1, 1);
     GLTexture::bind("cinta");
 
-    GLShader::pushProgram("belt");
+    GLShader::pushProgram("belt");{
 
-    GLShader::setUniform("displacement", displacement);
+        GLShader::setUniform("displacement", displacement);
 
-    glPushMatrix();
-    glScalef(0.5, 0.5, 0.5);
-    glTranslatef(0,0,1);
+        glPushMatrix();
+        glScalef(0.5, 0.5, 0.5);
+        glTranslatef(0,0,1);
 
-    superficie->draw();
+        superficie->draw();
 
-    glPopMatrix();
+        glPopMatrix();
 
-    GLShader::popProgram();
+    }GLShader::popProgram();
 }
 
 void CoveyorBelt::advance(float amount)

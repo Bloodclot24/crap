@@ -4,6 +4,8 @@
 
 #include "GLShader.h"
 #include "GLTexture.h"
+#include "GLMaterial.h"
+
 #include "Primitives/Cube.h"
 #include "Primitives/Cylinder.h"
 #include "Curves/StraightLine.h"
@@ -78,7 +80,6 @@ void TP3::initialize()
     GLShader::loadFShader("shaders/bottle.frag", "bottle");
 
     //Creo los programas
-    //const char* normalVShader[] = {"normal", NULL};
     const char* lightVShader[]  = {"light", NULL};
 
     const char* normalFShader[] = {"base", "texture", "light", NULL};
@@ -89,17 +90,27 @@ void TP3::initialize()
     GLShader::createProgram("belt",   lightVShader, beltFShader);
     GLShader::createProgram("bottle", lightVShader, bottleFShader);
 
+    GLMaterial::create("matte", 0.2, 0.7, 0, 0);
+    GLMaterial::create("glass", 0.2, 0.2, 0.6, 0.6);
+
     GLShader::pushProgram("normal");
+    GLMaterial::push("matte");
 
     //Activo iluminacion
     glEnable(GL_LIGHT0);
 
-    GLfloat specular[] = {1.0, 1.0, 1.0, 1.0};
+    GLfloat specular[] = {1.0, 1.0, 1.0};
     glLightfv(GL_LIGHT0, GL_SPECULAR, specular);
-    GLfloat ambient[] = { 0.4f, 0.4f, 0.4f };
+
+    GLfloat ambient[] = { 0.2f, 0.2f, 0.2f};
     glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
-    GLfloat position[] = { 5.0f, 5.0f, 5.0f, 1.0f };
+
+    GLfloat diffuse[] = { 1, 1, 1};
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse);
+
+    GLfloat position[] = { 0.0f, 0.0f, 10.0f, 0.0f };
     glLightfv(GL_LIGHT0, GL_POSITION, position);
+
 
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_LIGHTING);
@@ -249,7 +260,7 @@ void TP3::renderScene()
 				glTexCoord2f(0.0, 1.0);
 				glVertex3f(j + 1, -10, i + 1);
 			}
-			glNormal3f(-1, 0, 0);
+			glNormal3f(1, 0, 0);
 			for (int j = -10; j < 10; j++) {
 				glTexCoord2f(0.0, 0.0);
 				glVertex3f(-10, j, i);
@@ -263,7 +274,7 @@ void TP3::renderScene()
 				glTexCoord2f(0.0, 1.0);
 				glVertex3f(-10, j, i + 1);
 			}
-			glNormal3f(1, 0, 0);
+			glNormal3f(-1, 0, 0);
 			for (int j = -10; j < 10; j++) {
 				glTexCoord2f(0.0, 0.0);
 				glVertex3f(10, j + 1, i);

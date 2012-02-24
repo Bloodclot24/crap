@@ -3,6 +3,7 @@
 
 #include "GLShader.h"
 #include "GLTexture.h"
+#include "GLMaterial.h"
 
 Bottle::Bottle()
 {
@@ -58,7 +59,7 @@ void Bottle::crearSuperficie() {
 
 bool Bottle::fill(float quantity)
 {
-	bool full = false;
+    bool full = false;
     fillLevel += quantity;
     if(fillLevel>0.8) {
         fillLevel = 0.8;
@@ -68,47 +69,51 @@ bool Bottle::fill(float quantity)
 }
 
 bool Bottle::putLabel(float step) {
-	labelTime += step;
-	if(labelTime > 0.2)
-		label = true;
-	return label;
+    labelTime += step;
+    if(labelTime > 0.2)
+        label = true;
+    return label;
 }
 
 void Bottle::draw()
 {
-	GLTexture::bind("etiqueta");
-    GLShader::pushProgram("bottle");
+    GLTexture::bind("etiqueta");
 
-    GLShader::setUniform("fillLevel", fillLevel);
-    GLShader::setUniform("label", label);
+    GLShader::pushProgram("bottle");{
+        GLMaterial::push("glass");{
 
-    glPushMatrix();{
+            GLShader::setUniform("fillLevel", fillLevel);
+            GLShader::setUniform("label", label);
 
-        glColor3f(1, 1, 1);
+            glPushMatrix();{
 
-        btVector3 position = getPosition();
+                glColor3f(1, 1, 1);
 
-        btTransform trans;
-        rigidBody_->getMotionState()->getWorldTransform(trans);
+                btVector3 position = getPosition();
 
-        btVector3 axis = trans.getRotation().getAxis();
+                btTransform trans;
+                rigidBody_->getMotionState()->getWorldTransform(trans);
 
-        glTranslatef(position[0],
-                     position[1],
-                     position[2]);
+                btVector3 axis = trans.getRotation().getAxis();
 
-        glRotatef(trans.getRotation().getAngle()*360/6.2832f,
-                  axis.getX(),
-                  axis.getY(),
-                  axis.getZ());
+                glTranslatef(position[0],
+                             position[1],
+                             position[2]);
 
-        glScalef(0.02,0.02,0.02);
-        glTranslatef(0,0,-height_/2);
+                glRotatef(trans.getRotation().getAngle()*360/6.2832f,
+                          axis.getX(),
+                          axis.getY(),
+                          axis.getZ());
 
-        superficie->draw();
-    }glPopMatrix();
+                glScalef(0.02,0.02,0.02);
+                glTranslatef(0,0,-height_/2);
 
-    GLShader::popProgram();
+                superficie->draw();
+            }glPopMatrix();
+
+        }GLMaterial::pop();
+
+    }GLShader::popProgram();
 }
 
 Bottle::~Bottle()
