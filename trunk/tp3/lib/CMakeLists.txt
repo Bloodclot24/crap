@@ -4,6 +4,7 @@ add_library(framework_final_lib
   Body.cpp
   GLTexture.cpp
   GLShader.cpp
+  GLMaterial.cpp
   Curve.cpp
   Curves/StraightLine.cpp
   Curves/BSpline.cpp
