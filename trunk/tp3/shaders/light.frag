@@ -1,40 +1,21 @@
 uniform float ka, kd, ks, shininess;
 
-varying vec3 Normal;
-varying vec4 Position;
-
-vec3 ads(int index)
-{
-    vec4 LightPosition = gl_LightSource[index].position;
-
-    vec3 n = normalize(Normal);
-
-    vec4 ambient = gl_LightSource[index].ambient * ka;
-
-    vec3 s=vec3(1.0);
-    /* if( LightPosition.w == 0.0 ) */
-    /*     s = normalize(vec3(LightPosition)); */
-    /* else */
-        s = normalize(vec3(LightPosition - Position)); 
-
-    vec3 v = normalize(vec3(-Position));
-    vec3 r = reflect(-s, n); 
-
-    float sDotN = max(dot(s,n), 0.0);
-
-    vec4 diffuse = gl_LightSource[index].diffuse * kd * sDotN;
-
-    //vec4 spec = vec4(0.1);
-    /* if( sDotN > 0.0 ){ */
-    /*     spec = gl_LightSource[index].specular * ks * */
-    /*         pow(max( dot(r,v), 0.0 ), 1); */
-    /* } */
-
-    return (ambient + diffuse).rgb;
-}
+varying vec4 normal_, posicion_, ojo_;
 
 vec4 computeLight()
 {
-    //vec4 color = vec4(ads(0), 1);
-    return gl_Color;
-}
+
+    int fuente = 0;
+    vec4 normal = normalize(normal_);
+    vec4 lightDir = normalize(gl_LightSource[fuente].position - posicion_);
+    float NdotL = max(dot(normal, lightDir), 0.0);
+    vec4 diffuse = kd * gl_LightSource[fuente].diffuse;
+    vec4 ambient = ka * gl_LightSource[fuente].ambient;
+    
+    vec4 s = lightDir;
+    vec4 v = normalize(-ojo_);
+    vec4 r = reflect( -s, normal );
+    float RdotV =  pow( max( dot(r,v), 0.0 ), shininess);
+	
+    return vec4((RdotV * gl_LightSource[fuente].specular * ks + diffuse * NdotL + ambient).rgb, 1.0);
+} 

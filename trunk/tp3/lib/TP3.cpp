@@ -19,6 +19,7 @@
 #include <GL/glu.h>
 #include <GL/glut.h>
 
+
 TP3::TP3()
 {
     windowWidth_ = 1;
@@ -106,8 +107,8 @@ void TP3::initialize()
     GLShader::createProgram("belt",   lightVShader, beltFShader);
     GLShader::createProgram("bottle", lightVShader, bottleFShader);
 
-    GLMaterial::create("matte", 0.2, 0.7, 0, 0);
-    GLMaterial::create("glass", 0.2, 0.2, 0.6, 0.6);
+    GLMaterial::create("matte", 0.2, 0.7, 0.4, 20);
+    GLMaterial::create("glass", 0.2, 0.2, 3, 150);
 
     GLShader::pushProgram("normal");
     GLMaterial::push("matte");
@@ -115,18 +116,17 @@ void TP3::initialize()
     //Activo iluminacion
     glEnable(GL_LIGHT0);
 
-    GLfloat specular[] = {1.0, 1.0, 1.0};
+    GLfloat specular[] = {1.0, 1.0, 1.0, 1.0};
     glLightfv(GL_LIGHT0, GL_SPECULAR, specular);
 
-    GLfloat ambient[] = { 0.2f, 0.2f, 0.2f};
+    GLfloat ambient[] = { 0.2f, 0.2f, 0.2f, 1.0};
     glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
 
-    GLfloat diffuse[] = { 1, 1, 1};
+    GLfloat diffuse[] = { 1, 1, 1, 1};
     glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse);
 
-    GLfloat position[] = { 0.0f, 0.0f, 10.0f, 0.0f };
+    GLfloat position[] = { 0.0f, 0.0f, 5.0f, 1.0f };
     glLightfv(GL_LIGHT0, GL_POSITION, position);
-
 
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_LIGHTING);
