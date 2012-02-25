@@ -8,6 +8,7 @@ add_library(framework_final_lib
   Curve.cpp
   Curves/StraightLine.cpp
   Curves/BSpline.cpp
+  Curves/Bezier.cpp
   Primitive.cpp
   Primitives/Cube.cpp
   Primitives/Cylinder.cpp

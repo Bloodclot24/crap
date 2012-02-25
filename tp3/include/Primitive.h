@@ -7,10 +7,10 @@
 #include <vector>
 #include <stdio.h>
 #include <stdlib.h>
-#include "btBulletDynamicsCommon.h"//cambiar esto
+#include "btBulletDynamicsCommon.h"
 
 
-typedef std::vector<btVector3> vectorPuntos; //cambiar de lugar
+typedef std::vector<btVector3> vectorPuntos;
 typedef std::vector<vectorPuntos> matrizPuntos;
 
 class Primitive

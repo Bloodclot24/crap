@@ -3,6 +3,7 @@
 
 #include "Body.h"
 #include "Primitives/SuperficieRevolucion.h"
+#include "Curves/Bezier.h"
 
 class Bottle : public Body
 {
@@ -11,11 +12,12 @@ class Bottle : public Body
     float fillLevel;
     bool label;
     float labelTime;
+    Bezier perfil_;
 
     void crearSuperficie();
 
 public:
-    Bottle();
+    Bottle(Bezier perfil);
     void draw();
     bool fill(float quantity);
     bool putLabel(float step);

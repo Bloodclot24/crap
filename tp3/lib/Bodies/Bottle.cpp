@@ -5,9 +5,11 @@
 #include "GLTexture.h"
 #include "GLMaterial.h"
 
-Bottle::Bottle()
+Bottle::Bottle(Bezier perfil)
 {
     btCollisionShape* bottleShape = new btCylinderShapeZ(btVector3(0.1, 0.1, 0.265));
+
+    perfil_ = perfil;
 
     btScalar mass = 1;
     fillLevel = 0;
@@ -38,22 +40,8 @@ Bottle::Bottle()
 }
 
 void Bottle::crearSuperficie() {
-    //La botella mide 5 de radio mayor y 26.5 de alto, sin tapa
-    std::vector<btVector3> ptos;
-    ptos.push_back(btVector3(0, 0, 0.8));
-    ptos.push_back(btVector3(1.3, 0, 0.8));
-    ptos.push_back(btVector3(2.5, 0, -0.5));
-    ptos.push_back(btVector3(3, 0, 0.3));
-    ptos.push_back(btVector3(6, 0, 3));
-    ptos.push_back(btVector3(1.5, 0, 2));
-    ptos.push_back(btVector3(4, 0, 11));
-    ptos.push_back(btVector3(4.8, 0, 20));
-    ptos.push_back(btVector3(1.5, 0, 18));
-    ptos.push_back(btVector3(1, 0, 24));
-    ptos.push_back(btVector3(1.5, 0, 24.5));
-    ptos.push_back(btVector3(1.3, 0, 25));
-    ptos.push_back(btVector3(1.3, 0, 26.5));
-    superficie = new SuperficieRevolucion(ptos);
+
+    superficie = new SuperficieRevolucion(perfil_);
     height_ = 26.5;
 }
 

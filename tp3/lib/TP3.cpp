@@ -8,7 +8,6 @@
 
 #include "Primitives/Cube.h"
 #include "Primitives/Cylinder.h"
-#include "Curves/StraightLine.h"
 #include "Bodies/FirstMachine.h"
 #include "Bodies/LastMachine.h"
 #include "Bodies/LabelMachine.h"
@@ -21,15 +20,59 @@
 
 #define SPEED 4
 
+const float beltControlPoints[][3] = {{-11.75, -1.25, 0}, 
+                                      {-10.25, -3.75, 0}, 
+                                      {-5.75,  -4.25, 0}, 
+                                      {-3.75,  -2.25, 0},
+                                      {-4.25,   2.25, 0},
+                                      {-2.25,   4.25, 0},
+                                      { 2.25,   3.75, 0},
+                                      { 4.75,   4.25, 0},
+                                      { 7.75,   7.75, 0},
+                                      {NAN, NAN, NAN}};
+
+const float bottleControlPoints[][3] = {{0,   0,  0.8},
+                                       {1.3, 0,  0.8},
+                                       {2.5, 0, -0.5},
+                                       {3,   0,  0.3},
+                                       {6,   0,  3},
+                                       {.5,  0,  2},
+                                       {4,   0,  11},
+                                       {4.8, 0,  20},
+                                       {1.5, 0,  18},
+                                       {1,   0,  24},
+                                       {1.5, 0,  24.5},
+                                       {1.3, 0,  25},
+                                       {1.3, 0,  26.5},
+                                       {NAN, NAN, NAN}};
+
 TP3::TP3()
 {
     windowWidth_ = 1;
     windowHeight_ = 1;
     dynamicsWorld_ = NULL;
 
-    StraightLine line(btVector3(-3, -3, 1), btVector3(3, 5, 0));
+    vectorPuntos controlPoints;
+    for(int i=0;!isnan(beltControlPoints[i][0]);i++){
+        controlPoints.push_back(btVector3(beltControlPoints[i][0],
+                                          beltControlPoints[i][1],
+                                          beltControlPoints[i][2]));
+    }
 
-    belt_ = new CoveyorBelt();
+    BSpline curve(controlPoints);
+
+    belt_ = new CoveyorBelt(curve);
+
+    controlPoints.clear();
+    for(int i=0;!isnan(bottleControlPoints[i][0]);i++){
+        controlPoints.push_back(btVector3(bottleControlPoints[i][0],
+                                          bottleControlPoints[i][1],
+                                          bottleControlPoints[i][2]));
+    }
+
+    Bezier bezierCurve(controlPoints);
+    bottleCurve_ = bezierCurve;
+    
 
     bottleInterval_ = 27.0*5.0/SPEED;
     nextBottle_ = 0;
@@ -155,7 +198,7 @@ void TP3::updateScene()
 			nextBottle_ -= 1.0;
 			if (nextBottle_ <= 0) {
 				nextBottle_ = bottleInterval_;
-				bottles_.push_back(new Bottle());
+				bottles_.push_back(new Bottle(bottleCurve_));
 				bottlesPositions_.push_back(0);
 			}
 

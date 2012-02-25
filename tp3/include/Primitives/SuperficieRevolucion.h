@@ -4,34 +4,36 @@
 #include "Primitive.h"
 #include "btBulletDynamicsCommon.h"//cambiar esto
 
+#include "Curves/Bezier.h"
+
 #define GRADO_BEZIER 3
 
 class SuperficieRevolucion : public Primitive {
 
-private:
-	vectorPuntos ptosControl;
-	matrizPuntos vertices;
-	matrizPuntos normales;
+    private:
+    vectorPuntos ptosControl;
+    matrizPuntos vertices;
+    matrizPuntos normales;
+    Bezier bezier_;
 
-	btVector3 calcularPuntoBezier(float u, vectorPuntos perfil);
-
-	void cargarCoordenadasBezier(unsigned pasosU);
-	void cargarNormales();
-	int factorial(int n);
-	void drawPrimitive();
+    vectorPuntos discretizarBezier(unsigned pasosT);
+    void cargarNormales();
+    void drawPrimitive();
 
 
 public:
 
-	SuperficieRevolucion(vectorPuntos perfil, unsigned rotaciones = 10,
-			unsigned pasosPerfil = 10, unsigned grados = 360, btVector3 axis = btVector3(0,0,1));
-	~SuperficieRevolucion();
-	matrizPuntos& getVertices(){
-		return vertices;
-	}
-	matrizPuntos& getNormales(){
-		return normales;
-	}
+    SuperficieRevolucion(Bezier perfil, unsigned rotaciones=10, 
+                         unsigned pasosT=100, unsigned grados=360, 
+                         btVector3 axis=btVector3(0,0,1));
+
+    ~SuperficieRevolucion();
+    matrizPuntos& getVertices(){
+        return vertices;
+    }
+    matrizPuntos& getNormales(){
+        return normales;
+    }
 
 };
 #endif
