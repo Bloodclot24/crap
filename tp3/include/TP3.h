@@ -39,10 +39,17 @@ class TP3 : public GLWorld
 
     float xrot_, yrot_, zrot_;
     float xtrans_, ytrans_, ztrans_;
+    int x_mouse;
+    int y_mouse;
+    float angle;
+    float xlookat_;
+    float ylookat_;
+    float zlookat_;
 
     bool stopAnimation;
 
     bool compiledLists;
+    bool spectator;
 
     btDiscreteDynamicsWorld* dynamicsWorld_;
 
@@ -60,6 +67,8 @@ class TP3 : public GLWorld
 
     void processBottles();
 
+    void reset();
+
     public:
 
     virtual void initialize();
@@ -67,6 +76,7 @@ class TP3 : public GLWorld
     virtual void handleReshape(int width, int height);
     virtual void handleKeyboard(unsigned char key, int x, int y);
     virtual void timerCallback(int value);
+    virtual void handleMouseMotion(int x, int y);
 
     TP3();
     virtual ~TP3();
