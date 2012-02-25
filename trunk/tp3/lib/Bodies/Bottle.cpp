@@ -1,5 +1,6 @@
 #include "Bodies/Bottle.h"
 #include "btBulletDynamicsCommon.h"
+#include "GlobalParameters.h"
 
 #include "GLShader.h"
 #include "GLTexture.h"
@@ -41,7 +42,7 @@ Bottle::Bottle(Bezier perfil)
 
 void Bottle::crearSuperficie() {
 
-    superficie = new SuperficieRevolucion(perfil_);
+    superficie = new SuperficieRevolucion(perfil_, BOTTLE_ROTATIONS, BOTTLE_STEP);
     height_ = 26.5;
 }
 
