@@ -11,11 +11,10 @@ vec3 ads(int index)
 
     vec4 ambient = gl_LightSource[index].ambient * ka;
 
-    vec3 s;
-    if( LightPosition.w == 0.0 )
-        s = normalize(vec3(LightPosition));
-    
-    else
+    vec3 s=vec3(1.0);
+    /* if( LightPosition.w == 0.0 ) */
+    /*     s = normalize(vec3(LightPosition)); */
+    /* else */
         s = normalize(vec3(LightPosition - Position)); 
 
     vec3 v = normalize(vec3(-Position));
@@ -25,16 +24,17 @@ vec3 ads(int index)
 
     vec4 diffuse = gl_LightSource[index].diffuse * kd * sDotN;
 
-    vec4 spec = vec4(0.0);
-    if( sDotN > 0.0 )
-    spec = gl_LightSource[index].specular * ks * 
-        pow( max( dot(r,v), 0.0 ), shininess ); 
+    //vec4 spec = vec4(0.1);
+    /* if( sDotN > 0.0 ){ */
+    /*     spec = gl_LightSource[index].specular * ks * */
+    /*         pow(max( dot(r,v), 0.0 ), 1); */
+    /* } */
 
-    return (ambient + diffuse + spec).rgb;
+    return (ambient + diffuse).rgb;
 }
 
 vec4 computeLight()
 {
-    vec4 color = vec4(ads(0), 1);
-    return color;
+    //vec4 color = vec4(ads(0), 1);
+    return gl_Color;
 }

@@ -17,7 +17,7 @@ class CoveyorBelt : public Body
     
     public:
     
-    CoveyorBelt();
+    CoveyorBelt(BSpline curve);
     void draw();
 
     btVector3 getPosition(float t);

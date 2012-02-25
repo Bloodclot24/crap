@@ -10,6 +10,8 @@
 #include "Bodies/CoveyorBelt2.h"
 #include "Bodies/Machine.h"
 #include "Bodies/Pack.h"
+#include "Curves/Bezier.h"
+
 
 class TP3 : public GLWorld
 {
@@ -17,6 +19,8 @@ class TP3 : public GLWorld
 
     int windowWidth_,
         windowHeight_;
+
+    Bezier bottleCurve_;
 
     std::vector<Bottle*> bottles_;
     std::vector<float> bottlesPositions_;

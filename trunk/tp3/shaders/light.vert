@@ -5,10 +5,8 @@ void main()
 {
     int lights = 1;
 
-    Normal = gl_Normal;
-
-    Position = ftransform();
-    Position = vec4(gl_ModelViewMatrix * gl_Position);
+    Normal = vec3(gl_ModelViewMatrix * vec4(gl_Normal,0.0));
+    Position = gl_ModelViewMatrix * gl_Vertex;
 
     gl_TexCoord[0] = gl_MultiTexCoord0;
     gl_Position = ftransform();
