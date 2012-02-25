@@ -2,6 +2,7 @@
 #include "GLShader.h"
 #include "GLTexture.h"
 #include "GLMaterial.h"
+#include "GlobalParameters.h"
 
 #include "btBulletDynamicsCommon.h"
 #include <GL/glut.h>
@@ -81,5 +82,5 @@ void CoveyorBelt::crearSuperficie() {
     normales.push_back(btVector3(0, 2, 1));
     normales.push_back(btVector3(0, 1, -2));
 
-    superficie = new SuperficieBarrido(perfil, normales, bspline_,100);
+    superficie = new SuperficieBarrido(perfil, normales, bspline_,BELT_STEP);
 }
