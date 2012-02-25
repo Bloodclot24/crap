@@ -60,17 +60,29 @@ TP3::TP3()
     machines[2] = new FillMachine();
     machines[3] = new LastMachine();
 
-    xrot_ = yrot_ = zrot_ = 0;
-
-    xtrans_ = 0;
-    ytrans_ = -6;
-    ztrans_ = 2;
+    reset();
 
     stopAnimation = false;
+    spectator = false;
     packs_.push_back(Pack());
 
     compiledLists = false;
 
+}
+
+void TP3::reset()
+{
+    xrot_ = yrot_ = zrot_ = 0;
+
+    xtrans_ = 0;
+    ytrans_ = -6;
+    ztrans_ = 1;
+    x_mouse = 0;
+    y_mouse = 0;
+    xlookat_ = 0;
+    ylookat_ = 6;
+    zlookat_ = 1;
+    angle = 0;
 }
 
 void TP3::initialize()
@@ -84,6 +96,7 @@ void TP3::initialize()
     GLTexture::load("chapaDoble.raw", "chapa");
     GLTexture::load("cintita.raw", "cinta");
     GLTexture::load("eti.raw", "etiqueta");
+    GLTexture::load("laddd.raw", "piso");
 
     //Cargo VShaders
     GLShader::loadVShader("shaders/normal.vert", "normal");
@@ -151,13 +164,23 @@ void TP3::setUpGlContext()
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    gluLookAt(xtrans_, ytrans_, ztrans_,
-              0,  0, 0,
-              0,  1, 0);
+    if(spectator) {
+    	btVector3 trans(xtrans_, ytrans_, ztrans_);
+    	btVector3 lookAt(xlookat_, ylookat_, zlookat_);
+    	btVector3 newLookAt = (lookAt - trans).rotate(btVector3(0,0,1), angle) + trans;
+       gluLookAt(xtrans_, ytrans_, ztrans_,
+				newLookAt[0], newLookAt[1], newLookAt[2],
+                  0,  0, 1);
+    } else {
 
-    glRotatef(xrot_, 1, 0, 0);
-    glRotatef(yrot_, 0, 1, 0);
-    glRotatef(zrot_, 0, 0, 1);
+		gluLookAt(xtrans_, ytrans_, ztrans_,
+				  0, 0, 0,
+				  0,  0, 1);
+
+		glRotatef(xrot_, 1, 0, 0);
+		glRotatef(yrot_, 0, 1, 0);
+		glRotatef(zrot_, 0, 0, 1);
+    }
 }
 
 void TP3::updateScene()
@@ -223,23 +246,26 @@ void TP3::processBottles() {
 void TP3::renderScene()
 {
 
-    GLTexture::bind("chapa");
+    GLTexture::bind("piso");
     GLTexture::unbind();
     glBegin(GL_QUADS);{
-        glColor3f(1, 0, 0);
+        glColor3f(0.5, 0.5, 0.2);
         glNormal3f(0,0,1);
 
-        glTexCoord2f(0.0, 0.0);
-        glVertex3f(-10, -10, 0);
+        for (int i = -10; i < 10; i++)
+		for (int j = -10; j < 10; j++) {
+			glTexCoord2f(0.0, 0.0);
+			glVertex3f(i, j, 0);
 
-        glTexCoord2f(1.0, 0.0);
-        glVertex3f(10,  -10, 0);
+			glTexCoord2f(1.0, 0.0);
+			glVertex3f(i+1,  j, 0);
 
-        glTexCoord2f(1.0, 1.0);
-        glVertex3f( 10,  10, 0);
+			glTexCoord2f(1.0, 1.0);
+			glVertex3f( i+1,  j+1, 0);
 
-        glTexCoord2f(0.0, 1.0);
-        glVertex3f( -10, 10, 0);
+			glTexCoord2f(0.0, 1.0);
+			glVertex3f( i, j+1, 0);
+		}
 
     }glEnd();
 
@@ -342,28 +368,48 @@ void TP3::handleKeyboard(unsigned char key, int x, int y)
 {
     switch(key){
 
-    case 'x': xrot_ += 3; break;
-    case 'X': xrot_ -= 3; break;
+    case 'e': spectator = ! spectator;
+    case 'r': reset(); break;
 
-    case 'y': yrot_ += 3; break;
-    case 'Y': yrot_ -= 3; break;
-
-    case 'z': zrot_ += 3; break;
-    case 'Z': zrot_ -= 3; break;
-
-    case '-': ytrans_ -= 0.1; break;
-    case '+': ytrans_ += 0.1; break;
-
-    case 'r': xrot_ = yrot_ = zrot_ = 0; 
-        ytrans_ = 0; break;
-
-    case 's': stopAnimation = !stopAnimation; break;
+    case 'S': stopAnimation = !stopAnimation; break;
 
     case 'c': compiledLists = !compiledLists; 
         Primitive::useCompiledLists(compiledLists); break;
         
     default: break;
+    }
 
+    if(spectator) {
+		switch(key){
+
+		case 'a': xtrans_ -= 0.1; xlookat_ -= 0.1; break;
+
+		case 'd': xtrans_ += 0.1; xlookat_ += 0.1; break;
+
+		case 's': ytrans_ -= 0.1; ylookat_ -= 0.1; break;
+
+		case 'w': ytrans_ += 0.1; ylookat_ += 0.1; break;
+
+		default: break;
+		}
+    } else {
+		switch(key){
+
+		case 'x': xrot_ += 3; break;
+		case 'X': xrot_ -= 3; break;
+
+		case 'y': yrot_ += 3; break;
+		case 'Y': yrot_ -= 3; break;
+
+		case 'z': zrot_ += 3; break;
+		case 'Z': zrot_ -= 3; break;
+
+		case '-': ytrans_ -= 0.1; break;
+		case '+': ytrans_ += 0.1; break;
+
+		default: break;
+
+		}
     }
         
 }
@@ -421,6 +467,25 @@ void TP3::timerCallback(int value)
 void TP3::addBody(Body* body)
 {
     dynamicsWorld_->addRigidBody(body->getRigidBody());
+}
+
+void TP3::handleMouseMotion(int x, int y)
+{
+	if(spectator) {
+		if (x_mouse < x)
+			angle -= 0.05;
+		else if(x_mouse > x)
+			angle += 0.05;
+		x_mouse = x;
+		if (x_mouse < windowWidth_ / 20 || x_mouse > 19 * windowWidth_ / 20) {
+			x_mouse = windowWidth_ / 2;
+			glutWarpPointer(x_mouse, windowHeight_ / 2);
+		}
+		if(y_mouse < windowHeight_ / 20 || y_mouse > 19* windowHeight_ / 20){
+			y_mouse = windowHeight_ / 2;
+			glutWarpPointer(x_mouse, y_mouse);
+		}
+	}
 }
 
 TP3::~TP3()
