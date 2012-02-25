@@ -12,6 +12,7 @@
 #include "Bodies/Pack.h"
 #include "Curves/Bezier.h"
 
+#define SPEED 4
 
 class TP3 : public GLWorld
 {
