@@ -19,7 +19,6 @@
 #include <GL/glu.h>
 #include <GL/glut.h>
 
-
 TP3::TP3()
 {
     windowWidth_ = 1;
@@ -117,7 +116,7 @@ void TP3::initialize()
     GLShader::createProgram("belt",   lightVShader, beltFShader);
     GLShader::createProgram("bottle", lightVShader, bottleFShader);
 
-    GLMaterial::create("matte", 0.2, 0.7, 0.4, 20);
+    GLMaterial::create("matte", 0.2, 0.7, 0.8, 120);
     GLMaterial::create("glass", 0.2, 0.2, 3, 150);
 
     GLShader::pushProgram("normal");
@@ -155,9 +154,9 @@ void TP3::initialize()
     glLightfv(GL_LIGHT4, GL_DIFFUSE, diffuse);
     glLightfv(GL_LIGHT5, GL_DIFFUSE, diffuse);
 
-    GLfloat position0[] = { 0.0f, 0.0f, 5.0f, 1.0f };
+    GLfloat position0[] = { 10.0f, 10.0f, 5.0f, 1.0f };
     glLightfv(GL_LIGHT0, GL_POSITION, position0);
-    GLfloat position1[] = { 1.0f, 0.0f, 5.0f, 1.0f };
+    GLfloat position1[] = { -10.0f, -10.0f, 5.0f, 1.0f };
     glLightfv(GL_LIGHT1, GL_POSITION, position1);
     GLfloat position2[] = { -1.0f, 0.0f, 5.0f, 1.0f };
     glLightfv(GL_LIGHT2, GL_POSITION, position2);
@@ -191,27 +190,41 @@ void TP3::setUpGlContext()
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
+    float matriz_camara[16];
     if(spectator) {
+
     	btVector3 newLookAt = btVector3(0,6,1).rotate(btVector3(0,0,1), angle) + trans_;
        gluLookAt(trans_[0], trans_[1], trans_[2],
 				newLookAt[0], newLookAt[1], newLookAt[2],
                   0,  0, 1);
+       glGetFloatv(GL_MODELVIEW_MATRIX, matriz_camara);
+       glLoadIdentity();
+
        float eye[] = { newLookAt[0], newLookAt[1], newLookAt[2] };
-       GLShader::setUniform("normal", eye);
+       GLShader::setUniformVec3("eye", eye);
     } else {
 
 		gluLookAt(trans_[0], trans_[1], trans_[2],
 				  0, 0, 0,
 				  0,  0, 1);
-
+		glGetFloatv(GL_MODELVIEW_MATRIX, matriz_camara);
+		glLoadIdentity();
+		GLShader::setUniform("matriz_camara", matriz_camara);
 	    float eye[] = { 0,0,0 };
-	    GLShader::setUniform("normal", eye);
+	    GLShader::setUniformVec3("eye", eye);
 
 		glRotatef(xrot_, 1, 0, 0);
 		glRotatef(yrot_, 0, 1, 0);
 		glRotatef(zrot_, 0, 0, 1);
     }
-    GLShader::setUniform("normal", spectator);
+    GLShader::setUniform("matriz_camara", matriz_camara);
+    GLShader::pushProgram("belt");
+    GLShader::setUniform("matriz_camara", matriz_camara);
+    GLShader::popProgram();
+    GLShader::pushProgram("bottle");
+    GLShader::setUniform("matriz_camara", matriz_camara);
+    GLShader::popProgram();
+    GLShader::setUniform("spectator", spectator);
 }
 
 void TP3::updateScene()
