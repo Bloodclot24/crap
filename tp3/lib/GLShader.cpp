@@ -190,3 +190,10 @@ void GLShader::setUniform(std::string name, float value)
     
     glUniform1f(location, value);
 }
+
+void GLShader::setUniform(std::string name, float* value)
+{
+    GLint location = glGetUniformLocation(programs[toUpper(stack.top())], name.c_str());
+
+    glUniform3fv(location, 3, value);
+}
