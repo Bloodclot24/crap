@@ -34,6 +34,7 @@ class GLShader
     static void popProgram();
 
     static void setUniform(std::string name, float value);
+    static void setUniform(std::string name, float* value);
 };
 
 #endif /* _GLSHADER_H_ */

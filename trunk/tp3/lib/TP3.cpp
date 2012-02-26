@@ -74,14 +74,11 @@ void TP3::reset()
 {
     xrot_ = yrot_ = zrot_ = 0;
 
-    xtrans_ = 0;
-    ytrans_ = -6;
-    ztrans_ = 1;
+    trans_[0] = 0;
+    trans_[1] = -6;
+    trans_[2] = 1;
     x_mouse = 0;
     y_mouse = 0;
-    xlookat_ = 0;
-    ylookat_ = 6;
-    zlookat_ = 1;
     angle = 0;
 }
 
@@ -128,18 +125,48 @@ void TP3::initialize()
 
     //Activo iluminacion
     glEnable(GL_LIGHT0);
+    glEnable(GL_LIGHT1);
+    glEnable(GL_LIGHT2);
+    glEnable(GL_LIGHT3);
+    glEnable(GL_LIGHT4);
+    glEnable(GL_LIGHT5);
 
     GLfloat specular[] = {1.0, 1.0, 1.0, 1.0};
     glLightfv(GL_LIGHT0, GL_SPECULAR, specular);
+    glLightfv(GL_LIGHT1, GL_SPECULAR, specular);
+    glLightfv(GL_LIGHT2, GL_SPECULAR, specular);
+    glLightfv(GL_LIGHT3, GL_SPECULAR, specular);
+    glLightfv(GL_LIGHT4, GL_SPECULAR, specular);
+    glLightfv(GL_LIGHT5, GL_SPECULAR, specular);
 
     GLfloat ambient[] = { 0.2f, 0.2f, 0.2f, 1.0};
     glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
+    glLightfv(GL_LIGHT1, GL_AMBIENT, ambient);
+    glLightfv(GL_LIGHT2, GL_AMBIENT, ambient);
+    glLightfv(GL_LIGHT3, GL_AMBIENT, ambient);
+    glLightfv(GL_LIGHT4, GL_AMBIENT, ambient);
+    glLightfv(GL_LIGHT5, GL_AMBIENT, ambient);
 
     GLfloat diffuse[] = { 1, 1, 1, 1};
     glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse);
+    glLightfv(GL_LIGHT1, GL_DIFFUSE, diffuse);
+    glLightfv(GL_LIGHT2, GL_DIFFUSE, diffuse);
+    glLightfv(GL_LIGHT3, GL_DIFFUSE, diffuse);
+    glLightfv(GL_LIGHT4, GL_DIFFUSE, diffuse);
+    glLightfv(GL_LIGHT5, GL_DIFFUSE, diffuse);
 
-    GLfloat position[] = { 0.0f, 0.0f, 5.0f, 1.0f };
-    glLightfv(GL_LIGHT0, GL_POSITION, position);
+    GLfloat position0[] = { 0.0f, 0.0f, 5.0f, 1.0f };
+    glLightfv(GL_LIGHT0, GL_POSITION, position0);
+    GLfloat position1[] = { 1.0f, 0.0f, 5.0f, 1.0f };
+    glLightfv(GL_LIGHT1, GL_POSITION, position1);
+    GLfloat position2[] = { -1.0f, 0.0f, 5.0f, 1.0f };
+    glLightfv(GL_LIGHT2, GL_POSITION, position2);
+    GLfloat position3[] = { 2.0f, 0.0f, 5.0f, 1.0f };
+    glLightfv(GL_LIGHT3, GL_POSITION, position3);
+    GLfloat position4[] = { -2.0f, 0.0f, 5.0f, 1.0f };
+    glLightfv(GL_LIGHT4, GL_POSITION, position4);
+    GLfloat position5[] = { 3.0f, 0.0f, 5.0f, 1.0f };
+    glLightfv(GL_LIGHT5, GL_POSITION, position5);
 
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_LIGHTING);
@@ -165,22 +192,26 @@ void TP3::setUpGlContext()
     glLoadIdentity();
 
     if(spectator) {
-    	btVector3 trans(xtrans_, ytrans_, ztrans_);
-    	btVector3 lookAt(xlookat_, ylookat_, zlookat_);
-    	btVector3 newLookAt = (lookAt - trans).rotate(btVector3(0,0,1), angle) + trans;
-       gluLookAt(xtrans_, ytrans_, ztrans_,
+    	btVector3 newLookAt = btVector3(0,6,1).rotate(btVector3(0,0,1), angle) + trans_;
+       gluLookAt(trans_[0], trans_[1], trans_[2],
 				newLookAt[0], newLookAt[1], newLookAt[2],
                   0,  0, 1);
+       float eye[] = { newLookAt[0], newLookAt[1], newLookAt[2] };
+       GLShader::setUniform("normal", eye);
     } else {
 
-		gluLookAt(xtrans_, ytrans_, ztrans_,
+		gluLookAt(trans_[0], trans_[1], trans_[2],
 				  0, 0, 0,
 				  0,  0, 1);
+
+	    float eye[] = { 0,0,0 };
+	    GLShader::setUniform("normal", eye);
 
 		glRotatef(xrot_, 1, 0, 0);
 		glRotatef(yrot_, 0, 1, 0);
 		glRotatef(zrot_, 0, 0, 1);
     }
+    GLShader::setUniform("normal", spectator);
 }
 
 void TP3::updateScene()
@@ -214,7 +245,7 @@ void TP3::updateBottlesPositions() {
 		if (bottlesPositions_[i] >= 1) {
 			firstBottle_ = i + 1;
 			if(packs_[packs_.size() - 1].getBottlesCount() >= 4) {
-				packs_[packs_.size() - 1].setPosition(5, 2, 2);
+				packs_[packs_.size() - 1].setPosition(5, 2.4, 1.6);
 				addBody(&packs_[packs_.size() - 1]);
 				packs_.push_back(Pack());
 			}
@@ -369,6 +400,10 @@ void TP3::handleKeyboard(unsigned char key, int x, int y)
     switch(key){
 
     case 'e': spectator = ! spectator;
+    		if(!spectator)
+    			glutSetCursor(GLUT_CURSOR_INHERIT);
+    		else
+    			glutSetCursor(GLUT_CURSOR_NONE);
     case 'r': reset(); break;
 
     case 'S': stopAnimation = !stopAnimation; break;
@@ -382,13 +417,13 @@ void TP3::handleKeyboard(unsigned char key, int x, int y)
     if(spectator) {
 		switch(key){
 
-		case 'a': xtrans_ -= 0.1; xlookat_ -= 0.1; break;
+		case 'a': trans_ += btVector3(-0.1,0,0).rotate(btVector3(0,0,1), angle); break;
 
-		case 'd': xtrans_ += 0.1; xlookat_ += 0.1; break;
+		case 'd': trans_ += btVector3(0.1,0,0).rotate(btVector3(0,0,1), angle); break;
 
-		case 's': ytrans_ -= 0.1; ylookat_ -= 0.1; break;
+		case 's': trans_ += btVector3(0,-0.1,0).rotate(btVector3(0,0,1), angle); break;
 
-		case 'w': ytrans_ += 0.1; ylookat_ += 0.1; break;
+		case 'w': trans_ += btVector3(0,0.1,0).rotate(btVector3(0,0,1), angle); break;
 
 		default: break;
 		}
@@ -404,8 +439,8 @@ void TP3::handleKeyboard(unsigned char key, int x, int y)
 		case 'z': zrot_ += 3; break;
 		case 'Z': zrot_ -= 3; break;
 
-		case '-': ytrans_ -= 0.1; break;
-		case '+': ytrans_ += 0.1; break;
+		case '-': trans_[1] -= 0.1; break;
+		case '+': trans_[1] += 0.1; break;
 
 		default: break;
 
@@ -473,10 +508,11 @@ void TP3::handleMouseMotion(int x, int y)
 {
 	if(spectator) {
 		if (x_mouse < x)
-			angle -= 0.05;
+			angle -= 0.01;
 		else if(x_mouse > x)
-			angle += 0.05;
+			angle += 0.01;
 		x_mouse = x;
+
 		if (x_mouse < windowWidth_ / 20 || x_mouse > 19 * windowWidth_ / 20) {
 			x_mouse = windowWidth_ / 2;
 			glutWarpPointer(x_mouse, windowHeight_ / 2);

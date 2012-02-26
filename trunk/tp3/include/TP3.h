@@ -38,13 +38,10 @@ class TP3 : public GLWorld
     CoveyorBelt* belt_;
 
     float xrot_, yrot_, zrot_;
-    float xtrans_, ytrans_, ztrans_;
+    btVector3 trans_;
     int x_mouse;
     int y_mouse;
     float angle;
-    float xlookat_;
-    float ylookat_;
-    float zlookat_;
 
     bool stopAnimation;
 
