@@ -18,6 +18,7 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <GL/glut.h>
+float exponente = 0;
 
 TP3::TP3()
 {
@@ -116,8 +117,8 @@ void TP3::initialize()
     GLShader::createProgram("belt",   lightVShader, beltFShader);
     GLShader::createProgram("bottle", lightVShader, bottleFShader);
 
-    GLMaterial::create("matte", 0.2, 0.7, 0.8, 120);
-    GLMaterial::create("glass", 0.2, 0.2, 3, 150);
+    GLMaterial::create("matte", 0.2, 0.4, 0.8, 50);
+    GLMaterial::create("glass", 0.2, 2, 23, 50);
 
     GLShader::pushProgram("normal");
     GLMaterial::push("matte");
@@ -130,7 +131,7 @@ void TP3::initialize()
     glEnable(GL_LIGHT4);
     glEnable(GL_LIGHT5);
 
-    GLfloat specular[] = {1.0, 1.0, 1.0, 1.0};
+    GLfloat specular[] = {0, 0, 1, 1.0};
     glLightfv(GL_LIGHT0, GL_SPECULAR, specular);
     glLightfv(GL_LIGHT1, GL_SPECULAR, specular);
     glLightfv(GL_LIGHT2, GL_SPECULAR, specular);
@@ -146,7 +147,7 @@ void TP3::initialize()
     glLightfv(GL_LIGHT4, GL_AMBIENT, ambient);
     glLightfv(GL_LIGHT5, GL_AMBIENT, ambient);
 
-    GLfloat diffuse[] = { 1, 1, 1, 1};
+    GLfloat diffuse[] = { 1, 0, 0, 1};
     glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse);
     glLightfv(GL_LIGHT1, GL_DIFFUSE, diffuse);
     glLightfv(GL_LIGHT2, GL_DIFFUSE, diffuse);
@@ -154,17 +155,31 @@ void TP3::initialize()
     glLightfv(GL_LIGHT4, GL_DIFFUSE, diffuse);
     glLightfv(GL_LIGHT5, GL_DIFFUSE, diffuse);
 
-    GLfloat position0[] = { 10.0f, 10.0f, 5.0f, 1.0f };
+    GLfloat spot_direction[] = { 0.0, 0.0, -1.0 };
+    glLightf(GL_LIGHT0, GL_SPOT_CUTOFF, 45.0);
+    glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, spot_direction);
+    glLightf(GL_LIGHT1, GL_SPOT_CUTOFF, 45.0);
+    glLightfv(GL_LIGHT1, GL_SPOT_DIRECTION, spot_direction);
+    glLightf(GL_LIGHT2, GL_SPOT_CUTOFF, 45.0);
+    glLightfv(GL_LIGHT2, GL_SPOT_DIRECTION, spot_direction);
+    glLightf(GL_LIGHT3, GL_SPOT_CUTOFF, 45.0);
+    glLightfv(GL_LIGHT3, GL_SPOT_DIRECTION, spot_direction);
+    glLightf(GL_LIGHT4, GL_SPOT_CUTOFF, 45.0);
+    glLightfv(GL_LIGHT4, GL_SPOT_DIRECTION, spot_direction);
+    glLightf(GL_LIGHT5, GL_SPOT_CUTOFF, 45.0);
+    glLightfv(GL_LIGHT5, GL_SPOT_DIRECTION, spot_direction);
+
+    GLfloat position0[] = { 8.0f, 8.0f, 10.0f, 1.0f };
     glLightfv(GL_LIGHT0, GL_POSITION, position0);
-    GLfloat position1[] = { -10.0f, -10.0f, 5.0f, 1.0f };
+    GLfloat position1[] = { -10.0f, -10.0f, 10.0f, 1.0f };
     glLightfv(GL_LIGHT1, GL_POSITION, position1);
-    GLfloat position2[] = { -1.0f, 0.0f, 5.0f, 1.0f };
+    GLfloat position2[] = { 6.0f, -6.0f, 10.0f, 1.0f };
     glLightfv(GL_LIGHT2, GL_POSITION, position2);
-    GLfloat position3[] = { 2.0f, 0.0f, 5.0f, 1.0f };
+    GLfloat position3[] = { 0.0f, 2.0f, 10.0f, 1.0f };
     glLightfv(GL_LIGHT3, GL_POSITION, position3);
-    GLfloat position4[] = { -2.0f, 0.0f, 5.0f, 1.0f };
+    GLfloat position4[] = { -3.0f, 0.0f, 10.0f, 1.0f };
     glLightfv(GL_LIGHT4, GL_POSITION, position4);
-    GLfloat position5[] = { 3.0f, 0.0f, 5.0f, 1.0f };
+    GLfloat position5[] = { 3.0f, 0.0f, 10.0f, 1.0f };
     glLightfv(GL_LIGHT5, GL_POSITION, position5);
 
     glEnable(GL_DEPTH_TEST);
@@ -209,7 +224,6 @@ void TP3::setUpGlContext()
 				  0,  0, 1);
 		glGetFloatv(GL_MODELVIEW_MATRIX, matriz_camara);
 		glLoadIdentity();
-		GLShader::setUniform("matriz_camara", matriz_camara);
 	    float eye[] = { 0,0,0 };
 	    GLShader::setUniformVec3("eye", eye);
 
@@ -418,6 +432,8 @@ void TP3::handleKeyboard(unsigned char key, int x, int y)
     		else
     			glutSetCursor(GLUT_CURSOR_NONE);
     case 'r': reset(); break;
+    case 'g': exponente+=10; break;
+    case 'h': exponente-=10; break;
 
     case 'S': stopAnimation = !stopAnimation; break;
 
