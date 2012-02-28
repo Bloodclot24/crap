@@ -10,7 +10,7 @@ Sphere::Sphere(float radius)
 
 void Sphere::drawPrimitive()
 {
-	gluSphere(quadric_, radius_, 15, 10);
+	gluSphere(quadric_, radius_, 30, 20);
 	//glutSolidSphere(radius_,15,4);
 }
 
