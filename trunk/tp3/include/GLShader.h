@@ -33,9 +33,14 @@ class GLShader
     static void pushProgram(std::string alias);
     static void popProgram();
 
+
+    static void setUniform(std::string name, int value);
     static void setUniform(std::string name, float value);
+
     static void setUniformVec3(std::string name, float value[3]);
     static void setUniform(std::string name, float value[16]);
+
+
 };
 
 #endif /* _GLSHADER_H_ */

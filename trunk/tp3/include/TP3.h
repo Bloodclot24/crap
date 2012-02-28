@@ -54,9 +54,13 @@ class TP3 : public GLWorld
 
     void setUpGlContext();
 
+    void setUpCubeContext(int face);
+
     void updateScene();
 
     void renderScene();
+
+    void renderCube();
 
     void addBody(Body* body);
 

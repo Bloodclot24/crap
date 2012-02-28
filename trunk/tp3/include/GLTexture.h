@@ -16,7 +16,11 @@ class GLTexture
     public:
 
     static void load(std::string fileName, std::string alias);
+    static void createCube(std::string alias);
+    static void beginRenderToCube(std::string alias, int face);
+    static void endRenderToCube();
     static void bind(std::string textureAlias);
+    static void bindCubic(std::string textureAlias);
     static void unbind();
 };
 

@@ -1,4 +1,6 @@
 #include "Bodies/FillMachine.h"
+#include "GLShader.h"
+#include "GLTexture.h"
 
 #include <GL/gl.h>
 
@@ -17,17 +19,26 @@ FillMachine::FillMachine(): cylinder_(0.8,0.4), sphere_(0.8)
 void FillMachine::draw()
 {
 
-    glColor3f(0.2, 0.2, 0.2);
+    glColor3f(0.1, 0.1, 0.1);
 
     glPushMatrix();{
     	glScalef(0.5, 0.5, 0.5);
     	glTranslatef(1.15,5.4,0.5);
     	prism_[0].draw();
     	glTranslatef(0,0,0.5);
+
+
+
+        GLShader::pushProgram("cubic");
+        GLTexture::bindCubic("cube1");
+        GLShader::setUniform("cubeMap", (int)0);
+
     	sphere_.draw();
     	cylinder_.draw();
     	glTranslatef(0,0,0.4);
     	sphere_.draw();
+        GLShader::popProgram();
+
     	glTranslatef(0,0,level);
     	glPushMatrix();{
     		glTranslatef(0,0,0.8);
