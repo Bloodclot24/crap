@@ -1,5 +1,4 @@
 varying vec4 normal_, posicion_;
-uniform mat4 matriz_camara;
 
 void main()
 {

@@ -134,7 +134,7 @@ void TP3::initialize()
     GLShader::createProgram("cubic",  cubicVShader, reflectFShader);
     
 
-    GLMaterial::create("matte", 0.1, 0.5, 1, 150);
+    GLMaterial::create("matte", 0.2, 0.5, 1, 150);
     GLMaterial::create("glass", 0.2, 0.3, 10, 80);
 
     GLShader::pushProgram("normal");
@@ -148,7 +148,7 @@ void TP3::initialize()
     glEnable(GL_LIGHT4);
     glEnable(GL_LIGHT5);
 
-    GLfloat specular[] = {0.0, 0.0, 1.0, 1.0};
+    GLfloat specular[] = {1.0, 1.0, 1.0, 1.0};
     GLfloat specular2[] = {1.0, 1.0, 1.0, 1.0};
     glLightfv(GL_LIGHT0, GL_SPECULAR, specular);
     glLightfv(GL_LIGHT1, GL_SPECULAR, specular2);
@@ -157,7 +157,7 @@ void TP3::initialize()
     glLightfv(GL_LIGHT4, GL_SPECULAR, specular);
     glLightfv(GL_LIGHT5, GL_SPECULAR, specular);
 
-    GLfloat ambient[] = { 0.1, 0.1, 0.1, 1.0};
+    GLfloat ambient[] = { 0.2, 0.2, 0.2, 1.0};
     glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
     glLightfv(GL_LIGHT1, GL_AMBIENT, ambient);
     glLightfv(GL_LIGHT2, GL_AMBIENT, ambient);
@@ -165,8 +165,8 @@ void TP3::initialize()
     glLightfv(GL_LIGHT4, GL_AMBIENT, ambient);
     glLightfv(GL_LIGHT5, GL_AMBIENT, ambient);
 
-    GLfloat diffuse[] = { 0, 1, 0, 1};
-    GLfloat diffuse2[] = { 1, 0, 0, 1};
+    GLfloat diffuse[] = { 1, 1, 1, 1};
+    GLfloat diffuse2[] = { 1, 1, 1, 1};
     glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse);
     glLightfv(GL_LIGHT1, GL_DIFFUSE, diffuse2);
     glLightfv(GL_LIGHT2, GL_DIFFUSE, diffuse);
@@ -219,9 +219,6 @@ void TP3::setUpGlContext()
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    float matriz_camara[16];
-
-    glGetFloatv(GL_MODELVIEW_MATRIX, matriz_camara);
 
     if(spectator) {
 
@@ -240,22 +237,6 @@ void TP3::setUpGlContext()
         glRotatef(yrot_, 0, 1, 0);
         glRotatef(zrot_, 0, 0, 1);
     }
-    
-    float eye[] = { trans_[0], trans_[1], trans_[2]};
-
-    GLShader::setUniform("matriz_camara", matriz_camara);
-    GLShader::pushProgram("belt");
-    GLShader::setUniform("matriz_camara", matriz_camara);
-    GLShader::popProgram();
-    GLShader::pushProgram("bottle");
-    GLShader::setUniform("matriz_camara", matriz_camara);
-    GLShader::popProgram();
-    GLShader::pushProgram("cubic");
-    GLShader::setUniformVec3("eye", eye);
-    GLShader::setUniform("matriz_camara", matriz_camara);
-    GLShader::popProgram();
-
-    GLShader::setUniform("spectator", spectator);
 }
 
 void TP3::updateScene()
@@ -481,20 +462,6 @@ void TP3::setUpCubeContext(int face)
     gluLookAt(x, y, z,
               x + faces[face][0], y + faces[face][1], z + faces[face][2],
               up[face][0], up[face][1], up[face][2]);
-
-
-    GLShader::setUniform("matriz_camara", matriz_camara);
-    GLShader::pushProgram("belt");
-    GLShader::setUniform("matriz_camara", matriz_camara);
-    GLShader::popProgram();
-    GLShader::pushProgram("bottle");
-    GLShader::setUniform("matriz_camara", matriz_camara);
-    GLShader::popProgram();
-    GLShader::pushProgram("cubic");
-    GLShader::setUniform("matriz_camara", matriz_camara);
-    GLShader::popProgram();
-
-    GLShader::setUniform("spectator", spectator);
 }
 
 
