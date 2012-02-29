@@ -1,10 +1,12 @@
 #include "Bodies/FillMachine.h"
 #include "GLShader.h"
 #include "GLTexture.h"
+#include "GLMaterial.h"
+
 
 #include <GL/gl.h>
 
-FillMachine::FillMachine(): cylinder_(0.8,0.4), sphere_(0.8)
+FillMachine::FillMachine(): cylinder_(0.82,0.4), sphere_(0.8)
 {
 	btVector3 patch0[4] = {btVector3(0.5,0.5,0),btVector3(-0.5,0.5,0),btVector3(-0.5,-0.5,0),btVector3(0.5,-0.5,0)};
 	prism_.push_back(Prism(patch0, 4, 1));
@@ -25,19 +27,29 @@ void FillMachine::draw()
     	glScalef(0.5, 0.5, 0.5);
     	glTranslatef(1.15,5.4,0.5);
     	prism_[0].draw();
-    	glTranslatef(0,0,0.5);
 
+    	glTranslatef(0,0,0.5);
 
 
         GLShader::pushProgram("cubic");
         GLTexture::bindCubic("cube1");
         GLShader::setUniform("cubeMap", (int)0);
+        GLMaterial::push("steel");{
 
-    	sphere_.draw();
-    	cylinder_.draw();
-    	glTranslatef(0,0,0.4);
-    	sphere_.draw();
-        GLShader::popProgram();
+            GLShader::setUniform("mapZ", -0.4f);
+            sphere_.draw();
+
+            GLShader::setUniform("mapZ", -0.15f);
+            cylinder_.draw();
+
+            glTranslatef(0,0,0.4);
+            GLShader::setUniform("mapZ", 0.25f);
+            sphere_.draw();
+
+            GLShader::setUniform("mapZ", 0);
+
+            GLShader::popProgram();
+        } GLMaterial::pop();
 
     	glTranslatef(0,0,level);
     	glPushMatrix();{
