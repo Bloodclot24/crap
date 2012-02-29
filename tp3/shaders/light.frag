@@ -1,6 +1,4 @@
 uniform float ka, kd, ks, shininess;
-uniform mat4 matriz_camara;
-uniform float spectator;
 varying vec4 normal_, posicion_;
 
 vec4 computeLight()
