@@ -23,12 +23,12 @@ btVector3 la(0,0,0);
 int valores[] = {0, 1, -1};
 
 
-GLfloat position0[] = { 9.8, 9.8, 1, 1.0 };
-GLfloat position1[] = { -9.8, -9.8, 1, 1.0};
-GLfloat position2[] = { -9.8, -9.8, 0.1, 1.0};
-GLfloat position3[] = { 2.0f, 0.0f, 5.0f, 1.0f };
-GLfloat position4[] = { -2.0f, 0.0f, 5.0f, 1.0f };
-GLfloat position5[] = { 3.0f, 0.0f, 5.0f, 1.0f };
+GLfloat position0[] = { 9.8, 9.8, 5, 1.0 };
+GLfloat position1[] = { -9.8, -9.8, 5, 1.0};
+GLfloat position2[] = { 7, -4, 5, 1.0};
+GLfloat position3[] = { 3.0f, 0.0f, 5.0f, 1.0f };
+GLfloat position4[] = { -3.0f, 0.0f, 5.0f, 1.0f };
+GLfloat position5[] = { 0.0f, 0.0f, 5.0f, 1.0f };
 
 TP3::TP3()
 {
@@ -134,8 +134,8 @@ void TP3::initialize()
     GLShader::createProgram("cubic",  cubicVShader, reflectFShader);
     
 
-    GLMaterial::create("matte", 0.2, 0.5, 10, 150);
-    GLMaterial::create("glass", 0.2, 0.2, 3, 80);
+    GLMaterial::create("matte", 0.1, 0.5, 1, 150);
+    GLMaterial::create("glass", 0.2, 0.3, 10, 80);
 
     GLShader::pushProgram("normal");
     GLMaterial::push("matte");
@@ -157,7 +157,7 @@ void TP3::initialize()
     glLightfv(GL_LIGHT4, GL_SPECULAR, specular);
     glLightfv(GL_LIGHT5, GL_SPECULAR, specular);
 
-    GLfloat ambient[] = { 0, 0, 0, 1.0};
+    GLfloat ambient[] = { 0.1, 0.1, 0.1, 1.0};
     glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
     glLightfv(GL_LIGHT1, GL_AMBIENT, ambient);
     glLightfv(GL_LIGHT2, GL_AMBIENT, ambient);
@@ -180,6 +180,22 @@ void TP3::initialize()
     glLightfv(GL_LIGHT3, GL_POSITION, position3);
     glLightfv(GL_LIGHT4, GL_POSITION, position4);
     glLightfv(GL_LIGHT5, GL_POSITION, position5);
+
+    GLfloat spot_direction0[] = { -0.5, -0.5, -1.0 };
+    GLfloat spot_direction1[] = { 0.5, 0.5, -1.0 };
+    GLfloat spot_direction[] = { 0.0, 0.0, -1.0 };
+    glLightf(GL_LIGHT0, GL_SPOT_CUTOFF, 90.0);
+    glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, spot_direction0);
+    glLightf(GL_LIGHT1, GL_SPOT_CUTOFF, 90.0);
+    glLightfv(GL_LIGHT1, GL_SPOT_DIRECTION, spot_direction1);
+    glLightf(GL_LIGHT2, GL_SPOT_CUTOFF, 45.0);
+    glLightfv(GL_LIGHT2, GL_SPOT_DIRECTION, spot_direction);
+    glLightf(GL_LIGHT3, GL_SPOT_CUTOFF, 45.0);
+    glLightfv(GL_LIGHT3, GL_SPOT_DIRECTION, spot_direction);
+    glLightf(GL_LIGHT4, GL_SPOT_CUTOFF, 45.0);
+    glLightfv(GL_LIGHT4, GL_SPOT_DIRECTION, spot_direction);
+    glLightf(GL_LIGHT5, GL_SPOT_CUTOFF, 45.0);
+    glLightfv(GL_LIGHT5, GL_SPOT_DIRECTION, spot_direction);
 
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_LIGHTING);
