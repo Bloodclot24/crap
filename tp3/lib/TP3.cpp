@@ -126,7 +126,7 @@ void TP3::initialize()
     const char* normalFShader[]  = {"base", "texture",  "light", NULL};
     const char* beltFShader[]    = {"base", "belt",     "light", NULL};
     const char* bottleFShader[]  = {"base", "bottle",   "light", NULL};
-    const char* reflectFShader[] = {"base", "noTexture","cubic", NULL}; 
+    const char* reflectFShader[] = {"base", "cubic", "light", NULL}; 
 
     GLShader::createProgram("normal", lightVShader, normalFShader);
     GLShader::createProgram("belt",   lightVShader, beltFShader);
@@ -136,6 +136,7 @@ void TP3::initialize()
 
     GLMaterial::create("matte", 0.2, 0.5, 1, 150);
     GLMaterial::create("glass", 0.2, 0.3, 10, 80);
+    GLMaterial::create("steel", 0.2, 0.3, 20, 100);
 
     GLShader::pushProgram("normal");
     GLMaterial::push("matte");
@@ -400,32 +401,26 @@ void TP3::renderScene()
     for(unsigned i=firstBottle_; i<bottles_.size(); ++i)
         bottles_[i]->draw();
 
-    //dibujo las luces
-    Sphere s(0.05);
-
-    glPushMatrix();{
-        glColor3f(1,1,1);
-        glTranslatef(position0[0], position0[1], position0[2]);
-        s.draw();
-    }glPopMatrix();
-    glPushMatrix();{
-        glColor3f(1,1,1);
-        glTranslatef(position1[0], position1[1], position1[2]);
-        s.draw();
-    }glPopMatrix();
 }
 
 void TP3::setUpCubeContext(int face)
 {
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    
+
     gluPerspective(90, 1,
-                   0, 50.0);
+                   0.75, 50.0);
+    
+    if(face == 4){
+        glClearColor(0,0,0,1);
+    }
+    else{
+        glClearColor(0.2,0.2,0.2,1);
+    }
 
-    //glFrustum(-5, 5, -5, 5, 0, 20);
+    glClearDepth(30.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    //glOrtho(-2, 2, -2, 2, 0, 50);
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
@@ -435,11 +430,6 @@ void TP3::setUpCubeContext(int face)
         y = 5.4/2,
         z = 0.5/2;
 
-    // float 
-    //     x = 0,
-    //     y = 0,
-    //     z = 0.5;
-
     float faces[][3] = {{ 1, 0, 0},
                         {-1, 0, 0},
                         { 0, 1, 0},
@@ -447,17 +437,23 @@ void TP3::setUpCubeContext(int face)
                         { 0, 0, 1},
                         { 0, 0,-1}};
 
-    float up[][3] = {{0,   -1,  0},
-                     {0,   -1,  0},
-                     {0,   0,  1},
-                     {0,   0,  -1},
-                     {0,   1,  0},
-                     {0,   -1,  0}};
+    float up[][3] = {{0,-1, 0},
+                     {0,-1, 0},
+                     {0, 0, 1},
+                     {0, 0,-1},
+                     {0,-1, 0},
+                     {0,-1, 0}};
 
     glLoadIdentity();
 
     float matriz_camara[16];
     glGetFloatv(GL_MODELVIEW_MATRIX, matriz_camara);
+
+    if(face == 5){
+        x=0;
+        y=0;
+        z = 1;
+    }
 
     gluLookAt(x, y, z,
               x + faces[face][0], y + faces[face][1], z + faces[face][2],
@@ -482,11 +478,6 @@ void TP3::renderCube()
 
         setUpCubeContext(i);
 
-        glClearColor(1,0,0,0.5);
-        glClearDepth(30.0f);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-
         glViewport(0, 0, 512, 512);
         renderScene();
     }
@@ -499,15 +490,15 @@ void TP3::renderCube()
 
     glColor3f(1,1,1);
 
-    glTranslatef(0,0,0.5);
-    GLShader::pushProgram("cubic");
-    GLTexture::bindCubic("cube1");
-    GLShader::setUniform("cubeMap", (int)0);
-    Cube c(1);
-    Sphere s(1);
-    //s.draw();
-    //c.draw();
-    GLShader::popProgram();
+    // glTranslatef(5,-5,1);
+    // GLShader::pushProgram("cubic");
+    // GLTexture::bindCubic("cube1");
+    // GLShader::setUniform("cubeMap", (int)0);
+    // //Cube c(1);
+    // Sphere s(1);
+    //  s.draw();
+    // //c.draw();
+    // GLShader::popProgram();
 }
 
 void TP3::handleDisplay()
@@ -521,7 +512,7 @@ void TP3::handleDisplay()
 
     renderScene();
 
-    //renderCube();
+    renderCube();
 
     glutSwapBuffers();
 }
