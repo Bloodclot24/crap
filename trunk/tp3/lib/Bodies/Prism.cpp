@@ -23,7 +23,7 @@ Prism::Prism(btVector3 *vertexes, int n, float height)
 
 void Prism::draw()
 {
-    glColor3f(1, 1, 1);
+    glColor3f(0.5, 0.5, 0.5);
     GLTexture::bind("chapa");
 
     float displacementMagnitude  = height_/2;
