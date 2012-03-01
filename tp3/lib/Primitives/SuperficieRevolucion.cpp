@@ -74,4 +74,15 @@ void SuperficieRevolucion::drawPrimitive() {
     }
 
     glEnd();
+
+    // glColor3f(1,0,0);
+    // glBegin(GL_LINES);{
+
+    //     for(int i=0; i < normales.size(); i++)
+    //         for(int j=0; j < normales[i].size(); j++){
+    //             glVertex3fv(vertices[i][j]);
+    //             glVertex3fv(vertices[i][j]+normales[i][j]*3);
+    //         }
+                
+    // }glEnd();
 }

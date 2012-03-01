@@ -36,6 +36,7 @@ class GLShader
 
     static void setUniform(std::string name, int value);
     static void setUniform(std::string name, float value);
+    static void setUniformM(std::string name, float* matriz);
 };
 
 #endif /* _GLSHADER_H_ */
