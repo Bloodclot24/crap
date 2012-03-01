@@ -23,12 +23,12 @@ btVector3 la(0,0,0);
 int valores[] = {0, 1, -1};
 
 
-GLfloat position0[] = { 9.8, 9.8, 5, 1.0 };
-GLfloat position1[] = { -9.8, -9.8, 5, 1.0};
-GLfloat position2[] = { 7, -4, 5, 1.0};
-GLfloat position3[] = { 3.0f, 0.0f, 5.0f, 1.0f };
-GLfloat position4[] = { -3.0f, 0.0f, 5.0f, 1.0f };
-GLfloat position5[] = { 0.0f, 0.0f, 5.0f, 1.0f };
+GLfloat position0[] = { 9.8, 9.8, 10, 1.0 };
+GLfloat position1[] = { -9.8, -9.8, 10, 1.0};
+GLfloat position2[] = { 7, -4, 10, 1.0};
+GLfloat position3[] = { 3.0f, 0.0f, 10.0f, 1.0f };
+GLfloat position4[] = { -3.0f, 0.0f, 10.0f, 1.0f };
+GLfloat position5[] = { 0.0f, 0.0f, 10.0f, 1.0f };
 
 TP3::TP3()
 {
@@ -85,7 +85,7 @@ void TP3::reset()
     xrot_ = yrot_ = zrot_ = 0;
 
     trans_[0] = 0;
-    trans_[1] = -6;
+    trans_[1] = -8;
     trans_[2] = 1;
     x_mouse = 0;
     y_mouse = 0;
@@ -100,11 +100,12 @@ void TP3::initialize()
 
     //Cargo texturas
     GLTexture::load("lad.raw", "ladrillos");
-    GLTexture::load("chapaDoble.raw", "chapa");
+    GLTexture::load("16metal.raw", "chapa");
     GLTexture::load("cintita.raw", "cinta");
     GLTexture::load("eti.raw", "etiqueta");
     GLTexture::createCube("cube1");
-    GLTexture::load("laddd.raw", "piso");
+    GLTexture::load("t.raw", "piso");
+    GLTexture::load("Metal.raw", "techo");
 
     //Cargo VShaders
     GLShader::loadVShader("shaders/light.vert", "light");
@@ -134,8 +135,8 @@ void TP3::initialize()
     GLShader::createProgram("cubic",  cubicVShader, reflectFShader);
     
 
-    GLMaterial::create("matte", 0.2, 0.5, 1, 150);
-    GLMaterial::create("glass", 0.2, 0.6, 20, 10);
+    GLMaterial::create("matte", 0.2, 0.5, 0.8, 100);
+    GLMaterial::create("glass", 0.2, 0.4, 3, 10);
     GLMaterial::create("steel", 0.2, 0.4, 10, 10);
 
     GLShader::pushProgram("normal");
@@ -340,6 +341,23 @@ void TP3::renderScene()
 
     }glEnd();
 
+    GLTexture::bind("techo");
+
+    glBegin(GL_QUADS);{
+        glColor3f(0.5, 0.5, 0.2);
+        glNormal3f(0,0,-1);
+        glTexCoord2f(0.0, 0.0);
+        glVertex3f(-10, -10, 10);
+
+        glTexCoord2f(1.0, 0.0);
+        glVertex3f(10, -10, 10);
+
+        glTexCoord2f(1.0, 1.0);
+        glVertex3f( 10, 10, 10);
+
+        glTexCoord2f(0.0, 1.0);
+        glVertex3f( -10, 10, 10);
+    }glEnd();
 
     GLTexture::bind("ladrillos");
     glBegin(GL_QUADS);{
@@ -554,6 +572,8 @@ void TP3::handleKeyboard(unsigned char key, int x, int y)
     case 'c': compiledLists = !compiledLists; 
         Primitive::useCompiledLists(compiledLists); break;
         
+    case 'q': exit(0); break;
+
     default: break;
     }
 

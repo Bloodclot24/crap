@@ -103,6 +103,7 @@ void FillMachine::draw()
     	glRotatef(-90,0,0,1);
     	glRotatef(90,1,0,0);
     	glColor3f(1, 1, 0);
+    	GLTexture::bind("cinta");
     	manguera->draw();
     }glPopMatrix();
 
