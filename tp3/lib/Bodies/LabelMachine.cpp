@@ -39,7 +39,7 @@ void LabelMachine::draw()
 
         	glScalef(0.9, 0.9, 1.4);
         	glTranslatef(0,0,-0.5 + level*2.4);
-        	glColor3f(0.6,0.6,0);
+        	glColor3f(1,1,0);
         	cylinder_.draw();
         }glPopMatrix();
     }glPopMatrix();
