@@ -135,8 +135,8 @@ void TP3::initialize()
     
 
     GLMaterial::create("matte", 0.2, 0.5, 1, 150);
-    GLMaterial::create("glass", 0.2, 0.3, 10, 80);
-    GLMaterial::create("steel", 0.2, 0.3, 20, 100);
+    GLMaterial::create("glass", 0.2, 0.6, 20, 10);
+    GLMaterial::create("steel", 0.2, 0.4, 10, 10);
 
     GLShader::pushProgram("normal");
     GLMaterial::push("matte");
@@ -238,6 +238,20 @@ void TP3::setUpGlContext()
         glRotatef(yrot_, 0, 1, 0);
         glRotatef(zrot_, 0, 0, 1);
     }
+
+    float matriz_vista[16];
+    glGetFloatv(GL_MODELVIEW_MATRIX, matriz_vista);
+
+    GLShader::setUniformM("matriz_vista", matriz_vista);
+    GLShader::pushProgram("belt");
+    GLShader::setUniformM("matriz_vista", matriz_vista);
+    GLShader::popProgram();
+    GLShader::pushProgram("bottle");
+    GLShader::setUniformM("matriz_vista", matriz_vista);
+    GLShader::popProgram();
+    GLShader::pushProgram("cubic");
+    GLShader::setUniformM("matriz_vista", matriz_vista);
+    GLShader::popProgram();
 }
 
 void TP3::updateScene()
@@ -400,6 +414,7 @@ void TP3::renderScene()
 
     for(unsigned i=firstBottle_; i<bottles_.size(); ++i)
         bottles_[i]->draw();
+
 
 }
 

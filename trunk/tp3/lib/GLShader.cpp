@@ -199,3 +199,9 @@ void GLShader::setUniform(std::string name, int value)
     glUniform1i(location, value);
 }
 
+void GLShader::setUniformM(std::string name, float* matriz)
+{
+    GLint location = glGetUniformLocation(programs[toUpper(stack.top())], name.c_str());
+    
+    glUniformMatrix4fv(location, 1, false, matriz);
+}
