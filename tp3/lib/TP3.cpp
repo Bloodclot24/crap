@@ -159,7 +159,7 @@ void TP3::initialize()
     glLightfv(GL_LIGHT4, GL_SPECULAR, specular);
     glLightfv(GL_LIGHT5, GL_SPECULAR, specular);
 
-    GLfloat ambient[] = { 0.2, 0.2, 0.2, 1.0};
+    GLfloat ambient[] = { 0.3, 0.3, 0.3, 1.0};
     glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
     glLightfv(GL_LIGHT1, GL_AMBIENT, ambient);
     glLightfv(GL_LIGHT2, GL_AMBIENT, ambient);
